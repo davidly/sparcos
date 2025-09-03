@@ -1733,6 +1733,7 @@ static const StoRV SparcToRiscV[] = // per https://gpages.juszkiewicz.com.pl/sys
     { 236, emulator_sys__llseek },
     { 250, SYS_mremap },
     { 253, SYS_fdatasync },
+    { 284, SYS_openat },
     { 285, SYS_mkdirat },
     { 290, SYS_unlinkat },
     { 291, SYS_renameat },
