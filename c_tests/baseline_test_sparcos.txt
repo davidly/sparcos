@@ -1,4 +1,4 @@
-Wed 09/03/2025  9:19:35.06 
+Wed 09/03/2025 10:08:54.40 
 test hidave 
 hi dave
 test tprintf 
@@ -3751,10 +3751,10 @@ fillc
 starting mult
 summ is : 465880
 test ttime 
-before TZ is set: tz: 'PacificDaylightTime+8', year: 2025, month 9, day 3, hour 16, min 19, sec 37
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 9, day 3, hour 11, min 19, sec 37
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 9, day 3, hour 8, min 19, sec 37
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 9, day 3, hour 16, min 19, sec 37
+before TZ is set: tz: 'PacificDaylightTime+8', year: 2025, month 9, day 3, hour 17, min 8, sec 57
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 9, day 3, hour 12, min 8, sec 57
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 9, day 3, hour 9, min 8, sec 57
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 9, day 3, hour 17, min 8, sec 57
 test fileops 
 current offset: 0
 result of fseek: 0
@@ -4490,7 +4490,7 @@ testing with INFINITY:
   in do_math()
          a:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          b:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
-         *:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         *:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          /:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          +:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          -:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
@@ -4499,7 +4499,7 @@ testing with INFINITY:
   in do_math()
          a:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          b:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
-         *:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         *:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          /:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          +:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          -:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
@@ -4508,7 +4508,7 @@ testing with INFINITY:
   in do_math()
          a:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          b:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
-         *:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         *:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          /:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          +:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          -:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
@@ -4517,7 +4517,7 @@ testing with INFINITY:
   in do_math()
          a:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          b:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
-         *:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         *:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          /:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          +:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          -:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
@@ -4599,26 +4599,26 @@ testing with INFINITY:
          a:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          b:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          *:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
-         /:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         /:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          +:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
-         -:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         -:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
     minmax:  min inf, max inf
   in do_math()
          a:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          b:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          *:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
-         /:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         /:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          +:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
-         -:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         -:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
     minmax:  min inf, max inf
   in do_math()
          a:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          b:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          *:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
-         /:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
-         +:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         /:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
+         +:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          -:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
        cmp:  lt 0 le 0 eq 0 ge 1 gt 1
     minmax:  min -inf, max inf
@@ -4626,8 +4626,8 @@ testing with INFINITY:
          a:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          b:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          *:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
-         /:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
-         +:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         /:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
+         +:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          -:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
        cmp:  lt 1 le 1 eq 0 ge 0 gt 0
     minmax:  min -inf, max inf
@@ -4635,16 +4635,16 @@ testing with INFINITY:
          a:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          b:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          *:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
-         /:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         /:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          +:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
-         -:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         -:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
     minmax:  min inf, max inf
 testing with -INFINITY:
   in do_math()
          a:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          b:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
-         *:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         *:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          /:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          +:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          -:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
@@ -4653,7 +4653,7 @@ testing with -INFINITY:
   in do_math()
          a:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          b:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
-         *:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         *:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          /:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          +:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          -:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
@@ -4662,7 +4662,7 @@ testing with -INFINITY:
   in do_math()
          a:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          b:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
-         *:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         *:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          /:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          +:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          -:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
@@ -4671,7 +4671,7 @@ testing with -INFINITY:
   in do_math()
          a:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          b:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
-         *:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         *:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          /:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          +:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          -:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
@@ -4753,8 +4753,8 @@ testing with -INFINITY:
          a:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          b:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          *:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
-         /:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
-         +:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         /:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
+         +:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          -:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
        cmp:  lt 1 le 1 eq 0 ge 0 gt 0
     minmax:  min -inf, max inf
@@ -4762,8 +4762,8 @@ testing with -INFINITY:
          a:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          b:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          *:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
-         /:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
-         +:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         /:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
+         +:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          -:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
        cmp:  lt 0 le 0 eq 0 ge 1 gt 1
     minmax:  min -inf, max inf
@@ -4771,27 +4771,27 @@ testing with -INFINITY:
          a:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          b:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          *:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
-         /:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         /:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          +:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
-         -:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         -:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
     minmax:  min -inf, max -inf
   in do_math()
          a:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          b:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          *:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
-         /:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         /:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          +:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
-         -:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         -:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
     minmax:  min -inf, max -inf
   in do_math()
          a:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          b:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          *:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
-         /:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         /:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          +:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
-         -:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         -:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
     minmax:  min -inf, max -inf
 testing with 69:
@@ -5107,7 +5107,7 @@ testing with 0.0:
          a:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          b:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          *:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
-         /:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         /:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          +:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          -:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
@@ -5116,7 +5116,7 @@ testing with 0.0:
          a:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          b:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          *:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
-         /:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         /:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          +:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          -:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
@@ -5125,7 +5125,7 @@ testing with 0.0:
          a:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          b:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          *:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
-         /:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         /:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          +:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          -:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
@@ -5134,7 +5134,7 @@ testing with 0.0:
          a:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          b:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          *:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
-         /:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         /:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          +:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          -:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
@@ -5214,7 +5214,7 @@ testing with 0.0:
   in do_math()
          a:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          b:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
-         *:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         *:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          /:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          +:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          -:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
@@ -5223,7 +5223,7 @@ testing with 0.0:
   in do_math()
          a:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          b:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
-         *:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         *:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          /:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          +:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          -:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
@@ -5232,7 +5232,7 @@ testing with 0.0:
   in do_math()
          a:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          b:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
-         *:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         *:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          /:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          +:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          -:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
@@ -5241,7 +5241,7 @@ testing with 0.0:
   in do_math()
          a:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          b:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
-         *:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         *:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          /:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          +:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          -:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
@@ -5251,7 +5251,7 @@ testing with 0.0:
          a:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          b:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          *:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
-         /:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         /:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          +:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          -:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
@@ -5261,7 +5261,7 @@ testing with -0.0:
          a:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          b:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          *:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
-         /:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         /:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          +:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          -:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
@@ -5270,7 +5270,7 @@ testing with -0.0:
          a:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          b:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          *:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
-         /:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         /:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          +:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          -:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
@@ -5279,7 +5279,7 @@ testing with -0.0:
          a:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          b:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          *:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
-         /:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         /:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          +:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          -:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
@@ -5288,7 +5288,7 @@ testing with -0.0:
          a:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          b:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          *:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
-         /:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         /:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          +:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          -:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
@@ -5368,7 +5368,7 @@ testing with -0.0:
   in do_math()
          a:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          b:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
-         *:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         *:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          /:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          +:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          -:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
@@ -5377,7 +5377,7 @@ testing with -0.0:
   in do_math()
          a:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          b:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
-         *:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         *:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          /:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          +:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          -:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
@@ -5386,7 +5386,7 @@ testing with -0.0:
   in do_math()
          a:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          b:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
-         *:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         *:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          /:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
          +:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          -:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
@@ -5395,7 +5395,7 @@ testing with -0.0:
   in do_math()
          a:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          b:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
-         *:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         *:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          /:  inf = 0x7ff0000000000000, isnan false, isinf true, iszero false, signbit false
          +:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
          -:  -inf = 0xfff0000000000000, isnan false, isinf true, iszero false, signbit true
@@ -5405,7 +5405,7 @@ testing with -0.0:
          a:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          b:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          *:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
-         /:  nan = 0xfff8000000000000, isnan true, isinf false, iszero false, signbit true
+         /:  nan = 0x7ff8000000000000, isnan true, isinf false, iszero false, signbit false
          +:  -0.000000 = 0x8000000000000000, isnan false, isinf false, iszero true, signbit true
          -:  0.000000 = 0, isnan false, isinf false, iszero true, signbit false
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
@@ -5467,7 +5467,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2025, month 9, day 3, hour 8, min 19, sec 41
+tz: 'PST+8', year: 2025, month 9, day 3, hour 9, min 9, sec 1
 len in pfl: 0
 exiting fopentst with great success
 test lenum 
@@ -5506,7 +5506,7 @@ test ff
   rwxrwxrwx           8967  2025-09-03 15:09:28  /Users/david/OneDrive/sparcos/c_tests/ff.c
 test ba 
 parsing input file TP.BAS
-247 ms for 1 iterations
+258 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test an 
@@ -5553,4 +5553,4 @@ id leaved
 idea veld
 lade vied
 lead vied
-Wed 09/03/2025  9:19:42.58 
+Wed 09/03/2025 10:09:02.11 
