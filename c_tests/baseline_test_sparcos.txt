@@ -1,4 +1,4 @@
-Wed 09/03/2025  9:11:59.56 
+Wed 09/03/2025  9:19:35.06 
 test hidave 
 hi dave
 test tprintf 
@@ -3751,10 +3751,10 @@ fillc
 starting mult
 summ is : 465880
 test ttime 
-before TZ is set: tz: 'PacificDaylightTime+8', year: 2025, month 9, day 3, hour 16, min 12, sec 2
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 9, day 3, hour 11, min 12, sec 2
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 9, day 3, hour 8, min 12, sec 2
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 9, day 3, hour 16, min 12, sec 2
+before TZ is set: tz: 'PacificDaylightTime+8', year: 2025, month 9, day 3, hour 16, min 19, sec 37
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 9, day 3, hour 11, min 19, sec 37
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 9, day 3, hour 8, min 19, sec 37
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 9, day 3, hour 16, min 19, sec 37
 test fileops 
 current offset: 0
 result of fseek: 0
@@ -5467,7 +5467,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2025, month 9, day 3, hour 8, min 12, sec 6
+tz: 'PST+8', year: 2025, month 9, day 3, hour 8, min 19, sec 41
 len in pfl: 0
 exiting fopentst with great success
 test lenum 
@@ -5505,8 +5505,8 @@ test tld completed with great success
 test ff 
   rwxrwxrwx           8967  2025-09-03 15:09:28  /Users/david/OneDrive/sparcos/c_tests/ff.c
 test ba 
-parsing input file tp.bas
-241 ms for 1 iterations
+parsing input file TP.BAS
+247 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test an 
@@ -5553,4 +5553,4 @@ id leaved
 idea veld
 lade vied
 lead vied
-Wed 09/03/2025  9:12:07.04 
+Wed 09/03/2025  9:19:42.58 
