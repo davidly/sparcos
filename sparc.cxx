@@ -20,7 +20,9 @@ using namespace std::chrono;
 #pragma GCC diagnostic ignored "-Wformat="
 #endif
 
-#define MY_NAN ((float)(INFINITY * 0.0F))
+// different compilers and cpus result in different values for NAN. Often the sign bit is turned on.
+static const uint64_t g_NAN = 0x7ff8000000000000;
+#define MY_NAN ( * (double *) & g_NAN )
 
 static uint32_t g_State = 0; // 32 instead of 8 bits is faster with the msft compiler
 
