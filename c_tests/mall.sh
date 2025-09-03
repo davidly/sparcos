@@ -7,13 +7,11 @@ else
     optflags="$1"
 fi
 
-# not: fopentst
-
 for arg in hidave tprintf tm tmuldiv ttt sieve e tstr targs tbits t tao \
            tcmp ttypes tarray trw trw2 terrno mm_old ttime fileops tpi \
            t_setjmp td tf tap tphi mm ts glob nantst pis tfo sleeptm \
            nqueens nq1d tdir  lenum tex trename triangle fact tld ff \
-           an ba;
+           an ba fopentst;
 do
     echo $arg
     m.sh $arg $optflags
