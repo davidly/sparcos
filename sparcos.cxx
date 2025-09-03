@@ -1738,6 +1738,7 @@ static const StoRV SparcToRiscV[] = // per https://gpages.juszkiewicz.com.pl/sys
     { 291, SYS_renameat },
     { 294, SYS_readlinkat },
     { 345, SYS_renameat2 },
+    { 347, SYS_getrandom },
     { 360, SYS_statx },
     { 403, SYS_clock_gettime }, // same value for both
     { 407, SYS_clock_nanosleep }, // really, SYS_clock_nanosleep_time64, but here that's redundant
