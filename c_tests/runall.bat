@@ -37,7 +37,7 @@ echo test ff >>%outputfile%
 
 echo test ba
 echo test ba >>%outputfile%
-%_sparcosruncmd% ba tp.bas >>%outputfile%
+%_sparcosruncmd% ba TP.BAS >>%outputfile%
 
 echo test an
 echo test an >>%outputfile%

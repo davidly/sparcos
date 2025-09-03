@@ -36,7 +36,7 @@ $_sparcosruncmd ff.elf -i . ff.c >>$outputfile
 
 echo test ba
 echo test ba >>$outputfile
-$_sparcosruncmd ba.elf tp.bas >>$outputfile
+$_sparcosruncmd ba.elf TP.BAS >>$outputfile
 
 echo test an
 echo test an >>$outputfile
