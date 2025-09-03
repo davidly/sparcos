@@ -1,4 +1,4 @@
-Tue 09/02/2025 12:01:30.25 
+Wed 09/03/2025  9:11:59.56 
 test hidave 
 hi dave
 test tprintf 
@@ -3751,10 +3751,10 @@ fillc
 starting mult
 summ is : 465880
 test ttime 
-before TZ is set: tz: 'PacificDaylightTime+8', year: 2025, month 9, day 2, hour 19, min 1, sec 33
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 9, day 2, hour 14, min 1, sec 33
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 9, day 2, hour 11, min 1, sec 33
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 9, day 2, hour 19, min 1, sec 33
+before TZ is set: tz: 'PacificDaylightTime+8', year: 2025, month 9, day 3, hour 16, min 12, sec 2
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 9, day 3, hour 11, min 12, sec 2
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 9, day 3, hour 8, min 12, sec 2
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 9, day 3, hour 16, min 12, sec 2
 test fileops 
 current offset: 0
 result of fseek: 0
@@ -5467,7 +5467,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2025, month 9, day 2, hour 11, min 1, sec 37
+tz: 'PST+8', year: 2025, month 9, day 3, hour 8, min 12, sec 6
 len in pfl: 0
 exiting fopentst with great success
 test lenum 
@@ -5503,5 +5503,54 @@ floorl of -1.8: -2.000000 == -2
 ceill of -1.8: -1.000000 == -1
 test tld completed with great success
 test ff 
-  rwxrwxrwx           8967  2025-09-02 16:18:47  /Users/david/OneDrive/sparcos/c_tests/ff.c
-Tue 09/02/2025 12:01:37.34 
+  rwxrwxrwx           8967  2025-09-03 15:09:28  /Users/david/OneDrive/sparcos/c_tests/ff.c
+test ba 
+parsing input file tp.bas
+241 ms for 1 iterations
+final move count 6493
+exiting the basic interpreter
+test an 
+a delve id
+a delved i
+a die veld
+a dive led
+a dived le
+a led vied
+add ive le
+add le vie
+addle ive
+addle vie
+aid delve
+aide veld
+ale dived
+ave did le
+ave id led
+ave idled
+dad ive le
+dad le vie
+dale dive
+dale vied
+david eel
+david lee
+dead evil
+dead levi
+dead live
+dead veil
+dead vile
+deal dive
+deal vied
+dee valid
+deed vial
+did leave
+died vale
+died veal
+dive lade
+dive lead
+dived lea
+evade lid
+eve id lad
+id leaved
+idea veld
+lade vied
+lead vied
+Wed 09/03/2025  9:12:07.04 

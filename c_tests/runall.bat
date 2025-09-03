@@ -35,6 +35,14 @@ echo test ff
 echo test ff >>%outputfile%
 %_sparcosruncmd% ff -i . ff.c >>%outputfile%
 
+echo test ba
+echo test ba >>%outputfile%
+%_sparcosruncmd% ba tp.bas >>%outputfile%
+
+echo test an
+echo test an >>%outputfile%
+%_sparcosruncmd% an david lee >>%outputfile%
+
 echo %date% %time% >>%outputfile%
 diff baseline_%outputfile% %outputfile%
 

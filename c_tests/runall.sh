@@ -1,5 +1,21 @@
 #!/bin/bash
 
+if [ "$1" = "nested" ]; then
+    _sparcosruncmd="../sparcos -h:120 ./sparcos.elf"
+fi
+
+if [ "$1" = "armos" ]; then
+    _sparcosruncmd="../../ArmOS/armos -h:120 ../../ArmOS/bin/sparcos"
+fi
+
+if [ "$1" = "rvos" ]; then
+    _sparcosruncmd="../../rvos/rvos -h:120 ../../rvos/bin/sparcos.elf"
+fi
+
+if [ "$_sparcosruncmd" = "" ]; then
+    _sparcosruncmd="../sparcos"
+fi
+
 outputfile="test_sparcos.txt"
 date_time=$(date)
 echo "$date_time" >$outputfile
@@ -11,12 +27,20 @@ for arg in hidave tprintf tm tmuldiv ttt sieve e tstr targs tbits t tao \
 do
     echo $arg
     echo test $arg >>$outputfile
-    ../sparcos $arg.elf >>$outputfile
+    $_sparcosruncmd $arg.elf >>$outputfile
 done
 
 echo test ff
 echo test ff >>$outputfile
-../sparcos ff.elf -i . ff.c >>$outputfile
+$_sparcosruncmd ff.elf -i . ff.c >>$outputfile
+
+echo test ba
+echo test ba >>$outputfile
+$_sparcosruncmd ba.elf tp.bas >>$outputfile
+
+echo test an
+echo test an >>$outputfile
+$_sparcosruncmd an.elf david lee >>$outputfile
 
 date_time=$(date)
 echo "$date_time" >>$outputfile
