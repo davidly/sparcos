@@ -265,7 +265,7 @@ private:
             return * (double *) ( & fregs[ fr ] );
         #else
             uint64_t d = flip_dwords( * (uint64_t *) ( & fregs[ fr ] ) );
-            return * (double *) &d;  
+            return * (double *) &d;
         #endif
     } //get_dreg
 
@@ -276,7 +276,7 @@ private:
 
     inline long double get_qreg( uint32_t fr )
     {
-        return * (long double *) ( & fregs[ fr ] );  
+        return * (long double *) ( & fregs[ fr ] );
     } //get_qreg
 
     inline uint32_t get_fcc() { return get_bits32( fsr, 10, 2 ); }
@@ -291,7 +291,7 @@ private:
     void trace_state( void );                  // trace the machine current status
     void unhandled( void );
     const char * render_flags( void );
-    const char * render_fflags( void );
+    const char render_fflag( void );
     bool check_condition( uint32_t cond );
     bool check_fcondition( uint32_t cond );
     void trace_canonical( const char * pins );

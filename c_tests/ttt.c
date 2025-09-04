@@ -22,11 +22,13 @@
 
 int g_Iterations = DefaultIterations;
 
-char g_board[ 9 ];
+typedef uint8_t ttt_t;
 
-char pos0func()
+ttt_t g_board[ 9 ];
+
+ttt_t pos0func()
 {
-    char x = g_board[0];
+    ttt_t x = g_board[0];
 
     if ( ( x == g_board[1] && x == g_board[2] ) ||
          ( x == g_board[3] && x == g_board[6] ) ||
@@ -35,9 +37,9 @@ char pos0func()
     return PieceBlank;
 }
 
-char pos1func()
+ttt_t pos1func()
 {
-    char x = g_board[1];
+    ttt_t x = g_board[1];
 
     if ( ( x == g_board[0] && x == g_board[2] ) ||
          ( x == g_board[4] && x == g_board[7] ) )
@@ -45,9 +47,9 @@ char pos1func()
     return PieceBlank;
 }
 
-char pos2func()
+ttt_t pos2func()
 {
-    char x = g_board[2];
+    ttt_t x = g_board[2];
 
     if ( ( x == g_board[0] && x == g_board[1] ) ||
          ( x == g_board[5] && x == g_board[8] ) ||
@@ -56,9 +58,9 @@ char pos2func()
     return PieceBlank;
 }
 
-char pos3func()
+ttt_t pos3func()
 {
-    char x = g_board[3];
+    ttt_t x = g_board[3];
 
     if ( ( x == g_board[4] && x == g_board[5] ) ||
          ( x == g_board[0] && x == g_board[6] ) )
@@ -66,9 +68,9 @@ char pos3func()
     return PieceBlank;
 }
 
-char pos4func()
+ttt_t pos4func()
 {
-    char x = g_board[4];
+    ttt_t x = g_board[4];
 
     if ( ( x == g_board[0] && x == g_board[8] ) ||
          ( x == g_board[2] && x == g_board[6] ) ||
@@ -78,9 +80,9 @@ char pos4func()
     return PieceBlank;
 }
 
-char pos5func()
+ttt_t pos5func()
 {
-    char x = g_board[5];
+    ttt_t x = g_board[5];
 
     if ( ( x == g_board[3] && x == g_board[4] ) ||
          ( x == g_board[2] && x == g_board[8] ) )
@@ -88,9 +90,9 @@ char pos5func()
     return PieceBlank;
 }
 
-char pos6func()
+ttt_t pos6func()
 {
-    char x = g_board[6];
+    ttt_t x = g_board[6];
 
     if ( ( x == g_board[7] && x == g_board[8] ) ||
          ( x == g_board[0] && x == g_board[3] ) ||
@@ -99,9 +101,9 @@ char pos6func()
     return PieceBlank;
 }
 
-char pos7func()
+ttt_t pos7func()
 {
-    char x = g_board[7];
+    ttt_t x = g_board[7];
 
     if ( ( x == g_board[6] && x == g_board[8] ) ||
          ( x == g_board[1] && x == g_board[4] ) )
@@ -109,9 +111,9 @@ char pos7func()
     return PieceBlank;
 }
 
-char pos8func()
+ttt_t pos8func()
 {
-    char x = g_board[8];
+    ttt_t x = g_board[8];
 
     if ( ( x == g_board[6] && x == g_board[7] ) ||
          ( x == g_board[2] && x == g_board[5] ) ||
@@ -120,7 +122,7 @@ char pos8func()
     return PieceBlank;
 }
 
-typedef char pfunc_t( void );
+typedef ttt_t pfunc_t( void );
 
 pfunc_t * winner_functions[9] =
 {
@@ -135,9 +137,9 @@ pfunc_t * winner_functions[9] =
     pos8func,
 };
 
-char LookForWinner()
+ttt_t LookForWinner()
 {
-    char p = g_board[0];
+    ttt_t p = g_board[0];
     if ( PieceBlank != p )
     {
         if ( p == g_board[1] && p == g_board[2] )
@@ -181,7 +183,7 @@ long g_Moves = 0;
 int MinMax( int alpha, int beta, int depth, int move )
 {
     int value;
-    char pieceMove;
+    ttt_t pieceMove;
     int p, score;
     pfunc_t * pf;
 

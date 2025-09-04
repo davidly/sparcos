@@ -16,7 +16,7 @@
 using namespace std;
 using namespace std::chrono;
 
-#if defined( __GNUC__ ) && !defined( __APPLE__ ) && !defined( __clang__ )     // bogus warning in g++ (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
+#if defined( __GNUC__ ) && !defined( __APPLE__ ) && !defined( __clang__ ) // bogus warning in g++ (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
 #pragma GCC diagnostic ignored "-Wformat="
 #endif
 
@@ -48,7 +48,7 @@ static inline bool sign32( uint32_t l )
 
 const char * Sparc::render_flags()
 {
-    static char flags[ 8 ] = { 0 };
+    static char flags[ 5 ] = { 0 };
     flags[ 0 ] = flag_n() ? 'N' : 'n';
     flags[ 1 ] = flag_z() ? 'Z' : 'z';
     flags[ 2 ] = flag_v() ? 'V' : 'v';
@@ -63,13 +63,11 @@ const uint32_t fccU = 3;   // unordered
 
 static const char fcc_flags[] = { 'E', 'L', 'G', 'U' };
 
-const char * Sparc::render_fflags()
+const char Sparc::render_fflag()
 {
-    static char flags[ 2 ] = { 0 };
     assert( get_fcc() < _countof( fcc_flags ) );
-    flags[ 0 ] = fcc_flags[ get_fcc() ];
-    return flags;
-} //render_fflags
+    return fcc_flags[ get_fcc() ];
+} //render_fflag
 
 static const char * render_fregstr( char * reg, uint32_t r )
 {
@@ -80,19 +78,19 @@ static const char * render_fregstr( char * reg, uint32_t r )
 
 static const char * fregstr1( uint32_t r )
 {
-    static char reg[ 5 ];
+    static char reg[ 4 ];
     return render_fregstr( reg, r );
 } //fregstr1
 
 static const char * fregstr2( uint32_t r )
 {
-    static char reg[ 5 ];
+    static char reg[ 4 ];
     return render_fregstr( reg, r );
 } //fregstr2
 
 static const char * fregstrd( uint32_t r )
 {
-    static char reg[ 5 ];
+    static char reg[ 4 ];
     return render_fregstr( reg, r );
 } //fregstrd
 
@@ -117,19 +115,19 @@ static const char * render_regstr( char * reg, uint32_t r )
 
 static const char * regstr1( uint32_t r )
 {
-    static char reg[ 5 ];
+    static char reg[ 4 ];
     return render_regstr( reg, r );
 } //regstr1
 
 static const char * regstr2( uint32_t r )
 {
-    static char reg[ 5 ];
+    static char reg[ 4 ];
     return render_regstr( reg, r );
 } //regstr2
 
 static const char * regstrd( uint32_t r )
 {
-    static char reg[ 5 ];
+    static char reg[ 4 ];
     return render_regstr( reg, r );
 } //regstrd
 
@@ -222,22 +220,22 @@ bool Sparc::check_fcondition( uint32_t cond )
     uint32_t fcc = get_fcc();
     switch( cond ) // note that the floating point and integer conditions are quite different!
     {
-        case 0: return false;                                 // never                             
-        case 1: return ( fccE != fcc );                       // not equal                         
-        case 2: return ( fccE == fcc || fccL == fcc );        // less or greater                   
-        case 3: return ( fccU == fcc || fccL == fcc );        // unordered or less                                
-        case 4: return ( fccL == fcc );                       // less                         
-        case 5: return ( fccU == fcc || fccG == fcc );        // unordered or greater         
-        case 6: return ( fccG == fcc );                       // greater                      
-        case 7: return ( fccU == fcc );                       // unordered                    
-        case 8: return true;                                  // always                       
-        case 9: return ( fccE == fcc );                       // equal                        
-        case 10: return ( fccU == fcc || fccE == fcc );       // unordered or equal           
-        case 11: return ( fccG == fcc || fccE == fcc );       // greater or equal             
+        case 0: return false;                                 // never
+        case 1: return ( fccE != fcc );                       // not equal
+        case 2: return ( fccE == fcc || fccL == fcc );        // less or greater
+        case 3: return ( fccU == fcc || fccL == fcc );        // unordered or less
+        case 4: return ( fccL == fcc );                       // less
+        case 5: return ( fccU == fcc || fccG == fcc );        // unordered or greater
+        case 6: return ( fccG == fcc );                       // greater
+        case 7: return ( fccU == fcc );                       // unordered
+        case 8: return true;                                  // always
+        case 9: return ( fccE == fcc );                       // equal
+        case 10: return ( fccU == fcc || fccE == fcc );       // unordered or equal
+        case 11: return ( fccG == fcc || fccE == fcc );       // greater or equal
         case 12: return ( fccL != fcc );                      // unordered or greater or equal
-        case 13: return ( fccL == fcc || fccE == fcc );       // less or equal                
-        case 14: return ( fccG != fcc );                      // unordered or less or equal   
-        case 15: return ( fccU != fcc );                      // ordered                      
+        case 13: return ( fccL == fcc || fccE == fcc );       // less or equal
+        case 14: return ( fccG != fcc );                      // unordered or less or equal
+        case 15: return ( fccU != fcc );                      // ordered
         default:
         {
             assert( false );
@@ -254,7 +252,7 @@ void Sparc::trace_canonical( const char * pins )
     if ( i )
     {
         int32_t simm13 = sign_extend( opbits( 0, 13 ), 12 );
-        tracer.Trace( "%s %s, %ld, %s\n", pins, regstr1( rs1 ), simm13, regstrd( rd ) );
+        tracer.Trace( "%s %s, %#x, %s\n", pins, regstr1( rs1 ), simm13, regstrd( rd ) );
     }
     else
     {
@@ -271,7 +269,7 @@ void Sparc::trace_shift_canonical( const char * pins )
     if ( i )
     {
         int32_t simm13 = sign_extend( opbits( 0, 13 ), 12 );
-        tracer.Trace( "%s %s, %ld, %s\n", pins, regstr1( rs1 ), simm13 & 0x1f, regstrd( rd ) );
+        tracer.Trace( "%s %s, %#x, %s\n", pins, regstr1( rs1 ), simm13 & 0x1f, regstrd( rd ) );
     }
     else
     {
@@ -288,15 +286,15 @@ void Sparc::trace_ld_canonical( const char * pins )
     if ( i )
     {
         int32_t simm13 = sign_extend( opbits( 0, 13 ), 12 );
-        tracer.Trace( "%s [ %s + %#x ], %s\n", pins, regstr1( rs1 ), simm13, regstrd( rd ) );
+        tracer.Trace( "%s [%s + %#x], %s\n", pins, regstr1( rs1 ), simm13, regstrd( rd ) );
     }
     else
     {
         uint32_t rs2 = opbits( 0, 5 );
         if ( 0 == rs2 )
-            tracer.Trace( "%s [ %s ], %s\n", pins, regstr1( rs1 ), regstrd( rd ) );
+            tracer.Trace( "%s [%s], %s\n", pins, regstr1( rs1 ), regstrd( rd ) );
         else
-            tracer.Trace( "%s [ %s + %s ], %s\n", pins, regstr1( rs1 ), regstr2( rs2 ), regstrd( rd ) );
+            tracer.Trace( "%s [%s + %s], %s\n", pins, regstr1( rs1 ), regstr2( rs2 ), regstrd( rd ) );
     }
 } //trace_ld_canonical
 
@@ -308,15 +306,15 @@ void Sparc::trace_st_canonical( const char * pins )
     if ( i )
     {
         int32_t simm13 = sign_extend( opbits( 0, 13 ), 12 );
-        tracer.Trace( "%s %s, [ %s + %#x ]\n", pins, regstrd( rd ), regstr1( rs1 ), simm13 );
+        tracer.Trace( "%s %s, [%s + %#x]\n", pins, regstrd( rd ), regstr1( rs1 ), simm13 );
     }
     else
     {
         uint32_t rs2 = opbits( 0, 5 );
         if ( 0 == rs2 )
-            tracer.Trace( "%s %s, [ %s ]\n", pins, regstrd( rd ), regstr1( rs1 ) );
+            tracer.Trace( "%s %s, [%s]\n", pins, regstrd( rd ), regstr1( rs1 ) );
         else
-            tracer.Trace( "%s %s, [ %s + %s ]\n", pins, regstrd( rd ), regstr1( rs1 ), regstr2( rs2 ) );
+            tracer.Trace( "%s %s, [%s + %s]\n", pins, regstrd( rd ), regstr1( rs1 ), regstr2( rs2 ) );
     }
 } //trace_st_canonical
 
@@ -340,8 +338,6 @@ void Sparc::trace_state()
         strcat( symbol_offset, "\n            " );
     }
 
-    tracer.Trace( "pc %8x %s%sop %8x %s %s cw:%u wim:%x", pc, symbol_name, symbol_offset, opcode, render_flags(), render_fflags(), get_cwp(), wim );
-
     static char acregs[ 32 * 16 + 10 ]; // way too much.
     acregs[ 0 ] = 0;
     int len = 0;
@@ -352,7 +348,7 @@ void Sparc::trace_state()
     if ( 0 != y )
         len += snprintf( & acregs[ len ], 16, "y:%x ", y );
 
-    tracer.Trace( " %s=> ", acregs );
+    tracer.Trace( "pc %8x %s%sop %8x %s %c c:%u w:%x %s=> ", pc, symbol_name, symbol_offset, opcode, render_flags(), render_fflag(), get_cwp(), wim, acregs );
 
     uint32_t op = opbits( 30, 2 );
     if ( 0 == op ) // format 2: sethi & branches ( Bicc, FBfcc, CBccc )
@@ -368,7 +364,7 @@ void Sparc::trace_state()
             {
                 uint32_t a = opbit( 29 );
                 uint32_t cond = opbits( 25, 4 );
-                tracer.Trace( "b%s%s %#x  # %#lx\n", condition_string( cond ), a ? ",a" : "", disp22 << 2, pc + ( disp22 << 2 ) );
+                tracer.Trace( "b%s%s %#x # %#lx\n", condition_string( cond ), a ? ",a" : "", disp22 << 2, pc + ( disp22 << 2 ) );
                 break;
             }
             case 4: // sethi
@@ -384,7 +380,7 @@ void Sparc::trace_state()
             {
                 uint32_t a = opbit( 29 );
                 uint32_t cond = opbits( 25, 4 );
-                tracer.Trace( "fb%s%s %#x  # %#lx\n", fcondition_string( cond ), a ? ",a" : "", disp22 << 2, pc + ( disp22 << 2 ) );
+                tracer.Trace( "fb%s%s %#x # %#lx\n", fcondition_string( cond ), a ? ",a" : "", disp22 << 2, pc + ( disp22 << 2 ) );
                 break;
             }
             case 7: // CBccc. There is no coprocessor
@@ -401,7 +397,7 @@ void Sparc::trace_state()
     else if ( 1 == op ) // format 1. call
     {
         int32_t disp30 = sign_extend( opbits( 0, 30 ), 29 );
-        tracer.Trace( "call %ld\n", 4 * disp30 );
+        tracer.Trace( "call %#x\n", 4 * disp30 );
     }
     else // format 3: op=2/3. remaining instructions
     {
@@ -416,13 +412,16 @@ void Sparc::trace_state()
         {
             switch( op3 )
             {
-                case 0: { trace_canonical( "add" ); break; }    
+                case 0: { trace_canonical( "add" ); break; }
                 case 1: { trace_canonical( "and" ); break; }
                 case 2:
                 {
                     if ( 0 == rs1 )
                         if ( i )
-                            tracer.Trace( "mov %ld, %s\n", simm13, regstrd( rd ) );
+                            if ( 0 == simm13 )
+                                tracer.Trace( "clr %s\n", regstrd( rd ) );
+                            else
+                                tracer.Trace( "mov %#x, %s\n", simm13, regstrd( rd ) );
                         else
                             tracer.Trace( "mov %s, %s\n", regstr2( rs2 ), regstrd( rd ) );
                     else
@@ -442,14 +441,23 @@ void Sparc::trace_state()
                 case 0xf: { trace_canonical( "sdiv" ); break; }
                 case 0x10: { trace_canonical( "addcc" ); break; }
                 case 0x11: { trace_canonical( "andcc" ); break; }
-                case 0x12: { trace_canonical( "orcc" ); break; }
+                case 0x12: // orcc
+                {
+                    if ( 0 == rs1 && 0 == rd && !i )
+                        tracer.Trace( "tst %s\n", regstr2( rs2 ) );
+                    else if ( 0 == rs2 && 0 == rd && !i )
+                        tracer.Trace( "tst %s\n", regstr1( rs1 ) );
+                    else
+                        trace_canonical( "orcc" );
+                    break;
+                }
                 case 0x13: { trace_canonical( "xorcc" ); break; }
                 case 0x14:
                 {
                     if ( 0 == rd )
                     {
                         if ( i )
-                            tracer.Trace( "cmp %s, %ld\n", regstr1( rs1 ), simm13 );
+                            tracer.Trace( "cmp %s, %#x\n", regstr1( rs1 ), simm13 );
                         else
                             tracer.Trace( "cmp %s, %s\n", regstr1( rs1 ), regstr2( rs2 ) );
                     }
@@ -487,7 +495,7 @@ void Sparc::trace_state()
                     if ( 0 == rd ) // wry
                     {
                         if ( i )
-                            tracer.Trace( "wr %ld ^ %s, y\n", simm13, regstr1( rs1 ) );
+                            tracer.Trace( "wr %#x ^ %s, y\n", simm13, regstr1( rs1 ) );
                         else
                             tracer.Trace( "wr %s ^ %s, y\n", regstr1( rs1 ), regstr2( rs2 ) );
                     }
@@ -585,7 +593,32 @@ void Sparc::trace_state()
                         unhandled();
                     break;
                 }
-                case 0x38: { trace_canonical( "jmpl" ); break; }// jmpl
+                case 0x38: // jmpl
+                {
+                    if ( 0 == rd )
+                        if ( i && 8 == simm13 )
+                            if ( 31 == rs1 )
+                                tracer.Trace( "ret\n" );
+                            else if ( 15 == rs1 )
+                                tracer.Trace( "retl\n" );
+                            else
+                                trace_canonical( "jmpl" );
+                        else
+                            if ( i )
+                                tracer.Trace( "jmp %s + %d\n", regstr1( rs1 ), simm13 );
+                            else
+                                tracer.Trace( "jmp %s + %s\n", regstr1( rs1 ), regstr2( rs2 ) );
+                    else if ( 15 == rd )
+                        if ( i )
+                            tracer.Trace( "call %s + %d\n", regstr1( rs1 ), simm13 );
+                        else if ( 0 == rs2 )
+                            tracer.Trace( "call %s\n", regstr1( rs1 ) );
+                        else
+                            tracer.Trace( "call %s + %s\n", regstr1( rs1 ), regstr2( rs2 ) );
+                    else
+                        trace_canonical( "jmpl" );
+                    break;
+                }
                 case 0x3a: // tcc
                 {
                     uint32_t cond = opbits( 25, 4 );
@@ -633,9 +666,9 @@ void Sparc::trace_state()
                 case 0x21: // ldfsr
                 {
                     if ( i )
-                        tracer.Trace( "ld [ %s + %#x ], fsr\n", regstr1( rs1 ), simm13 );
+                        tracer.Trace( "ld [%s + %#x], fsr\n", regstr1( rs1 ), simm13 );
                     else
-                        tracer.Trace( "ld [ %s + %s ], fsr\n", regstr1( rs1 ), regstr2( rs2 ) );
+                        tracer.Trace( "ld [%s + %s], fsr\n", regstr1( rs1 ), regstr2( rs2 ) );
                     break;
                 }
                 case 0x23: { trace_ld_canonical( "lddf" ); break; }
@@ -643,9 +676,9 @@ void Sparc::trace_state()
                 case 0x25: // stfsr
                 {
                     if ( i )
-                        tracer.Trace( "st fsr, [ %s + %#x ]\n", regstr1( rs1 ), simm13 );
+                        tracer.Trace( "st fsr, [%s + %#x]\n", regstr1( rs1 ), simm13 );
                     else
-                        tracer.Trace( "st fsr, [ %s + %s ]\n", regstr1( rs1 ), regstr2( rs2 ) );
+                        tracer.Trace( "st fsr, [%s + %s]\n", regstr1( rs1 ), regstr2( rs2 ) );
                     break;
                 }
                 case 0x27: { trace_st_canonical( "stdf" ); break; }
@@ -856,8 +889,8 @@ uint64_t Sparc::run()
     tracer.Trace( "code at pc %x:\n", pc );
     tracer.TraceBinaryData( getmem( pc ), 128, 4 );
 
-    int delay_instruction = 0; // 0 == no delay, 1 == execute delay, 2 == transfer to npc
-    uint64_t cycles = 0;
+    uint32_t delay_instruction = 0; // 0 == no delay, 1 == execute delay, 2 == after a save/restore in a delay slot trap
+    uint64_t cycles = 0; // really just an instruction count but sparc makes claims about 1c per 1i
 
     for ( ;; )
     {
@@ -870,44 +903,33 @@ uint64_t Sparc::run()
                 emulator_hard_termination( *this, "pc is lower than memory:", pc );
             if ( pc >= ( base + mem_size - stack_size ) )
                 emulator_hard_termination( *this, "pc is higher than it should be:", pc );
-            
             if ( ( 32 != NWINDOWS ) && ( 0 != ( wim & ~( ( 1 << NWINDOWS ) - 1 ) ) ) )
-            {
-                printf( "wim: %#x, high bits %#x\n", wim, ( wim & ~( ( 1 << NWINDOWS ) - 1 ) ) );
-                printf( "mask: %#x not mask %#x\n", ( ( 1 << NWINDOWS ) - 1 ), ~ ( ( 1 << NWINDOWS ) - 1 ) );
                 emulator_hard_termination( *this, "wim is invalid:", wim );
-            }
-
             if ( 0 != Sparc_reg( 0 ) )
                 emulator_hard_termination( *this, "g0 isn't zero:", Sparc_reg( 0 ) );
             if ( 0 != ( pc & 3 ) ) // to avoid alignment faults
                 emulator_hard_termination( *this, "the pc isn't 4-byte aligned:", pc );
         #endif
 
-        if ( 0 == delay_instruction )        // 0 is the normal state -- no delay slot instruction
+        if ( 1 == delay_instruction )   // 1 means the delay slot instruction is being executed, so don't move pc or npc
+            delay_instruction++;
+        else                            // 0 or 2
         {
             pc = npc;
-            npc = 4 + pc;
-        }
-        else if ( 1 == delay_instruction )   // 1 means the delay slot instruction is being executed
-            delay_instruction++;
-        else                                 // 2 means we're done with the delay slot instruction and now branching to what's in npc
-        {
-            pc = npc; // branch likely
             npc += 4;
             delay_instruction = 0;
         }
 
+        cycles++;
         opcode = getui32( pc );
 
-        if ( 0 != g_State )     // 3.5% of runtime on this check
+        if ( 0 != g_State )
         {
             if ( g_State & stateEndEmulation )
             {
                 g_State &= ~stateEndEmulation;
                 break;
             }
-
             if ( g_State & stateTraceInstructions )
                 trace_state();
         }
@@ -984,12 +1006,8 @@ uint64_t Sparc::run()
             uint32_t op3 = opbits( 19, 6 );
             uint32_t rs1 = opbits( 14, 5 );
             uint32_t i = opbit( 13 );
-            uint32_t rs2 = 0;
-            int32_t simm13 = 0;
-            if ( i )
-                simm13 = sign_extend( opbits( 0, 13 ), 12 );
-            else
-                rs2 = opbits( 0, 5 );
+            uint32_t rs2 = opbits( 0, 5 );                              // decode both rs2 and simm13 since the conditional is slower
+            int32_t simm13 = sign_extend( opbits( 0, 13 ), 12 );
 
             if ( 2 == op ) // arithmetic, logical, shift, and remaining
             {
@@ -1209,7 +1227,7 @@ uint64_t Sparc::run()
                         }
                         break;
                     }
-                    case 0x24: // mulscc.  Use gcc's -mcpu=v7 flag to generate usage of this instruction for integer multiplication (v8 has native integer multiplication)
+                    case 0x24: // mulscc.  Use gcc's -mcpu=v7 flag to generate usage of this instruction for integer multiplication (sparc v8 has native integer multiplication)
                     {
                         // op1 = (n XOR v) CONCAT r[rs1]<31:1>
                         // if (Y<0> = 0) op2 = 0, else op2 = r[rs2] or sign extnd(simm13)
@@ -1237,32 +1255,20 @@ uint64_t Sparc::run()
                     }
                     case 0x25: // sll
                     {
-                        if ( 0 == rd )
-                            break;
-                        if ( i )
-                            Sparc_reg( rd ) = Sparc_reg( rs1 ) << ( simm13 & 0x1f );
-                        else
-                            Sparc_reg( rd ) = Sparc_reg( rs1 ) << ( Sparc_reg( rs2 ) & 0x1f );
+                        if ( 0 != rd )
+                            Sparc_reg( rd ) = Sparc_reg( rs1 ) << ( i ? ( simm13 & 0x1f ) : ( Sparc_reg( rs2 ) & 0x1f ) );
                         break;
                     }
                     case 0x26: // srl
                     {
-                        if ( 0 == rd )
-                            break;
-                        if ( i )
-                            Sparc_reg( rd ) = Sparc_reg( rs1 ) >> ( simm13 & 0x1f );
-                        else
-                            Sparc_reg( rd ) = Sparc_reg( rs1 ) >> ( Sparc_reg( rs2 ) & 0x1f );
+                        if ( 0 != rd )
+                            Sparc_reg( rd ) = Sparc_reg( rs1 ) >> ( i ? ( simm13 & 0x1f ) : ( Sparc_reg( rs2 ) & 0x1f ) );
                         break;
                     }
                     case 0x27: // sra
                     {
-                        if ( 0 == rd )
-                            break;
-                        if ( i )
-                            Sparc_reg( rd ) = ( (int32_t) Sparc_reg( rs1 ) ) >> ( simm13 & 0x1f );
-                        else
-                            Sparc_reg( rd ) = ( (int32_t) Sparc_reg( rs1 ) ) >> ( Sparc_reg( rs2 ) & 0x1f );
+                        if ( 0 != rd )
+                            Sparc_reg( rd ) = ( (int32_t) Sparc_reg( rs1 ) ) >> ( i ? ( simm13 & 0x1f ) : ( Sparc_reg( rs2 ) & 0x1f ) );
                         break;
                     }
                     case 0x28: // rdy
@@ -1272,7 +1278,8 @@ uint64_t Sparc::run()
                             if ( 0 != rd )
                                 Sparc_reg( rd ) = y;
                         }
-                        else if ( 0xf == rs1 ) { /* do nothing */ } // stbar
+                        else if ( 0xf == rs1 ) // stbar
+                            { /* do nothing */ }
                         else
                             unhandled();
                         break;
@@ -1324,7 +1331,7 @@ uint64_t Sparc::run()
                             set_qreg( rd, get_qreg( rs1 ) - get_qreg( rs2 ) );                                           // fsubq
                         else if ( 0xd1 == opf )
                             * (int32_t *) & fregs[ rd ] = (int32_t) truncf( fregs[ rs2 ] );                              // fstoi
-                        else if ( 0xd2 == opf )                                                                          
+                        else if ( 0xd2 == opf )
                             * (int32_t *) & fregs[ rd ] = (int32_t) trunc( get_dreg( rs2 ) );                            // fdtoi
                         else if ( 0xd3 == opf )
                             * (int32_t *) & fregs[ rd ] = (int32_t) truncl( get_qreg( rs2 ) );                           // fqtoi
@@ -1426,7 +1433,7 @@ uint64_t Sparc::run()
                         uint32_t cwp_new = next_restore_cwp( get_cwp() );
                         if ( get_bit32( wim, cwp_new ) ) // generate underflow trap
                         {
-                            //tracer.Trace( "  restore generating underflow trap with delay_instrution %u\n", delay_instruction );
+                            //tracer.Trace( "  restore generating underflow trap with delay_instruction %u\n", delay_instruction );
                             handle_trap( 6 );
                             if ( 2 == delay_instruction ) // if restore was in a delay slot, remember that
                                 delay_instruction = 1;
@@ -1453,23 +1460,20 @@ uint64_t Sparc::run()
                 {
                     case 0: // ld
                     {
-                        if ( 0 == rd )
-                            break;
-                        Sparc_reg( rd ) = getui32( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ) );
+                        if ( 0 != rd )
+                            Sparc_reg( rd ) = getui32( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ) );
                         break;
                     }
                     case 1: // ldub
                     {
-                        if ( 0 == rd )
-                            break;
-                        Sparc_reg( rd ) = getui8( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ) );
+                        if ( 0 != rd )
+                            Sparc_reg( rd ) = getui8( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ) );
                         break;
                     }
                     case 2: // lduh
                     {
-                        if ( 0 == rd )
-                            break;
-                        Sparc_reg( rd ) = getui16( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ) );
+                        if ( 0 != rd )
+                            Sparc_reg( rd ) = getui16( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ) );
                         break;
                     }
                     case 3: // ldd
@@ -1504,16 +1508,14 @@ uint64_t Sparc::run()
                     }
                     case 9: // ldsb
                     {
-                        if ( 0 == rd )
-                            break;
-                        Sparc_reg( rd ) = sign_extend( getui8( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ) ), 7 );
+                        if ( 0 != rd )
+                            Sparc_reg( rd ) = sign_extend( getui8( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ) ), 7 );
                         break;
                     }
                     case 0xa: // ldsh
                     {
-                        if ( 0 == rd )
-                            break;
-                        Sparc_reg( rd ) = sign_extend( getui16( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ) ), 15 );
+                        if ( 0 != rd )
+                            Sparc_reg( rd ) = sign_extend( getui16( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ) ), 15 );
                         break;
                     }
                     case 0xd: // ldstub
@@ -1573,8 +1575,6 @@ uint64_t Sparc::run()
                 }
             }
         }
-
-        cycles++;
     } // for
 
     return cycles; // for now, instructions not cycles

@@ -927,22 +927,22 @@ static int windows_translate_flags( int flags )
   0x0      O_RDONLY        O_RDONLY                O_RDONLY             O_RDONLY    O_RDONLY     O_RDONLY      O_RDONLY    O_RDONLY
   0x1      O_WRONLY        O_WRONLY                O_WRONLY             O_WRONLY    O_WRONLY     O_WRONLY      O_WRONLY    O_WRONLY
   0x2      O_RDRW          O_RDRW                  O_RDRW               O_RDRW      O_RDRW       O_RDRW        O_RDRW      O_RDRW
-  0x8      O_APPEND                                                     O_APPEND    O_APPEND     O_APPEND              
-  0x10     O_RANDOM                                                     O_SHLOCK                 O_SHLOCK      O_APPEND        
-  0x20     O_SEQUENTIAL                                                 O_EXLOCK                 O_EXLOCK      O_CREAT 
-  0x40     O_TEMPORARY     O_CREAT                 O_CREAT                          O_ASYNC                    O_TRUNC 
-  0x80     O_NOINHERIT     O_EXCL                  O_EXCL                                                      O_NOINHERIT     
+  0x8      O_APPEND                                                     O_APPEND    O_APPEND     O_APPEND
+  0x10     O_RANDOM                                                     O_SHLOCK                 O_SHLOCK      O_APPEND
+  0x20     O_SEQUENTIAL                                                 O_EXLOCK                 O_EXLOCK      O_CREAT
+  0x40     O_TEMPORARY     O_CREAT                 O_CREAT                          O_ASYNC                    O_TRUNC
+  0x80     O_NOINHERIT     O_EXCL                  O_EXCL                                                      O_NOINHERIT
   0x100    O_CREAT                                                                                             O_TEXT      O_CREAT
-  0x200    O_TRUNC         O_TRUNC                 O_TRUNC              O_CREAT     O_CREAT      O_CREAT       O_BINARY        
+  0x200    O_TRUNC         O_TRUNC                 O_TRUNC              O_CREAT     O_CREAT      O_CREAT       O_BINARY
   0x400    O_EXCL          O_APPEND                O_APPEND             O_TRUNC     O_TRUNC      O_TRUNC       O_EXCL      O_EXCL
   0x800                                                                 O_EXCL      O_EXCL       O_EXCL                    O_APPEND
-  0x2000                   O_ASYNC                 O_ASYNC              O_SYNC      O_SYNC       O_SYNC         
-  0x4000   O_TEXT          O_DIRECT                O_DIRECTORY          O_NONBLOCK               O_NONBLOCK             
-  0x8000   O_BINARY                                                                              
-  0x10000                  O_DIRECTORY             O_DIRECT                         O_DIRECTORY      
-  0x10100                  O_SYNC                  O_SYNC                                        
-  0x80000                                                               O_DIRECT                 O_DIRECT                
-  0x100000                                                              O_DIRECTORY O_DIRECT                         
+  0x2000                   O_ASYNC                 O_ASYNC              O_SYNC      O_SYNC       O_SYNC
+  0x4000   O_TEXT          O_DIRECT                O_DIRECTORY          O_NONBLOCK               O_NONBLOCK
+  0x8000   O_BINARY
+  0x10000                  O_DIRECTORY             O_DIRECT                         O_DIRECTORY
+  0x10100                  O_SYNC                  O_SYNC
+  0x80000                                                               O_DIRECT                 O_DIRECT
+  0x100000                                                              O_DIRECTORY O_DIRECT
   0x200000                                                                                       O_DIRECTORY
   0x2010000                                                                         O_TMPFILE
 */
@@ -2468,7 +2468,7 @@ void emulator_invoke_svc( CPUClass & cpu )
                     pcur->d_off = pcur->d_reclen;
                     strcpy( pcur->d_name, pent->d_name );
                     pcur->settype( pent->d_type );
-        
+
                     tracer.Trace( "  wrote '%s' into the entry. d_reclen %d, d_off %d, d_type %#x\n", pcur->d_name, (int) pcur->d_reclen, (int) pcur->d_off, pcur->gettype() );
                     tracer.TraceBinaryData( (uint8_t *) pcur, pcur->d_reclen, 4 );
                     result = pcur->d_reclen;
@@ -2629,7 +2629,7 @@ void emulator_invoke_svc( CPUClass & cpu )
                     pcur->d_off = pcur->d_reclen;
                     strcpy( pcur->d_name, pent->d_name );
                     pcur->d_type = pent->d_type;
-        
+
                     tracer.Trace( "  wrote '%s' into the entry. d_reclen %d, d_off %d, d_type %#x\n", pcur->d_name, (int) pcur->d_reclen, (int) pcur->d_off, pcur->d_type );
                     result = pcur->d_reclen;
                     pcur->swap_endianness();
@@ -3905,7 +3905,7 @@ void emulator_invoke_svc( CPUClass & cpu )
 
 void emulator_invoke_sparc_trap5( Sparc & cpu ) // called for trap #5 overflow of register window from save instrution
 {
-    // copy the new register window that's marked as invalid / in-use to the memory location pointed to by the stack pointer o6 / 14 in the current register window
+    // copy the register window that's marked as invalid / in-use to the memory location pointed to by the stack pointer o6 / 14 in the target register window
 
     cpu.set_cwp( cpu.next_save_cwp( cpu.get_cwp() ) ); // once because we're handling a trap
     cpu.set_cwp( cpu.next_save_cwp( cpu.get_cwp() ) ); // again for the nested save
@@ -3914,8 +3914,14 @@ void emulator_invoke_sparc_trap5( Sparc & cpu ) // called for trap #5 overflow o
         emulator_hard_termination( cpu, "sp is 0 in overflow trap from a save instruction", cpu.pc );
 
     memcpy( cpu.getmem( cpu.Sparc_reg( 14 ) ), & cpu.Sparc_reg( 16 ), 64 ); // spill
+
+    #ifndef NDEBUG
+    memset( & cpu.Sparc_reg( 16 ), 0, 64 ); // the register window can be trashed at this point. validate this is true in debug builds.
+    #endif
+
     //tracer.Trace( "  sp being spilled to: %#x from register address %p, cwp:%u\n", cpu.Sparc_reg( 14 ), & cpu.Sparc_reg( 16 ), cpu.get_cwp() );
     //tracer.TraceBinaryData( cpu.getmem( cpu.Sparc_reg( 14 ) ), 64, 4 );
+
     cpu.set_cwp( cpu.next_restore_cwp( cpu.get_cwp() ) );
 
     // update the wim for the current register window to be valid so when save is retried it doesn't trap and
@@ -3930,10 +3936,10 @@ void emulator_invoke_sparc_trap5( Sparc & cpu ) // called for trap #5 overflow o
 
 void emulator_invoke_sparc_trap6( Sparc & cpu ) // called for trap #6 underflow of register window from restore instruction
 {
-    // copy the new register window that's marked as invalid / in-use to the current memory location pointed to by the stack pointer o6 / 14 in the current register window
+    // copy the register window that's marked as invalid / in-use from the current memory location pointed to by the stack pointer o6 / 14 in the target register window
     // note: offsetting next_save and next_restore calls are #ifdef'ed out for performance
 
-#if CWP_REALITY // this isn't defined but could be to really match what would happen in an actual handler
+#if CWP_REALITY // this isn't defined but could be to match what would happen in an actual handler
     cpu.set_cwp( cpu.next_save_cwp( cpu.get_cwp() ) ); // because we're handling a trap
     cpu.set_cwp( cpu.next_restore_cwp( cpu.get_cwp() ) ); // restore twice to point at the frame to restore
 #endif
@@ -3943,8 +3949,10 @@ void emulator_invoke_sparc_trap6( Sparc & cpu ) // called for trap #6 underflow 
         emulator_hard_termination( cpu, "sp is 0 in underflow trap from a restore instruction", cpu.get_cwp() );
 
     memcpy( & cpu.Sparc_reg( 16 ), cpu.getmem( cpu.Sparc_reg( 14 ) ), 64 ); // unspill
+
     //tracer.Trace( "  sp being unspilled from: %#x to register address %p, cwp:%u\n", cpu.Sparc_reg( 14 ), & cpu.Sparc_reg( 16 ), cpu.get_cwp() );
     //tracer.TraceBinaryData( cpu.getmem( cpu.Sparc_reg( 14 ) ), 64, 4 );
+
     cpu.set_cwp( cpu.next_save_cwp( cpu.get_cwp() ) ); // restore the original cwp
 #if CWP_REALITY
     cpu.set_cwp( cpu.next_save_cwp( cpu.get_cwp() ) );
@@ -6808,7 +6816,7 @@ static bool load_image32( FILE * fp, const char * pimage, const char * app_args 
                 read = fread( section_names_string_table.data(), head.size, 1, fp );
                 if ( 1 != read )
                     usage( "can't read string table\n" );
-    
+
                 tracer.Trace( "section names string table:\n" );
                 tracer.TraceBinaryData( (uint8_t *) section_names_string_table.data(), (uint32_t) head.size, 4 );
             }
@@ -6819,7 +6827,7 @@ static bool load_image32( FILE * fp, const char * pimage, const char * app_args 
                 read = fread( g_string_table.data(), head.size, 1, fp );
                 if ( 1 != read )
                     usage( "can't read string table\n" );
-    
+
                 tracer.Trace( "main string table:\n" );
                 tracer.TraceBinaryData( (uint8_t *) g_string_table.data(), (uint32_t) head.size, 4 );
             }
@@ -7481,7 +7489,7 @@ static bool load_image( const char * pimage, const char * app_args )
                 read = fread( section_names_string_table.data(), head.size, 1, fp );
                 if ( 1 != read )
                     usage( "can't read string table\n" );
-    
+
                 tracer.Trace( "section names string table:\n" );
                 tracer.TraceBinaryData( (uint8_t *) section_names_string_table.data(), (uint32_t) head.size, 4 );
             }
@@ -7492,7 +7500,7 @@ static bool load_image( const char * pimage, const char * app_args )
                 read = fread( g_string_table.data(), head.size, 1, fp );
                 if ( 1 != read )
                     usage( "can't read string table\n" );
-    
+
                 tracer.Trace( "main string table:\n" );
                 tracer.TraceBinaryData( (uint8_t *) g_string_table.data(), (uint32_t) head.size, 4 );
             }
