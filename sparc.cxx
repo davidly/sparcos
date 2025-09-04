@@ -672,6 +672,9 @@ void Sparc::handle_trap( uint32_t trap )
     if ( 0x83 == trap ) // register window flush trap. no need to do anything because this is for free in the emulator
         return;
 
+    if ( 0x82 == trap ) // sparc v7 software integer divide by zero. ignore for now
+        return;
+
     if ( 5 == trap ) // overflow trap from a save instruction. could also be written in sparc assembly and installed with a trap handler.
     {
         emulator_invoke_sparc_trap5( *this );
@@ -1206,17 +1209,30 @@ uint64_t Sparc::run()
                         }
                         break;
                     }
-                    case 0x24: // mulscc
+                    case 0x24: // mulscc.  Use gcc's -mcpu=v7 flag to generate usage of this instruction for integer multiplication (v8 has native integer multiplication)
                     {
-                        uint32_t a = Sparc_reg( rs1 );
+                        // op1 = (n XOR v) CONCAT r[rs1]<31:1>
+                        // if (Y<0> = 0) op2 = 0, else op2 = r[rs2] or sign extnd(simm13)
+                        // r[rd] <== op1 + op2
+                        // Y <== r[rs1]<0> CONCAT Y<31:1>
+                        // n <== r[rd]<31>
+                        // z <== if [r[rd]]=0 then 1, else 0
+                        // v <== ((op1<31> AND op2<31> AND not r[rd]<31>) OR (not op1<31> AND not op2<31> AND r[rd]<31>))
+                        // c <== ((op1<31> AND op2<31>) OR (not r[rd] AND (op1<31> OR op2<31>))
+
+                        uint32_t rs1val = Sparc_reg( rs1 );
+                        uint32_t operand1 = ( rs1val >> 1 ) | ( ( flag_n() ^ flag_v() ) << 31 );
                         uint32_t b = i ? simm13 : Sparc_reg( rs2 );
-                        uint32_t shifted = ( a >> 1 ) | ( ( flag_n() ^ flag_v() ) << 31 );
-                        uint32_t multiplier = y;
-                        if ( y & 1 )
-                            multiplier += shifted;
-                        Sparc_reg( rd ) = multiplier;
-                        set_zn( multiplier );
-                        y = ( y >> 1 ) | ( ( a & 1 ) << 31 );
+                        uint32_t operand2 = ( y & 1 ) ? b : 0;
+                        uint32_t rdval = operand1 + operand2;
+                        Sparc_reg( rd ) = rdval;
+                        y = ( y >> 1 ) | ( ( rs1val & 1 ) << 31 );
+                        set_zn( rdval );
+                        bool sign_op1 = sign32( operand1 );
+                        bool sign_op2 = sign32( operand2 );
+                        bool sign_rdval = sign32( rdval );
+                        setflag_v( ( sign_op1 & sign_op2 & !sign_rdval ) | ( !sign_op1 & !sign_op2 & sign_rdval ) );
+                        setflag_c( ( sign_op1 & sign_op2 ) | ( ( 0 == rdval ) & sign_op1 | sign_op2 ) );
                         break;
                     }
                     case 0x25: // sll

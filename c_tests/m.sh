@@ -15,7 +15,8 @@ fi
 
 gccpath="../gcc-14.3.0/bin"
 
-$gccpath/sparc-linux-gcc -x c++ -O$optlevel $1.c -o $1.elf -l:libstdc++.a -static
+# use -mcpu=v7 to generate mulscc instructions for integer multiplication
+$gccpath/sparc-linux-gcc -x c++ -O$optlevel -mcpu=v8 $1.c -o $1.elf -l:libstdc++.a -static
 $gccpath/sparc-buildroot-linux-uclibc-objdump -d $1.elf >$1.txt
 
 #cp $1.c /mnt/c/users/david/onedrive/sparcos/c_tests
