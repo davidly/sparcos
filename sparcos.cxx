@@ -1743,6 +1743,7 @@ static const StoRV SparcToRiscV[] = // per https://gpages.juszkiewicz.com.pl/sys
     { 360, SYS_statx },
     { 403, SYS_clock_gettime }, // same value for both
     { 407, SYS_clock_nanosleep }, // really, SYS_clock_nanosleep_time64, but here that's redundant
+    { 413, SYS_pselect6 }, // SYS_pselect6_time64, which is the same here
     { 0x2002, emulator_sys_trace_instructions }, // same value
 };
 

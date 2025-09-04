@@ -387,7 +387,7 @@ void Sparc::trace_state()
                 tracer.Trace( "fb%s%s %#x  # %#lx\n", fcondition_string( cond ), a ? ",a" : "", disp22 << 2, pc + ( disp22 << 2 ) );
                 break;
             }
-            case 7: // CBccc
+            case 7: // CBccc. There is no coprocessor
             {
                 uint32_t a = opbit( 29 );
                 uint32_t cond = opbits( 25, 4 );
@@ -464,7 +464,11 @@ void Sparc::trace_state()
                 case 0x1a: { trace_canonical( "umulcc" ); break; }
                 case 0x1b: { trace_canonical( "smulcc" ); break; }
                 case 0x1c: { trace_canonical( "subxcc" ); break; }
+                case 0x1e: { trace_canonical( "udivcc" ); break; }
                 case 0x1f: { trace_canonical( "sdivcc" ); break; }
+                case 0x20: { trace_canonical( "taddcc" ); break; }
+                case 0x21: { trace_canonical( "tsubcc" ); break; }
+                case 0x24: { trace_canonical( "mulscc" ); break; }
                 case 0x25: { trace_shift_canonical( "sll" ); break; }
                 case 0x26: { trace_shift_canonical( "srl" ); break; }
                 case 0x27: { trace_shift_canonical( "sla" ); break; }
@@ -472,6 +476,8 @@ void Sparc::trace_state()
                 {
                     if ( 0 == rs1 ) // rdy
                         tracer.Trace( "rd y, %s\n", regstrd( rd ) );
+                    else if ( 0xf == rs1 ) // stbar
+                        tracer.Trace( "stbar\n" );
                     else
                         unhandled();
                     break;
@@ -589,6 +595,14 @@ void Sparc::trace_state()
                         tracer.Trace( "t%s %s, %s\n", condition_string( cond ), regstr1( rs1 ), regstr2( rs2 ) );
                     break;
                 }
+                case 0x3b: // flush
+                {
+                    if ( i )
+                        tracer.Trace( "flush %s + %d\n", regstr1( rs1 ), simm13 );
+                    else
+                        tracer.Trace( "flush %s + %s\n", regstr1( rs1 ), regstr1( rs2 ) );
+                    break;
+                }
                 case 0x3c: { trace_canonical( "save" ); break; }// save
                 case 0x3d: { trace_canonical( "restore" ); break; }// restore
                 default:
@@ -614,6 +628,7 @@ void Sparc::trace_state()
                 case 9: { trace_ld_canonical( "ldsb" ); break; }
                 case 0xa: { trace_ld_canonical( "ldsh" ); break; }
                 case 0xd: { trace_ld_canonical( "ldstub" ); break; }
+                case 0xf: { trace_ld_canonical( "swap" ); break; }
                 case 0x20: { trace_ld_canonical( "ldf" ); break; }
                 case 0x21: // ldfsr
                 {
@@ -903,7 +918,7 @@ uint64_t Sparc::run()
 
             switch( op2 )
             {
-                case 0: unhandled(); // unimp
+                case 0: { handle_trap( 2 ); break; } // unimp
                 case 2: // Bicc
                 {
                     uint32_t a = opbit( 29 );
@@ -947,7 +962,7 @@ uint64_t Sparc::run()
                         npc = pc + 8; // skip the annulled delay instruction
                     break;
                 }
-                case 7: unhandled(); // CBccc
+                case 7: unhandled(); // CBccc. There is no coprocessor
                 default:
                     unhandled();
             }
@@ -981,6 +996,7 @@ uint64_t Sparc::run()
                     case 8: // addx
                     case 0x10: // addcc
                     case 0x18: // addxcc
+                    case 0x20: // taddcc
                     {
                         uint32_t a = Sparc_reg( rs1 );
                         uint32_t b = i ? simm13 : Sparc_reg( rs2 );
@@ -989,14 +1005,18 @@ uint64_t Sparc::run()
                         uint32_t result32 = 0xffffffff & result64;
                         if ( 0 != rd )
                             Sparc_reg( rd ) = result32;
-                        if ( 0x10 == op3 )
+                        if ( 0x10 == op3 || 0x18 == op3 || 0x20 == op3 )
                         {
                             set_zn( result32 );
                             setflag_c( 0 != ( 0xffffffff00000000 & result64 ) );
                             bool signa = sign32( a );
                             bool signb = sign32( b );
                             bool signresult = sign32( result32 );
-                            setflag_v( ( signa == signb ) && ( signa != signresult ) );
+                            bool overflow = ( ( signa == signb ) && ( signa != signresult ) );
+                            if ( ( 0x20 == op3 ) && ( ( a & 3 ) || ( b & 3 ) ) )
+                                overflow = true;
+                            setflag_v( overflow );
+
                         }
                         break;
                     }
@@ -1040,6 +1060,7 @@ uint64_t Sparc::run()
                     case 0xc: // subx
                     case 0x14: // subcc
                     case 0x1c: // subxcc
+                    case 0x21: // tsubcc
                     {
                         uint32_t a = Sparc_reg( rs1 );
                         uint32_t b = i ? simm13 : Sparc_reg( rs2 );
@@ -1047,14 +1068,17 @@ uint64_t Sparc::run()
                         uint32_t diff = a - b - c;
                         if ( 0 != rd )
                             Sparc_reg( rd ) = diff;
-                        if ( 0x10 & op3 )
+                        if ( 0x14 == op3 || 0x1c == op3 || 0x21 == op3 )
                         {
                             set_zn( diff );
                             bool signa = sign32( a );
                             bool signb = sign32( b );
                             bool signdiff = sign32( diff );
-                            setflag_v( ( signa != signb ) && ( signdiff != signa ) );
                             setflag_c( ( !signa && signb ) || ( signdiff && ( !signa || signb ) ) );
+                            bool overflow = ( ( signa != signb ) && ( signdiff != signa ) );
+                            if ( ( 0x21 == op3 ) && ( ( a & 3 ) || ( b & 3 ) ) )
+                                overflow = true;
+                            setflag_v( overflow );
                         }
                         break;
                     }
@@ -1135,6 +1159,7 @@ uint64_t Sparc::run()
                         break;
                     }
                     case 0xe: // udiv
+                    case 0x1e: // udivcc
                     {
                         uint32_t a = Sparc_reg( rs1 );
                         uint32_t b = i ? simm13 : Sparc_reg( rs2 );
@@ -1142,7 +1167,14 @@ uint64_t Sparc::run()
                         if ( 0 != b ) // bugbug: trap here
                         {
                             uint64_t result64 = dividend / (uint64_t ) b;
-                            uint32_t result32 = ( result64 & 0xffffffff00000000 ) ? 0xffffffff : (uint32_t) result64;
+                            bool overflow = ( result64 & 0xffffffff00000000 );
+                            uint32_t result32 = overflow ? 0xffffffff : (uint32_t) result64;
+                            if ( 0x1e == op3 )
+                            {
+                                setflag_c( false );
+                                setflag_v( overflow );
+                                set_zn( result32 );
+                            }
                             if ( 0 != rd )
                                 Sparc_reg( rd ) = result32;
                         }
@@ -1163,17 +1195,28 @@ uint64_t Sparc::run()
                             uint32_t result32 = (uint32_t) result64;
                             if ( overflow )
                                 result32 = sign ? 0x80000000 : 0x7fffffff;
-
                             if ( 0x1f == op3 )
                             {
                                 setflag_c( false );
                                 setflag_v( overflow );
                                 set_zn( result32 );
                             }
-    
                             if ( 0 != rd )
                                 Sparc_reg( rd ) = result32;
                         }
+                        break;
+                    }
+                    case 0x24: // mulscc
+                    {
+                        uint32_t a = Sparc_reg( rs1 );
+                        uint32_t b = i ? simm13 : Sparc_reg( rs2 );
+                        uint32_t shifted = ( a >> 1 ) | ( ( flag_n() ^ flag_v() ) << 31 );
+                        uint32_t multiplier = y;
+                        if ( y & 1 )
+                            multiplier += shifted;
+                        Sparc_reg( rd ) = multiplier;
+                        set_zn( multiplier );
+                        y = ( y >> 1 ) | ( ( a & 1 ) << 31 );
                         break;
                     }
                     case 0x25: // sll
@@ -1213,6 +1256,7 @@ uint64_t Sparc::run()
                             if ( 0 != rd )
                                 Sparc_reg( rd ) = y;
                         }
+                        else if ( 0xf == rs1 ) { /* do nothing */ } // stbar
                         else
                             unhandled();
                         break;
@@ -1319,14 +1363,10 @@ uint64_t Sparc::run()
                     }
                     case 0x38: // jmpl
                     {
-                        if ( i )
-                            npc = Sparc_reg( rs1 ) + simm13;
-                        else
-                            npc = Sparc_reg( rs1 ) + Sparc_reg( rs2 );
-
+                        
+                        npc = i ? ( Sparc_reg( rs1 ) + simm13 ) : Sparc_reg( rs1 ) + Sparc_reg( rs2 );
                         if ( 0 != rd )
                             Sparc_reg( rd ) = pc;
-
                         delay_instruction = 1;
                         pc += 4;
                         break;
@@ -1336,15 +1376,13 @@ uint64_t Sparc::run()
                         uint32_t cond = opbits( 25, 4 );
                         if ( check_condition( cond ) )
                         {
-                            uint32_t trap = 128;
-                            if ( i )
-                                trap += ( 0x7f & Sparc_reg( rs1 ) ) + simm13;
-                            else
-                                trap += ( 0x7f & ( Sparc_reg( rs1 ) + Sparc_reg( rs2 ) ) );
+                            uint32_t trap = 128 + ( 0x7f & Sparc_reg( rs1 ) );
+                            trap +=  ( i ? simm13 : Sparc_reg( rs2 ) );
                             handle_trap( trap );
                         }
                         break;
                     }
+                    case 0x3b: { break; } // flush
                     case 0x3c: // save
                     {
                         uint32_t cwp_new = next_save_cwp( get_cwp() );
@@ -1469,6 +1507,14 @@ uint64_t Sparc::run()
                         if ( 0 != rd )
                             Sparc_reg( rd ) = getui8( offset );
                         setui8( offset, 0xff );
+                        break;
+                    }
+                    case 0xf: // swap
+                    {
+                        uint32_t address = Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) );
+                        uint32_t val = getui32( address );
+                        setui32( address, Sparc_reg( rd ) );
+                        Sparc_reg( rd ) = val;
                         break;
                     }
                     case 0x20: // ldf
