@@ -2212,7 +2212,7 @@ void emulator_invoke_svc( CPUClass & cpu )
             bool opendir = false;
 #if defined( M68 )
             opendir = ( 0 != ( 0x200000 & original_flags ) );
-#elif defined( RVOS )
+#elif defined( RVOS ) || defined( SPARCOS )
             opendir = ( 0 != ( 0x10000 & original_flags ) );
 #else //RVOS
             opendir = ( 0 != ( 0x4000 & original_flags ) );
@@ -2840,7 +2840,7 @@ void emulator_invoke_svc( CPUClass & cpu )
             bool opendir = false;
 #if defined( M68 )
             opendir = ( 0 != ( 0x200000 & original_flags ) );
-#elif defined( RVOS )
+#elif defined( RVOS ) || defined( SPARCOS )
             opendir = ( 0 != ( 0x10000 & original_flags ) );
 #else //RVOS
             opendir = ( 0 != ( 0x4000 & original_flags ) );

@@ -1363,8 +1363,7 @@ uint64_t Sparc::run()
                     }
                     case 0x38: // jmpl
                     {
-                        
-                        npc = i ? ( Sparc_reg( rs1 ) + simm13 ) : Sparc_reg( rs1 ) + Sparc_reg( rs2 );
+                        npc = Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) );
                         if ( 0 != rd )
                             Sparc_reg( rd ) = pc;
                         delay_instruction = 1;

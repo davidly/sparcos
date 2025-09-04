@@ -29,7 +29,7 @@ struct Sparc
         stack_top = top_of_stack;                  // where the stack started
         base = base_address;                       // lowest valid address in the app's address space, maps to offset 0 in mem. If not 0, can't update trap vectors.
         mem = memory.data();                       // save the pointer, but don't take ownership
-        mem_size = (uint32_t) memory.size();       // how much RAM is allocated ror the 68000
+        mem_size = (uint32_t) memory.size();       // how much RAM is allocated for the cpu
         beyond_mem = mem + memory.size();          // addresses beyond and later are illegal
         membase = mem - base;                      // real pointer to the start of the app's memory (prior to offset)
 
@@ -135,7 +135,7 @@ struct Sparc
     } //set_cwp
 
     uint32_t gregs[ 8 ];                           // global registers g0 - g7
-    const static uint32_t NWINDOWS = 16;            // must be a power of 2 >= 4 <= 32 ( 4, 8, 16, or 32). 8 is typical for Sparc implementations. 4 for test coverage. 32 for performance.
+    const static uint32_t NWINDOWS = 8;            // must be a power of 2 ( 4, 8, 16, or 32). 8 is typical for Sparc. 4 for test coverage. 32 for performance.
     uint32_t regs[ NWINDOWS * 16 ];                // 16 32-bit registers per window
     uint32_t psr;                                  // processor state register. includes 5 bits for cwp
     uint32_t wim;                                  // window invalid mask
@@ -179,7 +179,7 @@ struct Sparc
 
 private:
     uint32_t opcode;                               // the currently executing opcode found at pc
-    uint8_t * mem;                                 // RAM for the 68000 is here
+    uint8_t * mem;                                 // RAM for the cpu is here
     uint8_t * beyond_mem;                          // first byte beyond the RAM
     uint32_t base;                                 // base address of the process per the elf file
     uint8_t * membase;                             // host pointer to base of vm's memory (mem - base) to make getmem() faster
