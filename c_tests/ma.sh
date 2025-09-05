@@ -7,8 +7,8 @@ if [ "$1" == "" ]; then
     exit 1
 fi
 
-if ! test -f "$1.c"; then
-    echo "File $1.c not found!"
+if ! test -f "$1.s"; then
+    echo "File $1.s not found!"
     exit 1
 fi
 
@@ -21,14 +21,11 @@ fi
 gccpath="../gcc-14.3.0/bin"
 
 # use -mcpu=v7 to generate mulscc instructions for integer multiplication
-$gccpath/sparc-linux-gcc -x c++ -O$optlevel -mcpu=v8 $1.c -o $1.elf -l:libstdc++.a -static
-
-# generate s file for reference
-#$gccpath/sparc-linux-gcc -x c++ -O$optlevel -S -fverbose-asm -mcpu=v8 $1.c -o $1.s
+$gccpath/sparc-linux-gcc -mcpu=v8 $1.s -o $1.elf -l:libstdc++.a -static
 
 # generate disassembly
 $gccpath/sparc-buildroot-linux-uclibc-objdump -d $1.elf >$1.txt
 
-#cp $1.c /mnt/c/users/david/onedrive/sparcos/c_tests
+#cp $1.s /mnt/c/users/david/onedrive/sparcos/c_tests
 #cp $1.elf /mnt/c/users/david/onedrive/sparcos/c_tests
 #cp $1.txt /mnt/c/users/david/onedrive/sparcos/c_tests

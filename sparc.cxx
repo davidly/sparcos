@@ -1330,7 +1330,7 @@ uint64_t Sparc::run()
                         else if ( 0x47 == opf )
                             set_qreg( rd, get_qreg( rs1 ) - get_qreg( rs2 ) );                                           // fsubq
                         else if ( 0xd1 == opf )
-                            * (int32_t *) & fregs[ rd ] = (int32_t) truncf( fregs[ rs2 ] );                              // fstoi
+                            * (int32_t *) & fregs[ rd ] = (int32_t) truncf( fregs[ rs2 ] );                              // fstoi  these 3 round towards 0 and ignore RD in FSR
                         else if ( 0xd2 == opf )
                             * (int32_t *) & fregs[ rd ] = (int32_t) trunc( get_dreg( rs2 ) );                            // fdtoi
                         else if ( 0xd3 == opf )
@@ -1456,79 +1456,76 @@ uint64_t Sparc::run()
             }
             else // 3 == op. memory
             {
+                uint32_t address = Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) );
                 switch( op3 )
                 {
                     case 0: // ld
                     {
                         if ( 0 != rd )
-                            Sparc_reg( rd ) = getui32( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ) );
+                            Sparc_reg( rd ) = getui32( address );
                         break;
                     }
                     case 1: // ldub
                     {
                         if ( 0 != rd )
-                            Sparc_reg( rd ) = getui8( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ) );
+                            Sparc_reg( rd ) = getui8( address );
                         break;
                     }
                     case 2: // lduh
                     {
                         if ( 0 != rd )
-                            Sparc_reg( rd ) = getui16( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ) );
+                            Sparc_reg( rd ) = getui16( address );
                         break;
                     }
                     case 3: // ldd
                     {
-                        uint32_t offset = Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) );
                         if ( 0 != rd )
-                            Sparc_reg( rd ) = getui32( offset );
-                        Sparc_reg( rd + 1 ) = getui32( offset + 4 );
+                            Sparc_reg( rd ) = getui32(  address );
+                        Sparc_reg( rd + 1 ) = getui32( address + 4 );
                         break;
                     }
                     case 4: // st
                     {
-                        setui32( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ), Sparc_reg( rd ) );
+                        setui32( address, Sparc_reg( rd ) );
                         break;
                     }
                     case 5: // stb
                     {
-                        setui8( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ), 0xff & Sparc_reg( rd ) );
+                        setui8( address, 0xff & Sparc_reg( rd ) );
                         break;
                     }
                     case 6: // sth
                     {
-                        setui16( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ), 0xffff & Sparc_reg( rd ) );
+                        setui16( address, 0xffff & Sparc_reg( rd ) );
                         break;
                     }
                     case 7: // std
                     {
-                        uint32_t offset = Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) );
-                        setui32( offset, Sparc_reg( rd ) );
-                        setui32( offset + 4, Sparc_reg( rd + 1 ) );
+                        setui32( address, Sparc_reg( rd ) );
+                        setui32( address + 4, Sparc_reg( rd + 1 ) );
                         break;
                     }
                     case 9: // ldsb
                     {
                         if ( 0 != rd )
-                            Sparc_reg( rd ) = sign_extend( getui8( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ) ), 7 );
+                            Sparc_reg( rd ) = sign_extend( getui8( address ), 7 );
                         break;
                     }
                     case 0xa: // ldsh
                     {
                         if ( 0 != rd )
-                            Sparc_reg( rd ) = sign_extend( getui16( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ) ), 15 );
+                            Sparc_reg( rd ) = sign_extend( getui16( address ), 15 );
                         break;
                     }
                     case 0xd: // ldstub
                     {
-                        uint32_t offset = Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) );
                         if ( 0 != rd )
-                            Sparc_reg( rd ) = getui8( offset );
-                        setui8( offset, 0xff );
+                            Sparc_reg( rd ) = getui8( address );
+                        setui8( address, 0xff );
                         break;
                     }
                     case 0xf: // swap
                     {
-                        uint32_t address = Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) );
                         uint32_t val = getui32( address );
                         setui32( address, Sparc_reg( rd ) );
                         Sparc_reg( rd ) = val;
@@ -1536,38 +1533,36 @@ uint64_t Sparc::run()
                     }
                     case 0x20: // ldf
                     {
-                        fregs[ rd ] = getfloat( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ) );
+                        fregs[ rd ] = getfloat( address );
                         trace_fregs();
                         break;
                     }
                     case 0x21: // ldfsr
                     {
-                        fsr = getui32( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ) );
+                        fsr = getui32( address );
                         break;
                     }
                     case 0x23: // lddf
                     {
-                        uint32_t offset = Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) );
-                        fregs[ rd ] = getfloat( offset );
-                        fregs[ rd + 1 ] = getfloat( offset + 4 );
+                        fregs[ rd ] = getfloat( address );
+                        fregs[ rd + 1 ] = getfloat( address + 4 );
                         trace_fregs();
                         break;
                     }
                     case 0x24: // stf
                     {
-                        setfloat( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ), fregs[ rd ] );
+                        setfloat( address, fregs[ rd ] );
                         break;
                     }
                     case 0x25: // stfsr
                     {
-                        setui32( Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ), fsr );
+                        setui32( address, fsr );
                         break;
                     }
                     case 0x27: // stdf
                     {
-                        uint32_t offset = Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) );
-                        setfloat( offset, fregs[ rd ] );
-                        setfloat( offset + 4, fregs[ rd + 1 ] );
+                        setfloat( address, fregs[ rd ] );
+                        setfloat( address + 4, fregs[ rd + 1 ] );
                         break;
                     }
                     default:

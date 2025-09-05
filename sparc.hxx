@@ -280,6 +280,7 @@ private:
     } //get_qreg
 
     inline uint32_t get_fcc() { return get_bits32( fsr, 10, 2 ); }
+    inline uint32_t get_rounding_mode() { return get_bits32( fsr, 30, 2 ); }
 
     inline void set_fcc( uint32_t fcc )
     {

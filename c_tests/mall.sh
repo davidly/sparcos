@@ -17,4 +17,10 @@ do
     m.sh $arg $optflags
 done
 
+for arg in esp sievesp;
+do
+    echo $arg
+    ma.sh $arg
+done
+
 msparcos.sh
