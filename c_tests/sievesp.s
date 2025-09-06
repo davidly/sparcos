@@ -37,25 +37,25 @@
 .equ size, 8190
 .equ sizefull, (size+2)
 
-    .section	".text"
-	.align 8
+.section ".text"
+    .align 8
 .done_string:
-	.asciz	"%u primes.\n"
+    .asciz "%u primes.\n"
 .align 8
 .flags:
     .zero size + 1
 
-	.section .text.startup,"ax",@progbits
-	.align 4
-	.global main
-	.type	main, #function
-	.proc	04
+    .section .text.startup,"ax",@progbits
+    .align 4
+    .global main
+    .type main, #function
+    .proc 04
 main:
-	.cfi_startproc
-	save	%sp, -96, %sp
-	.cfi_window_save
-	.cfi_register 15, 31
-	.cfi_def_cfa_register 30
+    .cfi_startproc
+    save %sp, -96, %sp
+    .cfi_window_save
+    .cfi_register 15, 31
+    .cfi_def_cfa_register 30
 
     mov 1, %l6
 
@@ -106,13 +106,12 @@ main:
     inc %l6                    ! delay slot
     
     sethi %hi(.done_string), %o0
-	  add %o0, %lo(.done_string), %o0	
+    add %o0, %lo(.done_string), %o0       
     mov %l4, %o1
-	  call	printf, 0
-   	mov	0, %i0                 ! delay slot
-	  jmp	%i7+8
+    call printf, 0
+    mov 0, %i0                 ! delay slot
+    jmp   %i7+8
     restore
-	.cfi_endproc
-.LFE967:
-	.size	main, .-main
-	.section	.note.GNU-stack,"",@progbits
+.cfi_endproc
+
+.section        .note.GNU-stack,"",@progbits

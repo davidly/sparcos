@@ -30,28 +30,28 @@
 ! x is in %l4
 ! N is in %l3
    
-    .section	".text"
-	.align 8
+.section    ".text"
+    .align 8
 .done_string:
-	.asciz	"\ndone\n"
+    .asciz "\ndone\n"
 .number_string:
-	.asciz	"%u"
+    .asciz "%u"
 .equ array_size, 200
-	.align 8
+    .align 8
 .array:
     .zero 2*array_size    
 
-	.section .text.startup,"ax",@progbits
-	.align 4
-	.global main
-	.type	main, #function
-	.proc	04
+    .section .text.startup,"ax",@progbits
+    .align 4
+    .global main
+    .type main, #function
+    .proc 04
 main:
-	.cfi_startproc
-	save	%sp, -96, %sp
-	.cfi_window_save
-	.cfi_register 15, 31
-	.cfi_def_cfa_register 30
+    .cfi_startproc
+    save %sp, -96, %sp
+    .cfi_window_save
+    .cfi_register 15, 31
+    .cfi_def_cfa_register 30
 
     sethi 64, %l0
     add %l0, 1, %l0
@@ -96,23 +96,22 @@ main:
     add %l0, %o0, %l4      ! x = 10 * a[ n - 1 ] + x / n. in the bne delay slot, always executed
  
   print_digit:
-	sethi %hi(.number_string), %o0
-	add %o0, %lo(.number_string), %o0	
+    sethi %hi(.number_string), %o0
+    add %o0, %lo(.number_string), %o0       
     mov %l4, %o1
-	call	printf, 0
- 	nop                    ! delay slot
+    call printf, 0
+    nop                    ! delay slot
     ba,a outer
     
   loop_done:
-	sethi %hi(.done_string), %o0
-	add %o0, %lo(.done_string), %o0	
-	call	puts, 0
-	nop
+    sethi %hi(.done_string), %o0
+    add %o0, %lo(.done_string), %o0 
+    call puts, 0
+    nop
 
-	mov	0, %i0
-	jmp	%i7+8
+    mov 0, %i0
+    jmp %i7+8
     restore
-	.cfi_endproc
-.LFE967:
-	.size	main, .-main
-	.section	.note.GNU-stack,"",@progbits
+.cfi_endproc
+
+.section        .note.GNU-stack,"",@progbits
