@@ -455,12 +455,10 @@ void Sparc::trace_state()
                 case 0x14:
                 {
                     if ( 0 == rd )
-                    {
                         if ( i )
                             tracer.Trace( "cmp %s, %#x\n", regstr1( rs1 ), simm13 );
                         else
                             tracer.Trace( "cmp %s, %s\n", regstr1( rs1 ), regstr2( rs2 ) );
-                    }
                     else
                         trace_canonical( "subcc" );
                     break;
@@ -493,12 +491,10 @@ void Sparc::trace_state()
                 case 0x30: // wry, wrasr, wrpsr, wrwim, wrtbr
                 {
                     if ( 0 == rd ) // wry
-                    {
                         if ( i )
                             tracer.Trace( "wr %#x ^ %s, y\n", simm13, regstr1( rs1 ) );
                         else
                             tracer.Trace( "wr %s ^ %s, y\n", regstr1( rs1 ), regstr2( rs2 ) );
-                    }
                     else
                         unhandled();
                     break;
@@ -506,91 +502,57 @@ void Sparc::trace_state()
                 case 0x34:
                 {
                     uint32_t opf = opbits( 5, 9 );
-                    if ( 1 == opf )
-                        tracer.Trace( "fmovs %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 5 == opf )
-                        tracer.Trace( "fnegs %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 9 == opf )
-                        tracer.Trace( "fabss %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0x49 == opf )
-                        tracer.Trace( "fmuls %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0x4a == opf )
-                        tracer.Trace( "fmuld %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0x4b == opf )
-                        tracer.Trace( "fmulq %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0x69 == opf )
-                        tracer.Trace( "fsmuld %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0x6e == opf )
-                        tracer.Trace( "fsmulq %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0x4d == opf )
-                        tracer.Trace( "fdivs %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0x4e == opf )
-                        tracer.Trace( "fdivd %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0x4f == opf )
-                        tracer.Trace( "fdivq %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0x41 == opf )
-                        tracer.Trace( "fadds %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0x42 == opf )
-                        tracer.Trace( "faddd %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0x43 == opf )
-                        tracer.Trace( "faddq %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0x45 == opf )
-                        tracer.Trace( "fsubs %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0x46 == opf )
-                        tracer.Trace( "fsubd %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0x47 == opf )
-                        tracer.Trace( "fsubq %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0xd1 == opf )
-                        tracer.Trace( "fstoi %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0xd2 == opf )
-                        tracer.Trace( "fdtoi %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0xd3 == opf )
-                        tracer.Trace( "fqtoi %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0xc4 == opf )
-                        tracer.Trace( "fitos %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0xc8 == opf )
-                        tracer.Trace( "fitod %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0xcc == opf )
-                        tracer.Trace( "fitoq %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0xc9 == opf )
-                        tracer.Trace( "fstod %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0xcd == opf )
-                        tracer.Trace( "fstoq %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0xc6 == opf )
-                        tracer.Trace( "fdtos %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0xce == opf )
-                        tracer.Trace( "fdtoq %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0xc7 == opf )
-                        tracer.Trace( "fqtos %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0xcb == opf )
-                        tracer.Trace( "fqtod %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0x29 == opf )
-                        tracer.Trace( "fsqrts %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0x2a == opf )
-                        tracer.Trace( "fsqrtd %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) );
-                    else if ( 0x2b == opf )
-                        tracer.Trace( "fsqrtq %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) );
-                    else
-                        unhandled();
+                    switch( opf )
+                    {
+                        case 1: tracer.Trace( "fmovs %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 5: tracer.Trace( "fnegs %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 9: tracer.Trace( "fabss %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0x29: tracer.Trace( "fsqrts %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0x2a: tracer.Trace( "fsqrtd %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0x2b: tracer.Trace( "fsqrtq %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0x41: tracer.Trace( "fadds %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0x42: tracer.Trace( "faddd %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0x43: tracer.Trace( "faddq %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0x45: tracer.Trace( "fsubs %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0x46: tracer.Trace( "fsubd %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0x47: tracer.Trace( "fsubq %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0x49: tracer.Trace( "fmuls %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0x4a: tracer.Trace( "fmuld %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0x4b: tracer.Trace( "fmulq %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0x4d: tracer.Trace( "fdivs %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0x4e: tracer.Trace( "fdivd %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0x4f: tracer.Trace( "fdivq %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0x69: tracer.Trace( "fsmuld %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0x6e: tracer.Trace( "fsmulq %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0xc4: tracer.Trace( "fitos %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0xc6: tracer.Trace( "fdtos %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0xc7: tracer.Trace( "fqtos %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0xc8: tracer.Trace( "fitod %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0xc9: tracer.Trace( "fstod %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0xcb: tracer.Trace( "fqtod %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0xcc: tracer.Trace( "fitoq %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0xcd: tracer.Trace( "fstoq %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0xce: tracer.Trace( "fdtoq %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0xd1: tracer.Trace( "fstoi %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0xd2: tracer.Trace( "fdtoi %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 0xd3: tracer.Trace( "fqtoi %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        default: unhandled(); break;
+                    }
                     break;
                 }
                 case 0x35: // fcmps, fcpmd, fpmpq and exception variants
                 {
                     uint32_t opf = opbits( 5, 9 );
-                    if ( 0x51 == opf )
-                        tracer.Trace( "fcmps %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ) );
-                    else if ( 0x52 == opf )
-                        tracer.Trace( "fcmpd %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ) );
-                    else if ( 0x53 == opf )
-                        tracer.Trace( "fcmpq %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ) );
-                    else if ( 0x55 == opf )
-                        tracer.Trace( "fcmpes %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ) );
-                    else if ( 0x56 == opf )
-                        tracer.Trace( "fcmped %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ) );
-                    else if ( 0x57 == opf )
-                        tracer.Trace( "fcmpeq %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ) );
-                    else
-                        unhandled();
+                    switch( opf )
+                    {
+                        case 0x51: tracer.Trace( "fcmps %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ) ); break;
+                        case 0x52: tracer.Trace( "fcmpd %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ) ); break;
+                        case 0x53: tracer.Trace( "fcmpq %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ) ); break;
+                        case 0x55: tracer.Trace( "fcmpes %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ) ); break;
+                        case 0x56: tracer.Trace( "fcmped %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ) ); break;
+                        case 0x57: tracer.Trace( "fcmpeq %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ) ); break;
+                        default: unhandled(); break;
+                    }
                     break;
                 }
                 case 0x38: // jmpl
@@ -1142,7 +1104,6 @@ uint64_t Sparc::run()
                         {
                             set_zn( result32 );
                             setflag_v( false );
-                            setflag_v( false );
                             setflag_c( false );
                         }
                         break;
@@ -1161,7 +1122,6 @@ uint64_t Sparc::run()
                         if ( 0x1b == op3 )
                         {
                             set_zn( result32 );
-                            setflag_v( false );
                             setflag_v( false );
                             setflag_c( false );
                         }
@@ -1244,19 +1204,19 @@ uint64_t Sparc::run()
                     case 0x25: // sll
                     {
                         if ( 0 != rd )
-                            Sparc_reg( rd ) = Sparc_reg( rs1 ) << ( i ? ( simm13 & 0x1f ) : ( Sparc_reg( rs2 ) & 0x1f ) );
+                            Sparc_reg( rd ) = Sparc_reg( rs1 ) << ( 0x1f & ( i ? simm13 : Sparc_reg( rs2 ) ) );
                         break;
                     }
                     case 0x26: // srl
                     {
                         if ( 0 != rd )
-                            Sparc_reg( rd ) = Sparc_reg( rs1 ) >> ( i ? ( simm13 & 0x1f ) : ( Sparc_reg( rs2 ) & 0x1f ) );
+                            Sparc_reg( rd ) = Sparc_reg( rs1 ) >> ( 0x1f & ( i ? simm13 : Sparc_reg( rs2 ) ) );
                         break;
                     }
                     case 0x27: // sra
                     {
                         if ( 0 != rd )
-                            Sparc_reg( rd ) = ( (int32_t) Sparc_reg( rs1 ) ) >> ( i ? ( simm13 & 0x1f ) : ( Sparc_reg( rs2 ) & 0x1f ) );
+                            Sparc_reg( rd ) = ( (int32_t) Sparc_reg( rs1 ) ) >> ( 0x1f & ( i ? simm13 : Sparc_reg( rs2 ) ) );
                         break;
                     }
                     case 0x28: // rdy
@@ -1283,92 +1243,59 @@ uint64_t Sparc::run()
                     case 0x34: // fmovs, fnegs, fabss, fmuls, fmuld, fmulq, fsmuld, fsmulq, fdivs, fdivd, fdivq
                     {
                         uint32_t opf = opbits( 5, 9 );
-                        if ( 1 == opf )
-                            fregs[ rd ] = fregs[ rs2 ];                                                                  // fmovs
-                        else if ( 5 == opf )
-                            fregs[ rd ] = -fregs[ rs2 ];                                                                 // fnegs
-                        else if ( 9 == opf )
-                            fregs[ rd ] = fabsf( fregs[ rs2 ] );                                                         // fabss
-                        else if ( 0x49 == opf )
-                            fregs[ rd ] = (float) do_fmul( fregs[ rs1 ], fregs[ rs2 ] );                                 // fmuls
-                        else if ( 0x4a == opf )
-                            set_dreg( rd, do_fmul( get_dreg( rs1 ), get_dreg( rs2 ) ) );                                 // fmuld
-                        else if ( 0x4b == opf )
-                            set_qreg( rd, get_qreg( rs1 ) * get_qreg( rs2 ) );                                           // fmulq
-                        else if ( 0x69 == opf )
-                            set_dreg( rd, do_fmul( fregs[ rs1 ], (double) fregs[ rs2 ] ) );                              // fsmuld
-                        else if ( 0x6e == opf )
-                            set_qreg( rd, (long double) get_dreg( rs1 ) * (long double) get_dreg( rs2 ) );               // fsmulq
-                        else if ( 0x4d == opf )
-                            fregs[ rd ] = (float) do_fdiv( fregs[ rs1 ], fregs[ rs2 ] );                                 // fdivs
-                        else if ( 0x4e == opf )
-                            set_dreg( rd, do_fdiv( get_dreg( rs1 ), get_dreg( rs2 ) ) );                                 // fdivd
-                        else if ( 0x4f == opf )
-                            set_qreg( rd, get_qreg( rs1 ) / get_qreg( rs2 ) );                                           // fdivq
-                        else if ( 0x41 == opf )
-                            fregs[ rd ] = (float) do_fadd( fregs[ rs1 ], fregs[ rs2 ] );                                 // fadds
-                        else if ( 0x42 == opf )
-                            set_dreg( rd, do_fadd( get_dreg( rs1 ), get_dreg( rs2 ) ) );                                 // faddd
-                        else if ( 0x43 == opf )
-                            set_qreg( rd, get_qreg( rs1 ) + get_qreg( rs2 ) );                                           // faddq
-                        else if ( 0x45 == opf )
-                            fregs[ rd ] = (float) do_fsub( fregs[ rs1 ], fregs[ rs2 ] );                                 // fsubs
-                        else if ( 0x46 == opf )
-                            set_dreg( rd, do_fsub( get_dreg( rs1 ), get_dreg( rs2 ) ) );                                 // fsubd
-                        else if ( 0x47 == opf )
-                            set_qreg( rd, get_qreg( rs1 ) - get_qreg( rs2 ) );                                           // fsubq
-                        else if ( 0xd1 == opf )
-                            * (int32_t *) & fregs[ rd ] = (int32_t) truncf( fregs[ rs2 ] );                              // fstoi  these 3 round towards 0 and ignore RD in FSR
-                        else if ( 0xd2 == opf )
-                            * (int32_t *) & fregs[ rd ] = (int32_t) trunc( get_dreg( rs2 ) );                            // fdtoi
-                        else if ( 0xd3 == opf )
-                            * (int32_t *) & fregs[ rd ] = (int32_t) truncl( get_qreg( rs2 ) );                           // fqtoi
-                        else if ( 0xc4 == opf )
-                            fregs[ rd ] = (float) ( * (int32_t *) &fregs[ rs2 ] );                                       // fitos
-                        else if ( 0xc8 == opf )
-                            set_dreg( rd, (double) ( * (int32_t *) &fregs[ rs2 ] ) );                                    // fitod
-                        else if ( 0xcc == opf )
-                            set_qreg( rd, (long double) ( * (int32_t *) &fregs[ rs2 ] ) );                               // fitoq
-                        else if ( 0xc9 == opf )
-                            set_dreg( rd, fregs[ rs2 ] );                                                                // fstod
-                        else if ( 0xcd == opf )
-                            set_qreg( rd, fregs[ rs2 ] );                                                                // fstoq
-                        else if ( 0xc6 == opf )
-                            fregs[ rd ] = (float) get_dreg( rs2 );                                                       // fdtos
-                        else if ( 0xce == opf )
-                            set_qreg( rd, get_dreg( rs2 ) );                                                             // fdtoq
-                        else if ( 0xc7 == opf )
-                            fregs[ rd ] = (float) get_qreg( rs2 );                                                       // fqtos
-                        else if ( 0xcb == opf )
-                            set_dreg( rd, (double) get_qreg( rs2 ) );                                                    // fqtod
-                        else if ( 0x29 == opf )
-                            fregs[ rd ] = sqrtf( fregs[ rs2 ] );                                                         // fsqrts
-                        else if ( 0x2a == opf )
-                            set_dreg( rd, sqrt( get_dreg( rs2 ) ) );                                                     // fsqrtd
-                        else if ( 0x2b == opf )
-                            set_qreg( rd, sqrtl( get_qreg( rs2 ) ) );                                                    // fsqrtq
-                        else
-                            unhandled();
+                        switch( opf )
+                        {
+                            case 1: fregs[ rd ] = fregs[ rs2 ]; break;                                                        // fmovs
+                            case 5: fregs[ rd ] = -fregs[ rs2 ]; break;                                                       // fnegs
+                            case 9: fregs[ rd ] = fabsf( fregs[ rs2 ] ); break;                                               // fabss
+                            case 0x29: fregs[ rd ] = sqrtf( fregs[ rs2 ] ); break;                                            // fsqrts
+                            case 0x2a: set_dreg( rd, sqrt( get_dreg( rs2 ) ) ); break;                                        // fsqrtd
+                            case 0x2b: set_qreg( rd, sqrtl( get_qreg( rs2 ) ) ); break;                                       // fsqrtq
+                            case 0x41: fregs[ rd ] = (float) do_fadd( fregs[ rs1 ], fregs[ rs2 ] ); break;                    // fadds
+                            case 0x42: set_dreg( rd, do_fadd( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;                    // faddd
+                            case 0x43: set_qreg( rd, get_qreg( rs1 ) + get_qreg( rs2 ) ); break;                              // faddq
+                            case 0x45: fregs[ rd ] = (float) do_fsub( fregs[ rs1 ], fregs[ rs2 ] ); break;                    // fsubs
+                            case 0x46: set_dreg( rd, do_fsub( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;                    // fsubd
+                            case 0x47: set_qreg( rd, get_qreg( rs1 ) - get_qreg( rs2 ) ); break;                              // fsubq
+                            case 0x49: fregs[ rd ] = (float) do_fmul( fregs[ rs1 ], fregs[ rs2 ] ); break;                    // fmuls
+                            case 0x4a: set_dreg( rd, do_fmul( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;                    // fmuld
+                            case 0x4b: set_qreg( rd, get_qreg( rs1 ) * get_qreg( rs2 ) ); break;                              // fmulq
+                            case 0x4d: fregs[ rd ] = (float) do_fdiv( fregs[ rs1 ], fregs[ rs2 ] ); break;                    // fdivs
+                            case 0x4e: set_dreg( rd, do_fdiv( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;                    // fdivd
+                            case 0x4f: set_qreg( rd, get_qreg( rs1 ) / get_qreg( rs2 ) ); break;                              // fdivq
+                            case 0x69: set_dreg( rd, do_fmul( fregs[ rs1 ], (double) fregs[ rs2 ] ) ); break;                 // fsmuld
+                            case 0x6e: set_qreg( rd, (long double) get_dreg( rs1 ) * (long double) get_dreg( rs2 ) ); break;  // fsmulq
+                            case 0xc4: fregs[ rd ] = (float) ( * (int32_t *) &fregs[ rs2 ] ); break;                          // fitos
+                            case 0xc6: fregs[ rd ] = (float) get_dreg( rs2 ); break;                                          // fdtos
+                            case 0xc7: fregs[ rd ] = (float) get_qreg( rs2 ); break;                                          // fqtos
+                            case 0xc8: set_dreg( rd, (double) ( * (int32_t *) &fregs[ rs2 ] ) ); break;                       // fitod
+                            case 0xc9: set_dreg( rd, fregs[ rs2 ] ); break;                                                   // fstod
+                            case 0xcb: set_dreg( rd, (double) get_qreg( rs2 ) ); break;                                       // fqtod
+                            case 0xcc: set_qreg( rd, (long double) ( * (int32_t *) &fregs[ rs2 ] ) ); break;                  // fitoq
+                            case 0xcd: set_qreg( rd, fregs[ rs2 ] ); break;                                                   // fstoq
+                            case 0xce: set_qreg( rd, get_dreg( rs2 ) ); break;                                                // fdtoq
+                            case 0xd1: * (int32_t *) & fregs[ rd ] = (int32_t) truncf( fregs[ rs2 ] ); break;                 // fstoi  these 3 round towards 0 and ignore RD in FSR
+                            case 0xd2: * (int32_t *) & fregs[ rd ] = (int32_t) trunc( get_dreg( rs2 ) ); break;               // fdtoi
+                            case 0xd3: * (int32_t *) & fregs[ rd ] = (int32_t) truncl( get_qreg( rs2 ) ); break;              // fqtoi
+                            default: unhandled(); break;
+                        }
+
                         trace_fregs();
                         break;
                     }
                     case 0x35: // fcmps, fcpmd, fpmpq and exception variants
                     {
                         uint32_t opf = opbits( 5, 9 );
-                        if ( 0x51 == opf ) // fcmps
-                            set_fcc( compare_floating( fregs[ rs1 ], fregs[ rs2 ] ) );
-                        else if ( 0x52 == opf ) // fcmpd
-                            set_fcc( compare_floating( get_dreg( rs1 ), get_dreg( rs2 ) ) );
-                        else if ( 0x53 == opf ) // fcmpq
-                            set_fcc( compare_floating( get_qreg( rs1 ), get_qreg( rs2 ) ) );
-                        else if ( 0x55 == opf ) // fcmpes
-                            set_fcc( compare_floating( fregs[ rs1 ], fregs[ rs2 ] ) ); // bugbug: no exceptions yet for these 3 fcmpeX variants
-                        else if ( 0x56 == opf ) // fcmped
-                            set_fcc( compare_floating( get_dreg( rs1 ), get_dreg( rs2 ) ) );
-                        else if ( 0x57 == opf ) // fcmpeq
-                            set_fcc( compare_floating( get_qreg( rs1 ), get_qreg( rs2 ) ) );
-                        else
-                            unhandled();
+                        switch( opf )
+                        {
+                            case 0x51: set_fcc( compare_floating( fregs[ rs1 ], fregs[ rs2 ] ) ); break;       // fcmps
+                            case 0x52: set_fcc( compare_floating( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break; // fcmpd
+                            case 0x53: set_fcc( compare_floating( get_qreg( rs1 ), get_qreg( rs2 ) ) ); break; // fcmpq
+                            case 0x55: set_fcc( compare_floating( fregs[ rs1 ], fregs[ rs2 ] ) ); break;       // fcmpes  bugbug: no exceptions yet for these 3 fcmpeX variants
+                            case 0x56: set_fcc( compare_floating( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break; // fcmped
+                            case 0x57: set_fcc( compare_floating( get_qreg( rs1 ), get_qreg( rs2 ) ) ); break; // fcmpeq
+                            default: unhandled(); break;
+                        }
                         trace_fregs();
                         break;
                     }
