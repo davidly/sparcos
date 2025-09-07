@@ -872,6 +872,110 @@ class SetBinaryMode
         }
 };
 
+/*
+  what whas their childhood trauma?
+           DOS & Windows   Linux RISC-V64 & AMD64  Linux Arm32 & Arm64  macOS       Linux sparc  newlib 68000  Watcom      Manx CP/M
+           -------------   ----------------------  -------------------  -----       -----------  ------------  ------      ---------
+  0x0      O_RDONLY        O_RDONLY                O_RDONLY             O_RDONLY    O_RDONLY     O_RDONLY      O_RDONLY    O_RDONLY
+  0x1      O_WRONLY        O_WRONLY                O_WRONLY             O_WRONLY    O_WRONLY     O_WRONLY      O_WRONLY    O_WRONLY
+  0x2      O_RDRW          O_RDRW                  O_RDRW               O_RDRW      O_RDRW       O_RDRW        O_RDRW      O_RDRW
+  0x8      O_APPEND                                                     O_APPEND    O_APPEND     O_APPEND
+  0x10     O_RANDOM                                                     O_SHLOCK                 O_SHLOCK      O_APPEND
+  0x20     O_SEQUENTIAL                                                 O_EXLOCK                 O_EXLOCK      O_CREAT
+  0x40     O_TEMPORARY     O_CREAT                 O_CREAT                          O_ASYNC                    O_TRUNC
+  0x80     O_NOINHERIT     O_EXCL                  O_EXCL                                                      O_NOINHERIT
+  0x100    O_CREAT                                                                                             O_TEXT      O_CREAT
+  0x200    O_TRUNC         O_TRUNC                 O_TRUNC              O_CREAT     O_CREAT      O_CREAT       O_BINARY
+  0x400    O_EXCL          O_APPEND                O_APPEND             O_TRUNC     O_TRUNC      O_TRUNC       O_EXCL      O_EXCL
+  0x800                                                                 O_EXCL      O_EXCL       O_EXCL                    O_APPEND
+  0x2000                   O_ASYNC                 O_ASYNC              O_SYNC      O_SYNC       O_SYNC
+  0x4000   O_TEXT          O_DIRECT                O_DIRECTORY          O_NONBLOCK               O_NONBLOCK
+  0x8000   O_BINARY
+  0x10000                  O_DIRECTORY             O_DIRECT                         O_DIRECTORY
+  0x10100                  O_SYNC                  O_SYNC
+  0x80000                                                               O_DIRECT                 O_DIRECT
+  0x100000                                                              O_DIRECTORY O_DIRECT
+  0x200000                                                                                       O_DIRECTORY
+  0x2010000                                                                         O_TMPFILE
+*/
+
+enum em_platform { dos_win, linux_rv64_amd64, linux_arm, macos, linux_sparc, newlib_68k };
+
+static const int flagmap[ 6 ][ 8 ] =
+{
+    //0          1         2         3        4          5            6        7
+    //O_APPEND   O_CREAT   O_TRUNC   O_EXCL   O_DIRECT   O_DIRECTORY  O_ASYNC  O_SYNC
+    { 0x8,       0x100,    0x200,    0x400,   0,         0,           0,       0 },
+    { 0x400,     0x40,     0x200,    0x80,    0x4000,    0x10000,     0x2000,  0x10100 },
+    { 0x400,     0x40,     0x200,    0x80,    0x10000,   0x4000,      0x2000,  0x10100 },
+    { 0x8,       0x200,    0x400,    0x800,   0x80000,   0x100000,    0,       0x2000 },
+    { 0x8,       0x200,    0x400,    0x800,   0x100000,  0x10000,     0x40,    0x2000 },
+    { 0x8,       0x200,    0x400,    0x800,   0x80000,   0x200000,    0,       0x2000 }
+};
+
+bool is_o_directory_set( int f )
+{
+    em_platform pto;
+    #if defined( _WIN32 )
+        pto = dos_win;
+    #elif defined( sparc )
+        pto = linux_sparc;
+    #elif defined( __mc68000__ )
+        pto = newlib_68k;
+    #elif defined( __riscv ) || defined( __amd64 )
+        pto = linux_rv64_amd64;;
+    #elif defined( __aarch64__ ) || defined ( __ARM_32BIT_STATE )
+        pto = linux_arm;
+    #else
+        #error what platform is this build targeting?
+    #endif
+
+    return ( ( flagmap[ pto ][ 5 ] & f ) == flagmap[ pto ][ 5 ] );
+} //is_o_directory_set
+
+int translate_open_flags( int f )
+{
+    em_platform pto, pfrom;
+    int result = ( f & 3 ); // O_RDONLY, O_WRONLY, and O_RDRW are consistent across platforms
+
+    #if defined( _WIN32 )
+        pto = dos_win;
+        result |= O_BINARY; // this is assumed on non-msft platforms
+    #elif defined( sparc )
+        pto = linux_sparc;
+    #elif defined( __mc68000__ )
+        pto = newlib_68k;
+    #elif defined( __riscv ) || defined( __amd64 )
+        pto = linux_rv64_amd64;;
+    #elif defined( __aarch64__ ) || defined ( __ARM_32BIT_STATE )
+        pto = linux_arm;
+    #else
+        #error what platform is this build targeting?
+    #endif
+
+    #if defined( RVOS )
+        pfrom = linux_rv64_amd64;
+    #elif defined( SPARCOS )
+        pfrom = linux_sparc;
+    #elif defined( M68 )
+        pfrom = newlib_68k;
+    #elif defined( ARMOS )
+        pfrom = linux_arm;
+    #else
+        #error what emulator are you building?
+    #endif
+
+    for ( uint32_t i = 0; i < _countof( flagmap[ 0 ] ); i++ )
+    {
+        int fromflag = flagmap[ pfrom ][ i ];
+        if ( ( f & fromflag ) == fromflag )
+            result |= flagmap[ pto ][ i ];
+    }
+
+    tracer.Trace( "  converted open flags from platform %u to platform %u, flags %#x to %#x\n", pfrom, pto, f, result );
+    return result;
+} //translate_open_flags
+
 #ifdef _WIN32
 
 size_t WinWrite( int descriptor, uint8_t * p, int count )
@@ -916,74 +1020,6 @@ static void slash_to_backslash( char * p )
         p++;
     }
 } //slash_to_backslash
-
-static int windows_translate_flags( int flags )
-{
-/*
-  Translate open() flags from Linux to Windows
-
-           DOS & Windows   Linux RISC-V64 & AMD64  Linux Arm32 & Arm64  macOS       Linux sparc  newlib 68000  Watcom      Manx CP/M
-           -------------   ----------------------  -------------------  -----       -----------  ------------  ------      ---------
-  0x0      O_RDONLY        O_RDONLY                O_RDONLY             O_RDONLY    O_RDONLY     O_RDONLY      O_RDONLY    O_RDONLY
-  0x1      O_WRONLY        O_WRONLY                O_WRONLY             O_WRONLY    O_WRONLY     O_WRONLY      O_WRONLY    O_WRONLY
-  0x2      O_RDRW          O_RDRW                  O_RDRW               O_RDRW      O_RDRW       O_RDRW        O_RDRW      O_RDRW
-  0x8      O_APPEND                                                     O_APPEND    O_APPEND     O_APPEND
-  0x10     O_RANDOM                                                     O_SHLOCK                 O_SHLOCK      O_APPEND
-  0x20     O_SEQUENTIAL                                                 O_EXLOCK                 O_EXLOCK      O_CREAT
-  0x40     O_TEMPORARY     O_CREAT                 O_CREAT                          O_ASYNC                    O_TRUNC
-  0x80     O_NOINHERIT     O_EXCL                  O_EXCL                                                      O_NOINHERIT
-  0x100    O_CREAT                                                                                             O_TEXT      O_CREAT
-  0x200    O_TRUNC         O_TRUNC                 O_TRUNC              O_CREAT     O_CREAT      O_CREAT       O_BINARY
-  0x400    O_EXCL          O_APPEND                O_APPEND             O_TRUNC     O_TRUNC      O_TRUNC       O_EXCL      O_EXCL
-  0x800                                                                 O_EXCL      O_EXCL       O_EXCL                    O_APPEND
-  0x2000                   O_ASYNC                 O_ASYNC              O_SYNC      O_SYNC       O_SYNC
-  0x4000   O_TEXT          O_DIRECT                O_DIRECTORY          O_NONBLOCK               O_NONBLOCK
-  0x8000   O_BINARY
-  0x10000                  O_DIRECTORY             O_DIRECT                         O_DIRECTORY
-  0x10100                  O_SYNC                  O_SYNC
-  0x80000                                                               O_DIRECT                 O_DIRECT
-  0x100000                                                              O_DIRECTORY O_DIRECT
-  0x200000                                                                                       O_DIRECTORY
-  0x2010000                                                                         O_TMPFILE
-*/
-
-    int f = flags & 3; // copy rd/wr/rdrw
-
-    f |= O_BINARY; // this is assumed on Linux systems
-
-#if defined( M68 ) || defined( SPARCOS )
-
-    if ( 0x200 & flags )
-        f |= O_CREAT;
-
-    if ( 0x800 & flags )
-        f |= O_EXCL;
-
-    if ( 0x400 & flags )
-        f |= O_TRUNC;
-
-    if ( 0x8 & flags )
-        f |= O_APPEND;
-
-#else // MacOS + Linux
-
-    if ( 0x40 & flags )
-        f |= O_CREAT;
-
-    if ( 0x80 & flags )
-        f |= O_EXCL;
-
-    if ( 0x200 & flags )
-        f |= O_TRUNC;
-
-    if ( 0x400 & flags )
-        f |= O_APPEND;
-
-#endif
-
-    tracer.Trace( "  flags translated from linux/macos/68000 %x to Microsoft %x\n", flags, f );
-    return f;
-} //windows_translate_flags
 
 static uint32_t epoch_days( uint16_t y, uint16_t m, uint16_t d ) // taken from https://blog.reverberate.org/2020/05/12/optimizing-date-algorithms.html
 {
@@ -1215,85 +1251,6 @@ static int gettimeofday( linux_timeval * tp )
 #endif
     return 0;
 } //gettimeofday
-
-#ifndef _WIN32
-#if defined(M68) || defined(SPARCOS)
-static int linux_translate_flags( int flags )
-{
-#if defined( sparc ) && defined( SPARCOS )
-    return flags;
-#endif
-
-    int f = flags & 3; // copy rd/wr/rdrw
-
-    if ( 0x200 & flags )
-        f |= 0x40; // O_CREAT
-
-    if ( 0x800 & flags )
-        f |= 0x80; // O_EXCL
-
-    if ( 0x400 & flags )
-        f |= 0x200; // O_TRUNC
-
-    if ( 0x8 & flags )
-        f |= 0x400; // O_APPEND
-
-#if defined( M68 )
-    int flag_o_directory = 0x200000;
-#elif defined( SPARCOS )
-    int flag_o_directory = 0x10000;
-#else
-    #error what emulator is this?
-#endif
-
-#if defined( __riscv ) || defined( __amd64 ) || defined( __x86_64__ ) || defined( sparc )
-    if ( flag_o_directory & flags )
-        f |= 0x10000; // O_DIRECTORY
-#elif defined( __aarch64__ ) || defined( __ARM_32BIT_STATE )
-    if ( flag_o_directory & flags )
-        f |= 0x4000; // O_DIRECTORY
-#elif defined( __mc68000__ )
-    if ( flag_o_directory & flags )
-        f |= 0x200000; // O_DIRECTORY
-#else
-    #error what platform is this?
-#endif
-
-    tracer.Trace( "  flags translated from 68000/sparc %x to linux %x\n", flags, f );
-    return f;
-} //linux_translate_flags
-#endif
-#endif //M68 || SPARCOS
-
-#ifdef M68K
-static int translate_open_flags_to_68k( int flags )
-{
-    int f = flags & 3; // copy rd/wr/rdrw
-
-    if ( 0x40 & flags )
-        f |= 0x200; // O_CREAT
-
-    if ( 0x80 & flags )
-        f |= 0x800; // O_EXCL
-
-    if ( 0x200 & flags )
-        f |= 0x400; // O_TRUNC
-
-    if ( 0x400 & flags )
-        f |= 0x8; // O_APPEND
-
-#if defined( RVOS ) || defined( SPARCOS )
-    if ( 0x10000 & flags )
-        f |= 0x200000; // O_DIRECTORY
-#else // ARMOS, etc.
-    if ( 0x4000 & flags )
-        f |= 0x200000; // O_DIRECTORY
-#endif
-
-    tracer.Trace( "  flags translated from 68000 %x to linux %x\n", flags, f );
-    return f;
-} //translate_open_flags_to_68k
-#endif //M68K
 
 #ifdef __APPLE__
 
@@ -2209,11 +2166,11 @@ void emulator_invoke_svc( CPUClass & cpu )
             int flags = (int) ACCESS_REG( REG_ARG1 );
             int mode = (int) ACCESS_REG( REG_ARG2 );
 
+            int original_flags = flags;
             tracer.Trace( "  open flags %x, mode %x, file %s\n", flags, mode, pname );
+            flags = translate_open_flags( flags );
 
 #ifdef _WIN32
-            int original_flags = flags;
-            flags = windows_translate_flags( flags );
             // bugbug: directory ignored and assumed to be local (-100)
 
             strcpy( acPath, pname );
@@ -2254,10 +2211,6 @@ void emulator_invoke_svc( CPUClass & cpu )
                 descriptor = _open( pname, flags, mode );
             }
 #else // !_WIN32
-
-#if ( defined(M68) || defined(SPARCOS) ) && ( !defined(M68K) && !defined(sparc) )
-            flags = linux_translate_flags( flags );
-#endif
 
             const char * pfilename = pname;
 
@@ -2821,8 +2774,8 @@ void emulator_invoke_svc( CPUClass & cpu )
             int flags = (int) ACCESS_REG( REG_ARG2 );
             int mode = (int) ACCESS_REG( REG_ARG3 );
             int64_t descriptor = 0;
-
             tracer.Trace( "  open dir %d, flags %x, mode %x, file '%s'\n", directory, flags, mode, pname );
+            flags = translate_open_flags( flags );
 
             if ( !strcmp( pname, "/proc/device-tree/cpus/timebase-frequency" ) )
             {
@@ -2840,23 +2793,14 @@ void emulator_invoke_svc( CPUClass & cpu )
 
 #ifdef _WIN32
             int original_flags = flags;
-            flags = windows_translate_flags( flags );
+            bool opendir = is_o_directory_set( flags );
+            tracer.Trace( "  opendir: %u\n", opendir );
 
             // bugbug: directory ignored and assumed to be local (-100)
 
             strcpy( acPath, pname );
             slash_to_backslash( acPath );
 
-            bool opendir = false;
-#if defined( M68 )
-            opendir = ( 0 != ( 0x200000 & original_flags ) );
-#elif defined( RVOS ) || defined( SPARCOS )
-            opendir = ( 0 != ( 0x10000 & original_flags ) );
-#else //RVOS
-            opendir = ( 0 != ( 0x4000 & original_flags ) );
-#endif //M68
-
-            tracer.Trace( "  opendir: %u\n", opendir );
             DWORD attr = GetFileAttributesA( acPath );
             if ( opendir && ( INVALID_FILE_ATTRIBUTES != attr ) && ( attr & FILE_ATTRIBUTE_DIRECTORY ) )
             {
@@ -2881,30 +2825,6 @@ void emulator_invoke_svc( CPUClass & cpu )
                 descriptor = _open( pname, flags, mode );
             }
 #else // _WIN32
-
-// if it's rvos running on Arm or armos running on risc-v, swap O_DIRECT and O_DIRECTORY
-
-#ifndef __APPLE__
-
-#ifdef RVOS
-    #if defined(__ARM_32BIT_STATE) || defined(__ARM_64BIT_STATE)
-            flags = linux_swap_riscv64_arm_dir_open_flags( flags );
-    #endif // ARM32 or ARM64
-#elif defined( ARMOS )
-    #if defined (__riscv) || defined( __amd64 )
-            flags = linux_swap_riscv64_arm_dir_open_flags( flags );
-    #endif // __riscv
-#endif
-
-#endif // ifndef __APPLE__
-
-#if defined(M68) && !defined(__APPLE__) && !defined(M68K)  // macOS and 68000 share the same open flags and are different than generic linux
-            flags = linux_translate_flags( flags );
-#endif
-
-#if defined( M68K ) && !defined( M68 )
-            flags = translate_open_flags_to_68k( flags );
-#endif
 
             tracer.Trace( "  final directory %d, flags %#x, mode %#x passed to openat\n", directory, flags, mode );
             descriptor = openat( directory, pname, flags, mode );
@@ -3564,13 +3484,20 @@ void emulator_invoke_svc( CPUClass & cpu )
                 pout32->stx_mode = local_stat.st_mode;
                 pout32->stx_size = local_stat.st_size;
                 pout32->stx_blocks = local_stat.st_blocks;
-#ifdef __APPLE__
+#if defined( __APPLE__ )
                 pout32->stx_atime.tv_sec = local_stat.st_atimespec.tv_sec;
                 pout32->stx_atime.tv_nsec = (uint32_t) local_stat.st_atimespec.tv_nsec;
                 pout32->stx_mtime.tv_sec = local_stat.st_mtimespec.tv_sec;
                 pout32->stx_mtime.tv_nsec = (uint32_t) local_stat.st_mtimespec.tv_nsec;
                 pout32->stx_ctime.tv_sec = local_stat.st_ctimespec.tv_sec;
                 pout32->stx_ctime.tv_nsec = (uint32_t) local_stat.st_ctimespec.tv_nsec;
+#elif defined( M68K )
+                pout32->stx_atime.tv_sec = local_stat.st_atime;
+                pout32->stx_atime.tv_nsec = 0;
+                pout32->stx_mtime.tv_sec = local_stat.st_mtime;
+                pout32->stx_mtime.tv_nsec = 0;
+                pout32->stx_ctime.tv_sec = local_stat.st_ctime;
+                pout32->stx_ctime.tv_nsec = 0;
 #else
                 pout32->stx_atime.tv_sec = local_stat.st_atim.tv_sec;
                 pout32->stx_atime.tv_nsec = (uint32_t) local_stat.st_atim.tv_nsec;

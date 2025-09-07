@@ -13,6 +13,10 @@ if "%1" == "rvos" (
   set _sparcosruncmd=..\..\rvos\rvos -h:120 ..\..\rvos\linux\sparcos
 )
 
+if "%1" == "m68" (
+  set _sparcosruncmd=..\..\m68\m68 -h:120 ..\..\m68\sparcos\sparcos.elf
+)
+
 if "%_sparcosruncmd%" == "" (
   set _sparcosruncmd=..\sparcos
 )
