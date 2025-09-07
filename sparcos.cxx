@@ -8445,16 +8445,8 @@ int main( int argc, char * argv[] )
         {
             unique_ptr<CPUClass> cpu( new CPUClass( memory, g_base_address, g_execution_address, g_stack_commit, g_top_of_stack ) );
 
-#ifdef SPARCOS // sparc is uniquely needy
-            cpu->Sparc_tbr() = 0; // put trap vectors at address 0
-            // bits not set: usermode, no coprocessor, previous supervisor, conditions
-            //               impl            version       enable FP     enable traps current window pointer is 0
-            cpu->Sparc_psr() = (REG_TYPE) ( ( 0xd << 28 ) | ( 1 << 24 ) | ( 1 << 12 ) | ( 1 << 5 ) | 0 );
-            cpu->Sparc_reg( 7 ) = g_tbss_address + g_tbss_size; // put a fake TCB in g7. backward offsets go into the TLS. Just one thread.
-            cpu->Sparc_wim() = 2; // wim bit 1 is turned on
-            cpu->Sparc_reg( 30 ) = g_top_of_stack - 64; // setup fp for cwp 0
-            tracer.Trace( "storing SP in register window on stack at %#x, value %#x\n", g_top_of_stack - 8, g_top_of_stack );
-            cpu->setui32( g_top_of_stack - 8, swap_endian32( g_top_of_stack ) ); // store the sp for cwp 0 in the highest window that's cwp N-1
+#ifdef SPARCOS
+            cpu->Sparc_wim() = 2; // wim bit 1 is turned on. The OS owns management of WIM. By default on reset it's set to 0xffffffff
 #endif
 
             cpu->trace_instructions( traceInstructions );

@@ -25,6 +25,7 @@ struct Sparc
     void reset( vector<uint8_t> & memory, uint32_t base_address, uint32_t start, uint32_t stack_commit, uint32_t top_of_stack )
     {
         memset( this, 0, sizeof( *this ) );
+        wim = 0xffffffff;                          // set to this on reset and the OS owns its value
         stack_size = stack_commit;                 // remember how much of the top of RAM is allocated to the stack
         stack_top = top_of_stack;                  // where the stack started
         base = base_address;                       // lowest valid address in the app's address space, maps to offset 0 in mem. If not 0, can't update trap vectors.
@@ -36,6 +37,7 @@ struct Sparc
         if ( 0 != start )
         {
             npc = pc = start;                      // app start address
+            //               impl            version       enable FP     enable traps current window pointer is 0
             psr = (uint32_t) ( ( 0xd << 28 ) | ( 1 << 24 ) | ( 1 << 12 ) | ( 1 << 5 ) | 0 ); // reasonable defaults
             Sparc_reg( 14 ) = top_of_stack;
         }
@@ -135,7 +137,7 @@ struct Sparc
     } //set_cwp
 
     uint32_t gregs[ 8 ];                           // global registers g0 - g7
-    const static uint32_t NWINDOWS = 8;            // must be a power of 2 ( 4, 8, 16, or 32). 8 is typical for Sparc. 4 for test coverage. 32 for performance.
+    const static uint32_t NWINDOWS = 8;            // must be a power of 2 (4, 8, 16, or 32). 8 is typical for Sparc. 4 for test coverage. 32 for performance.
     uint32_t regs[ NWINDOWS * 16 ];                // 16 32-bit registers per window
     uint32_t psr;                                  // processor state register. includes 5 bits for cwp
     uint32_t wim;                                  // window invalid mask
