@@ -784,7 +784,6 @@ double do_fsub( double a, double b )
 
     if ( isnan( a ) )
         return a;
-
     if ( isnan( b ) )
         return b;
 
@@ -805,13 +804,10 @@ double do_fadd( double a, double b )
 
     if ( isnan( a ) )
         return a;
-
     if ( isnan( b ) )
         return b;
-
     if ( ainf )
         return a;
-
     if ( binf )
         return b;
 
@@ -822,7 +818,6 @@ double do_fmul( double a, double b )
 {
     if ( isnan( a ) )
         return a;
-
     if ( isnan( b ) )
         return b;
 
@@ -833,13 +828,10 @@ double do_fmul( double a, double b )
 
     if ( ( ainf && bzero ) || ( azero && binf ) )
         return MY_NAN;
-
     if ( ainf && binf )
         set_double_sign( INFINITY, ( signbit( a ) != signbit( b ) ) );
-
     if ( ainf || binf )
         return set_double_sign( INFINITY, signbit( a ) != signbit( b ) );
-
     if ( azero || bzero )
         return set_double_sign( 0.0, signbit( a ) != signbit( b ) );
 
@@ -850,7 +842,6 @@ double do_fdiv( double a, double b )
 {
     if ( isnan( a ) )
         return a;
-
     if ( isnan( b ) )
         return b;
 
@@ -861,13 +852,10 @@ double do_fdiv( double a, double b )
 
     if ( ( ainf && binf ) || ( azero && bzero ) )
         return MY_NAN;
-
     if ( ainf )
         return set_double_sign( INFINITY, signbit( a ) != signbit( b ) );
-
     if ( binf )
         return set_double_sign( 0.0, signbit( a ) != signbit( b ) );
-
     if ( azero )
         return set_double_sign( 0.0, signbit( a ) != signbit( b ) );
 
@@ -895,9 +883,9 @@ uint64_t Sparc::run()
     for ( ;; )
     {
         #ifndef NDEBUG
-            if ( Sparc_reg( 14 ) > stack_top )
+            if ( Sparc_reg( 14 ) > stack_top ) // 14 is sp
                 emulator_hard_termination( *this, "sp is higher than the top of the stack", Sparc_reg( 14 ) );
-            if ( Sparc_reg( 14 ) <= ( stack_top - stack_size ) )
+            if ( Sparc_reg( 14 ) <= ( stack_top - stack_size ) ) // 14 is sp
                 emulator_hard_termination( *this, "sp is lower than the bottom of the stack", Sparc_reg( 14 ) );
             if ( pc < base )
                 emulator_hard_termination( *this, "pc is lower than memory:", pc );
@@ -952,14 +940,14 @@ uint64_t Sparc::run()
                     if ( branch )
                     {
                         npc = pc + ( disp22 << 2 );
-                        if ( ! ( ( 8 == cond ) && a ) ) // delayed instructions always executed unless it's BA (branch always) and annulled
+                        if ( ! ( ( 8 == cond ) && a ) ) // delay slot instructions always executed unless it's BA (branch always) and annulled
                         {
                             delay_instruction = 1;
                             pc += 4;
                         }
                     }
                     else if ( a )
-                        npc = pc + 8; // skip the annulled delay instruction
+                        npc = pc + 8; // skip the annulled delay slot instruction
                     break;
                 }
                 case 4: // sethi
@@ -977,14 +965,14 @@ uint64_t Sparc::run()
                     if ( branch )
                     {
                         npc = pc + ( disp22 << 2 );
-                        if ( ! ( ( 8 == cond ) && a ) ) // delayed instructions always executed unless it's BA (branch always) and annulled
+                        if ( ! ( ( 8 == cond ) && a ) ) // delay slot instructions always executed unless it's BA (branch always) and annulled
                         {
                             delay_instruction = 1;
                             pc += 4;
                         }
                     }
                     else if ( a )
-                        npc = pc + 8; // skip the annulled delay instruction
+                        npc = pc + 8; // skip the annulled delay slot instruction
                     break;
                 }
                 case 7: unhandled(); // CBccc. There is no coprocessor
@@ -995,8 +983,8 @@ uint64_t Sparc::run()
         else if ( 1 == op ) // format 1. call
         {
             int32_t disp30 = sign_extend( opbits( 0, 30 ), 29 );
-            Sparc_reg( 15 ) = pc;
-            npc = pc + 4 * disp30; // where to branch after the delay instruction
+            Sparc_reg( 15 ) = pc; // 15 is o7
+            npc = pc + 4 * disp30; // where to branch after the delay slot instruction
             delay_instruction = 1;
             pc += 4; // point to the delay instruction
         }
@@ -1386,7 +1374,7 @@ uint64_t Sparc::run()
                     }
                     case 0x38: // jmpl
                     {
-                        npc = Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) );
+                        npc = Sparc_reg( rs1 ) + ( i ? simm13 : Sparc_reg( rs2 ) ); // jump to here after executing instruction in the delay slot
                         if ( 0 != rd )
                             Sparc_reg( rd ) = pc;
                         delay_instruction = 1;
