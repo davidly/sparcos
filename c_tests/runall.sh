@@ -12,6 +12,10 @@ if [ "$1" = "rvos" ]; then
     _sparcosruncmd="../../rvos/rvos -h:120 ../../rvos/bin/sparcos.elf"
 fi
 
+if [ "$1" = "m68" ]; then
+    _sparcosruncmd="../../m68/m68 -h:120 ../../rvos/bin/m68.elf"
+fi
+
 if [ "$_sparcosruncmd" = "" ]; then
     _sparcosruncmd="../sparcos"
 fi
