@@ -137,7 +137,7 @@ struct Sparc
     } //set_cwp
 
     uint32_t gregs[ 8 ];                           // global registers g0 - g7
-    const static uint32_t NWINDOWS = 8;            // must be a power of 2 (4, 8, 16, or 32). 8 is typical for Sparc. 4 for test coverage. 32 for performance.
+    const static uint32_t NWINDOWS = 8;            // 3..32. 8 is typical for SPARC V8 implementations. 3 for test coverage. 32 for performance.
     uint32_t regs[ NWINDOWS * 16 ];                // 16 32-bit registers per window
     uint32_t psr;                                  // processor state register. includes 5 bits for cwp
     uint32_t wim;                                  // window invalid mask
