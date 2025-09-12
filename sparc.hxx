@@ -25,7 +25,7 @@ struct Sparc
     void reset( vector<uint8_t> & memory, uint32_t base_address, uint32_t start, uint32_t stack_commit, uint32_t top_of_stack )
     {
         memset( this, 0, sizeof( *this ) );
-        wim = 0xffffffff;                          // set to this on reset and the OS owns its value
+        wim = 0xffffffff;                          // set to this on reset then the OS owns its value
         stack_size = stack_commit;                 // remember how much of the top of RAM is allocated to the stack
         stack_top = top_of_stack;                  // where the stack started
         base = base_address;                       // lowest valid address in the app's address space, maps to offset 0 in mem. If not 0, can't update trap vectors.
@@ -141,7 +141,7 @@ struct Sparc
     uint32_t regs[ NWINDOWS * 16 ];                // 16 32-bit registers per window
     uint32_t psr;                                  // processor state register. includes 5 bits for cwp
     uint32_t wim;                                  // window invalid mask
-    uint32_t tbr;                                  // trap base register
+    uint32_t tbr;                                  // trap base register. initialized to 0
     uint32_t y;                                    // multiply/divide register
     uint32_t pc;                                   // program counter
     uint32_t npc;                                  // next program counter
@@ -149,9 +149,9 @@ struct Sparc
     float fregs[ 32 ];                             // 32 32-bit floating point registers
     uint32_t fsr;                                  // floating-point state register
 
-    uint32_t & Sparc_psr() { return psr; }
-    uint32_t & Sparc_wim() { return wim; }
-    uint32_t & Sparc_tbr() { return tbr; }
+    inline uint32_t & Sparc_psr() { return psr; }
+    inline uint32_t & Sparc_wim() { return wim; }
+    inline uint32_t & Sparc_tbr() { return tbr; }
 
     uint32_t & Sparc_reg( uint32_t r )
     {
@@ -207,14 +207,6 @@ private:
         return ( x ^ m ) - m;
     } //sign_extend
 
-    inline static int16_t sign_extend16( uint16_t x, uint16_t high_bit )
-    {
-        assert( high_bit < 15 );
-        x &= ( 1 << ( high_bit + 1 ) ) - 1; // clear bits above the high bit since they may contain noise
-        const int16_t m = ( (uint16_t) 1 ) << high_bit;
-        return ( x ^ m ) - m;
-    } //sign_extend16
-
     inline bool flag_c() { return ( 0 != ( psr & ( 1 << 20 ) ) ); }
     inline bool flag_v() { return ( 0 != ( psr & ( 1 << 21 ) ) ); }
     inline bool flag_z() { return ( 0 != ( psr & ( 1 << 22 ) ) ); }
@@ -254,6 +246,7 @@ private:
 
     inline void set_dreg( uint32_t fr, double d )
     {
+        assert( 0 == ( fr & 1 ) );
         #ifdef TARGET_BIG_ENDIAN
             * (double *) ( & fregs[ fr ] ) = d;
         #else
@@ -263,6 +256,7 @@ private:
 
     inline double get_dreg( uint32_t fr )
     {
+        assert( 0 == ( fr & 1 ) );
         #ifdef TARGET_BIG_ENDIAN
             return * (double *) ( & fregs[ fr ] );
         #else
@@ -273,11 +267,13 @@ private:
 
     inline void set_qreg( uint32_t fr, long double d )
     {
+        assert( 0 == ( fr & 3 ) );
         * (long double *) ( & fregs[ fr ] ) = d;
     } //set_dreg
 
     inline long double get_qreg( uint32_t fr )
     {
+        assert( 0 == ( fr & 3 ) );
         return * (long double *) ( & fregs[ fr ] );
     } //get_qreg
 
@@ -301,5 +297,7 @@ private:
     void trace_shift_canonical( const char * pins );
     void trace_ld_canonical( const char * pins );
     void trace_st_canonical( const char * pins );
+    const char * condition_string( uint32_t cond );
+    const char * fcondition_string( uint32_t cond );
 };
 

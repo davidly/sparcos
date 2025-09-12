@@ -17,6 +17,14 @@ if "%1" == "m68" (
   set _sparcosruncmd=..\..\m68\m68 -h:120 ..\..\m68\sparcos\sparcos.elf
 )
 
+if "%1" == "gnu" (
+  set _sparcosruncmd=..\sparcosg
+)
+
+if "%1" == "clang" (
+  set _sparcosruncmd=..\sparcoscl
+)
+
 if "%_sparcosruncmd%" == "" (
   set _sparcosruncmd=..\sparcos
 )
