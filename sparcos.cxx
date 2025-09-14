@@ -7316,12 +7316,10 @@ static bool load_image( const char * pimage, const char * app_args )
         return load_image32( fp, pimage, app_args );
     else
         usage( "elf image isn't 32-bit" );
-#endif
-
+#elif  defined( RVOS ) || defined( ARMOS )
     bool big_endian = ( 2 == ehead.endianness );
     tracer.Trace( "image is %s endian\n", big_endian ? "big" : "little" );
 
-#if defined( RVOS ) || defined( ARMOS )
     ehead.swap_endianness();
 
     if ( 2 != ehead.type )
