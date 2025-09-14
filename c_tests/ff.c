@@ -178,19 +178,16 @@ void search( const char * pstart, const char * ppattern )
             }
 
             strcpy( next +  dir_len, pentry->d_name );
-
             if ( is_excluded( next ) )
                 continue;
 
             //printf( "pentry->d_type: %d\n", pentry->d_type );
-
             if ( g_use_lstat )
                 pentry->d_type = DT_UNKNOWN; // really just for testing lstat()
 
             bool is_dir = false;
             struct stat st_link;
             bool lstat_retrieved = false;
-
 
             if ( DT_UNKNOWN == pentry->d_type )
             {

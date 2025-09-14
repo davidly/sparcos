@@ -7314,6 +7314,8 @@ static bool load_image( const char * pimage, const char * app_args )
 #if defined( M68 ) || defined( SPARCOS )
     if ( 1 == ehead.bit_width )
         return load_image32( fp, pimage, app_args );
+    else
+        usage( "elf image isn't 32-bit" );
 #endif
 
     bool big_endian = ( 2 == ehead.endianness );

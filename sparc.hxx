@@ -41,6 +41,7 @@ struct Sparc
             psr = (uint32_t) ( ( 0xd << 28 ) | ( 1 << 24 ) | ( 1 << 12 ) | ( 1 << 5 ) | 0 ); // reasonable defaults
             Sparc_reg( 14 ) = top_of_stack;
         }
+        assert( ( NWINDOWS >= 3 ) && ( NWINDOWS <= 32 ) );
     } //Sparc
 
     inline uint32_t getui32( uint32_t o )

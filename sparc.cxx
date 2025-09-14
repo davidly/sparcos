@@ -1249,12 +1249,12 @@ uint64_t Sparc::run()
                         uint32_t opf = opbits( 5, 9 );
                         switch( opf )
                         {
-                            case 0x51: set_fcc( compare_floating( fregs[ rs1 ], fregs[ rs2 ] ) ); break;       // fcmps
-                            case 0x52: set_fcc( compare_floating( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break; // fcmpd
-                            case 0x53: set_fcc( compare_floating( get_qreg( rs1 ), get_qreg( rs2 ) ) ); break; // fcmpq
-                            case 0x55: set_fcc( compare_floating( fregs[ rs1 ], fregs[ rs2 ] ) ); break;       // fcmpes  bugbug: no exceptions yet for these 3 fcmpeX variants
-                            case 0x56: set_fcc( compare_floating( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break; // fcmped
-                            case 0x57: set_fcc( compare_floating( get_qreg( rs1 ), get_qreg( rs2 ) ) ); break; // fcmpeq
+                            case 0x51: set_fcc( compare_floating( fregs[ rs1 ], fregs[ rs2 ] ) ); break;        // fcmps
+                            case 0x52: set_fcc( compare_floating( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;  // fcmpd
+                            case 0x53: set_fcc( compare_floating( get_qreg( rs1 ), get_qreg( rs2 ) ) ); break;  // fcmpq
+                            case 0x55: set_fcc( compare_floating( fregs[ rs1 ], fregs[ rs2 ] ) ); break;        // fcmpes  bugbug: no exceptions yet for these 3 fcmpeX variants
+                            case 0x56: set_fcc( compare_floating( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;  // fcmped
+                            case 0x57: set_fcc( compare_floating( get_qreg( rs1 ), get_qreg( rs2 ) ) ); break;  // fcmpeq
                             default: unhandled();
                         }
                         trace_fregs();
@@ -1282,7 +1282,6 @@ uint64_t Sparc::run()
                         uint32_t cwp_new = next_save_cwp( get_cwp() );
                         if ( get_bit32( wim, cwp_new ) ) // generate overflow trap
                         {
-                            //tracer.Trace( "  save generating overflow trap with delay_instruction %u\n", delay_instruction );
                             handle_trap( 5 );
                             if ( 2 == delay_instruction ) // if save was in a delay slot, remember that
                                 delay_instruction = 1;
@@ -1292,8 +1291,7 @@ uint64_t Sparc::run()
                         }
                         else
                         {
-                            // math from old cwp and store the result in the new cwp
-                            set_cwp( cwp_new );
+                            set_cwp( cwp_new ); // math from old cwp and store the result in the new cwp
                             if ( 0 != rd )
                                 Sparc_reg( rd ) = val1 + val2;
                         }
@@ -1304,7 +1302,6 @@ uint64_t Sparc::run()
                         uint32_t cwp_new = next_restore_cwp( get_cwp() );
                         if ( get_bit32( wim, cwp_new ) ) // generate underflow trap
                         {
-                            //tracer.Trace( "  restore generating underflow trap with delay_instruction %u\n", delay_instruction );
                             handle_trap( 6 );
                             if ( 2 == delay_instruction ) // if restore was in a delay slot, remember that
                                 delay_instruction = 1;
@@ -1314,8 +1311,7 @@ uint64_t Sparc::run()
                         }
                         else
                         {
-                            // math from old cwp and store the result in the new cwp
-                            set_cwp( cwp_new );
+                            set_cwp( cwp_new ); // math from old cwp and store the result in the new cwp
                             if ( 0 != rd )
                                 Sparc_reg( rd ) = val1 + val2;
                         }
