@@ -35,7 +35,7 @@ template <class T> char * inttoa( T num, char * str, int base )
         str[ i ] = 0;
         return str;
     }
-
+    
     bool isNegative = false;
     if ( num < 0 && 10 == base )
     {
@@ -48,7 +48,7 @@ template <class T> char * inttoa( T num, char * str, int base )
         ui64num &= ( 0xffffffffffffffff >> ( 8 * ( 8 - sizeof( T ) ) ) );
 
     uint64_t ui64base = (uint64_t) base;
-
+    
     while ( 0 != ui64num )
     {
         uint64_t rem = ui64num % ui64base;
@@ -122,7 +122,7 @@ extern "C" int main()
         ui8 = 0xff;
         ui8 >>= s;
         show_result( ui8 );
-    }
+    }        
 
     for ( int s = 0; s < 8 * (int) sizeof( i16 ); s++ )
     {

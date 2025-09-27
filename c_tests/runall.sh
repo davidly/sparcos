@@ -8,6 +8,10 @@ if [ "$1" = "armos" ]; then
     _sparcosruncmd="../../ArmOS/armos -h:120 ../../ArmOS/bin/sparcos"
 fi
 
+if [ "$1" = "m68" ]; then
+    _sparcosruncmd="../../m68/m68 -h:120 ../../m68/bin/sparcos"
+fi
+
 if [ "$1" = "rvos" ]; then
     _sparcosruncmd="../../rvos/rvos -h:120 ../../rvos/bin/sparcos.elf"
 fi
