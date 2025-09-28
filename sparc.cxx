@@ -350,42 +350,27 @@ void Sparc::trace_state()
         uint32_t op2 = opbits( 22, 3 );
         uint32_t imm22 = opbits( 0, 22 );
         int32_t disp22 = sign_extend( imm22, 21 );
+        uint32_t a = opbit( 29 );
+        uint32_t cond = opbits( 25, 4 );
 
-        switch( op2 )
+        if ( 0 == op2 ) // unimp
+            tracer.Trace( "unimp\n" );
+        else if ( 2 == op2 ) // Bicc
+            tracer.Trace( "b%s%s %#x # %#lx\n", condition_string( cond ), a ? ",a" : "", disp22 << 2, pc + ( disp22 << 2 ) );
+        else if ( 4 == op2 ) // sethi
         {
-            case 0: tracer.Trace( "unimp\n" );
-            case 2: // Bicc
-            {
-                uint32_t a = opbit( 29 );
-                uint32_t cond = opbits( 25, 4 );
-                tracer.Trace( "b%s%s %#x # %#lx\n", condition_string( cond ), a ? ",a" : "", disp22 << 2, pc + ( disp22 << 2 ) );
-                break;
-            }
-            case 4: // sethi
-            {
-                uint32_t rd = opbits( 25, 5 );
-                if ( 0 == rd && 0 == imm22 )
-                    tracer.Trace( "nop\n" );
-                else
-                    tracer.Trace( "sethi %#x, %s\n", imm22, regstrd( rd ) );
-                break;
-            }
-            case 6: // FBfcc
-            {
-                uint32_t a = opbit( 29 );
-                uint32_t cond = opbits( 25, 4 );
-                tracer.Trace( "fb%s%s %#x # %#lx\n", fcondition_string( cond ), a ? ",a" : "", disp22 << 2, pc + ( disp22 << 2 ) );
-                break;
-            }
-            case 7: // CBccc. There is no coprocessor
-            {
-                uint32_t a = opbit( 29 );
-                uint32_t cond = opbits( 25, 4 );
-                tracer.Trace( "cb%s%s %#x\n", condition_string( cond ), a ? ",a" : "", disp22 << 2 );
-                break;
-            }
-            default: unhandled();
+            uint32_t rd = opbits( 25, 5 );
+            if ( 0 == rd && 0 == imm22 )
+                tracer.Trace( "nop\n" );
+            else
+                tracer.Trace( "sethi %#x, %s\n", imm22, regstrd( rd ) );
         }
+        else if ( 6 == op2 ) // FBfcc
+            tracer.Trace( "fb%s%s %#x # %#lx\n", fcondition_string( cond ), a ? ",a" : "", disp22 << 2, pc + ( disp22 << 2 ) );
+        else if ( 7 == op2 ) // CBccc. There is no coprocessor
+            tracer.Trace( "cb%s%s %#x\n", condition_string( cond ), a ? ",a" : "", disp22 << 2 );
+        else
+            unhandled();
     }
     else if ( 1 == op ) // format 1. call
     {
@@ -881,10 +866,11 @@ uint64_t Sparc::run()
             {
                 case 0: { handle_trap( 2 ); break; } // unimp
                 case 2: // Bicc
+                case 6: // FBfcc
                 {
                     uint32_t a = opbit( 29 );
                     uint32_t cond = opbits( 25, 4 );
-                    bool branch = check_condition( cond );
+                    bool branch = ( 2 == op2 ) ?  check_condition( cond ) : check_fcondition( cond );
                     if ( branch )
                     {
                         npc = pc + ( disp22 << 2 );
@@ -903,24 +889,6 @@ uint64_t Sparc::run()
                     uint32_t rd = opbits( 25, 5 );
                     if ( 0 != rd )
                         Sparc_reg( rd ) = ( imm22 << 10 );
-                    break;
-                }
-                case 6: // FBfcc
-                {
-                    uint32_t a = opbit( 29 );
-                    uint32_t cond = opbits( 25, 4 );
-                    bool branch = check_fcondition( cond );
-                    if ( branch )
-                    {
-                        npc = pc + ( disp22 << 2 );
-                        if ( ! ( ( 8 == cond ) && a ) ) // delay slot instructions always executed unless it's BA (branch always) and annulled
-                        {
-                            delay_instruction = 1;
-                            pc += 4;
-                        }
-                    }
-                    else if ( a )
-                        npc = pc + 8; // skip the annulled delay slot instruction
                     break;
                 }
                 case 7: unhandled(); // CBccc. There is no coprocessor
@@ -1278,32 +1246,13 @@ uint64_t Sparc::run()
                     }
                     case 0x3b: { break; } // flush
                     case 0x3c: // save
-                    {
-                        uint32_t cwp_new = next_save_cwp( get_cwp() );
-                        if ( get_bit32( wim, cwp_new ) ) // generate overflow trap
-                        {
-                            handle_trap( 5 );
-                            if ( 2 == delay_instruction ) // if save was in a delay slot, remember that
-                                delay_instruction = 1;
-                            else
-                                npc = pc;
-                            break;
-                        }
-                        else
-                        {
-                            set_cwp( cwp_new ); // math from old cwp and store the result in the new cwp
-                            if ( 0 != rd )
-                                Sparc_reg( rd ) = val1 + val2;
-                        }
-                        break;
-                    }
                     case 0x3d: // restore
                     {
-                        uint32_t cwp_new = next_restore_cwp( get_cwp() );
-                        if ( get_bit32( wim, cwp_new ) ) // generate underflow trap
+                        uint32_t cwp_new = ( 0x3c == op3 ) ? next_save_cwp( get_cwp() ) : next_restore_cwp( get_cwp() );
+                        if ( get_bit32( wim, cwp_new ) ) // generate overflow/underflow trap
                         {
-                            handle_trap( 6 );
-                            if ( 2 == delay_instruction ) // if restore was in a delay slot, remember that
+                            handle_trap( ( 0x3c == op3 ) ? 5 : 6 );
+                            if ( 2 == delay_instruction ) // if save/restore was in a delay slot, remember that
                                 delay_instruction = 1;
                             else
                                 npc = pc;
