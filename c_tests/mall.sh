@@ -17,7 +17,7 @@ do
     m.sh $arg $optflags
 done
 
-for arg in esp sievesp tttsp tttusp;
+for arg in esp esp7 sievesp tttsp tttusp;
 do
     echo $arg
     ma.sh $arg
