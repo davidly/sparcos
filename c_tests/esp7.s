@@ -310,9 +310,9 @@ print_unsigned:
     nop
 
 .L_print_zero:
-    sethi %hi(.L_zero_str), %o1  ! Get high 22 bits of string address.
-    or    %o1, %lo(.L_zero_str), %o1  ! Get low 10 bits.
-    mov   1, %o2                 ! Length is 1 character.
+    sethi %hi(.L_zero_str), %l1  ! Get high 22 bits of string address.
+    or    %l1, %lo(.L_zero_str), %l1  ! Get low 10 bits.
+    mov   1, %l2                 ! Length is 1 character.
 
 .L_call_write:
     mov   4, %g1            ! write syscall
