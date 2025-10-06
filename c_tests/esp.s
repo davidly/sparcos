@@ -98,7 +98,6 @@ main:
   print_digit:
     call print_unsigned
     mov %l4, %o0          ! in the delay slot
-
     ba,a outer
     
   loop_done:

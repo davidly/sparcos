@@ -85,19 +85,20 @@ main:
     add %l1, %l5, %l1
 
   inner:
-    mov %l4, %o0
+    mov %l4, %o0           ! prepare to compute x%n and x/n
     call .udiv             ! on return, o0 has the quotient and o1 has the remainder
     mov %l5, %o1           ! in the delay slot; argument o1 set prior to the call above
-    mov %o0, %l6           ! l6 now has x / n saved for later
 
     sth %o1, [%l1]         ! a[n] = x % n
     sub %l1, 2, %l1        ! move the current array pointer down one element
-    call .umul10
-    lduh [%l1], %o0        ! in the delay slot. executed prior to the call above. load a[ n - 1 ] to %o0
+    lduh [%l1], %o1        ! load a[ n - 1 ] to %o0
+    add %o1, %o1, %o2      ! 10 * a[ n - 1 ] step 1 -- o1 has 2x
+    sll %o1, 3, %o1        ! step 2 -- o0 has 8x
+    add %o1, %o2, %o1      ! step 3 -- o0 has 10x
 
     subcc %l5, 1, %l5      ! while ( --n )
     bne inner
-    add %o0, %l6, %l4      ! x = 10 * a[ n - 1 ] + x / n. in the bne delay slot, always executed
+    add %o1, %o0, %l4      ! x = 10 * a[ n - 1 ] + x / n. in the bne delay slot, always executed
  
   print_digit:
     call print_unsigned
@@ -218,54 +219,33 @@ main:
     addcc %g0, %g0, %o1
 
 /*
- * Taken from google AI.
  * Unsigned 32-bit integer division for SPARC V7 as a leaf procedure.
- *
  * This routine assumes the divisor is non-zero.
- *
  * Arguments:
  *  %o0: Dividend
  *  %o1: Divisor
- *
  * Returns:
  *  %o0: Quotient
  *  %o1: Remainder
- *
- * Registers used for calculation:
- *  %g1: Quotient (volatile global)
- *  %g2: Remainder (volatile global)
- *  %o1: Divisor (from argument)
 */
-    .global .udiv
+        .global .udiv
 .udiv:
-    /* Set up registers for the main loop.
-     * Arguments are already in %o0 (dividend) and %o1 (divisor).
-     * Since this is a leaf function, we can use global registers for locals.
-     */
     mov     %g0, %g1        ! %g1 = 0 (quotient)
-    mov     %o0, %g2        ! %g2 = dividend (will become remainder)
+    cmp     %o0, %o1        ! Compare remainder with divisor
+    bl,a    divide_end      ! Branch if less (remainder < divisor)
+    nop
+    sub     %o0, %o1, %o0   
 
 divide_loop:
-    /* Check if subtraction can still occur */
-    cmp     %g2, %o1        ! Compare remainder (%g2) with divisor (%o1)
-    bl      divide_end      ! Branch if less (remainder < divisor)
-    nop                     ! Delay slot
-
-    /* Perform one subtraction and increment the quotient */
-    sub     %g2, %o1, %g2    ! %g2 = %g2 - %o1
-    add     %g1, 1, %g1     ! %g1 = %g1 + 1
-
-    /* Loop back to check again */
-    ba      divide_loop     ! Branch always
-    nop                     ! Delay slot
+    add     %g1, 1, %g1     
+    cmp     %o0, %o1        ! Compare remainder with divisor
+    bge,a   divide_loop
+    sub     %o0, %o1, %o0   ! delay slot subtraction. only executed if the branch to loop is taken
 
 divide_end:
-    /* Set return values in the out registers */
-    mov     %g1, %o0        ! %o0 = quotient
-    mov     %g2, %o1        ! %o1 = remainder
-
+    mov     %o0, %o1        ! move remainder to o1
     retl                    ! Return from a leaf function
-    nop                     ! Delay slot
+    mov     %g1, %o0        ! delay slot. executed prior to retl. %o0 = quotient result
 
 ! print_unsigned: Prints a 32-bit unsigned integer to stdout.
 ! Argument:
