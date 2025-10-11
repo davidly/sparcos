@@ -1126,7 +1126,7 @@ uint64_t Sparc::run()
                         bool sign_op2 = sign32( operand2 );
                         bool sign_rdval = sign32( rdval );
                         setflag_v( ( sign_op1 & sign_op2 & !sign_rdval ) | ( !sign_op1 & !sign_op2 & sign_rdval ) );
-                        setflag_c( ( sign_op1 & sign_op2 ) | ( ( 0 == rdval ) & sign_op1 | sign_op2 ) );
+                        setflag_c( ( sign_op1 & sign_op2 ) | ( ( 0 == rdval ) & ( sign_op1 | sign_op2 ) ) );
                         break;
                     }
                     case 0x25: // sll
