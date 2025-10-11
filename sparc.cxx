@@ -1,5 +1,6 @@
 // Emulates a sparc v8 cpu. No supervisor support.
 // August 24, 2025 by David Lee
+// these instuctions don't exist on sparc v7: umul, umulcc, smul, smulcc, udiv, udivcc, sdiv, sdivcc
 
 #include <stdint.h>
 #include <memory.h>
@@ -238,14 +239,15 @@ bool Sparc::check_fcondition( uint32_t cond )
     }
 } //check_fcondition
 
-void Sparc::trace_canonical( const char * pins )
+void Sparc::trace_canonical( const char * pins, bool shift )
 {
     uint32_t rd = opbits( 25, 5 );
     uint32_t rs1 = opbits( 14, 5 );
-    uint32_t i = opbit( 13 );
-    if ( i )
+    if ( opbit( 13 ) ) // immediate
     {
         int32_t simm13 = sign_extend( opbits( 0, 13 ), 12 );
+        if ( shift )
+            simm13 &= 0x1f;
         tracer.Trace( "%s %s, %#x, %s\n", pins, regstr1( rs1 ), simm13, regstrd( rd ) );
     }
     else
@@ -255,29 +257,11 @@ void Sparc::trace_canonical( const char * pins )
     }
 } //trace_canonical
 
-void Sparc::trace_shift_canonical( const char * pins )
-{
-    uint32_t rd = opbits( 25, 5 );
-    uint32_t rs1 = opbits( 14, 5 );
-    uint32_t i = opbit( 13 );
-    if ( i )
-    {
-        int32_t simm13 = sign_extend( opbits( 0, 13 ), 12 );
-        tracer.Trace( "%s %s, %#x, %s\n", pins, regstr1( rs1 ), simm13 & 0x1f, regstrd( rd ) );
-    }
-    else
-    {
-        uint32_t rs2 = opbits( 0, 5 );
-        tracer.Trace( "%s %s, %s, %s\n", pins, regstr1( rs1 ), regstr2( rs2 ), regstrd( rd ) );
-    }
-} //trace_shift_canonical
-
 void Sparc::trace_ld_canonical( const char * pins )
 {
     uint32_t rd = opbits( 25, 5 );
     uint32_t rs1 = opbits( 14, 5 );
-    uint32_t i = opbit( 13 );
-    if ( i )
+    if ( opbit( 13 ) ) // immediate
     {
         int32_t simm13 = sign_extend( opbits( 0, 13 ), 12 );
         tracer.Trace( "%s [%s + %#x], %s\n", pins, regstr1( rs1 ), simm13, regstrd( rd ) );
@@ -296,8 +280,7 @@ void Sparc::trace_st_canonical( const char * pins )
 {
     uint32_t rd = opbits( 25, 5 );
     uint32_t rs1 = opbits( 14, 5 );
-    uint32_t i = opbit( 13 );
-    if ( i )
+    if ( opbit( 13 ) ) // immediate
     {
         int32_t simm13 = sign_extend( opbits( 0, 13 ), 12 );
         tracer.Trace( "%s %s, [%s + %#x]\n", pins, regstrd( rd ), regstr1( rs1 ), simm13 );
@@ -453,9 +436,9 @@ void Sparc::trace_state()
                 case 0x20: { trace_canonical( "taddcc" ); break; }
                 case 0x21: { trace_canonical( "tsubcc" ); break; }
                 case 0x24: { trace_canonical( "mulscc" ); break; }
-                case 0x25: { trace_shift_canonical( "sll" ); break; }
-                case 0x26: { trace_shift_canonical( "srl" ); break; }
-                case 0x27: { trace_shift_canonical( "sla" ); break; }
+                case 0x25: { trace_canonical( "sll", true ); break; }
+                case 0x26: { trace_canonical( "srl", true ); break; }
+                case 0x27: { trace_canonical( "sla", true ); break; }
                 case 0x28: // rdy
                 {
                     if ( 0 == rs1 ) // rdy
@@ -635,37 +618,41 @@ void Sparc::trace_state()
 void Sparc::handle_trap( uint32_t trap )
 {
     assert( trap < 256 );
+    tbr &= ~ ( 255 << 4 );  // clear the old trap address
+    tbr |= ( trap << 4 );   // set the new trap address
 
-    if ( 0x90 == trap ) // linux syscall
+    if ( !is_address_valid( tbr ) || ( 0 == getui32( tbr ) ) ) // if no trap handler is installed, special-case some conditions for the emulator
     {
-        emulator_invoke_svc( *this );
-        return;
+        switch( trap )
+        {
+            case 5:     // overflow trap from a save instruction. could also be written in sparc assembly and installed with a trap handler.
+            {
+                emulator_invoke_sparc_trap5( *this );
+                return;
+            }
+            case 6:     // underflow trap from a restore instruction.
+            {
+                emulator_invoke_sparc_trap6( *this );
+                return;
+            }
+            case 8:     // fp_exception. the gnu compiler generates FCMPEx instructions with no trap handler installed. Ignore those traps.
+            case 0x2a:  // division_by_zero. ignore for now
+            case 0x82:  // sparc v7 software integer divide by zero. ignore for now
+            case 0x83:  // register window flush trap. no need to do anything because this is for free in the emulator
+                return;
+            case 0x90:  // linux syscall
+            {
+                emulator_invoke_svc( *this );
+                return;
+            }
+            default:
+                emulator_hard_termination( *this, "no handler installed for trap ", trap );
+        }
     }
 
-    if ( 0x83 == trap ) // register window flush trap. no need to do anything because this is for free in the emulator
-        return;
+    tracer.Trace( "handle_trap %#x, tbr %#x\n", trap, tbr );
 
-    if ( 0x82 == trap ) // sparc v7 software integer divide by zero. ignore for now
-        return;
-
-    if ( 0x2a == trap ) // division_by_zero. ignore for now
-        return;
-
-    if ( 5 == trap ) // overflow trap from a save instruction. could also be written in sparc assembly and installed with a trap handler.
-    {
-        emulator_invoke_sparc_trap5( *this );
-        return;
-    }
-
-    if ( 6 == trap ) // underflow trap from a restore instruction.
-    {
-        emulator_invoke_sparc_trap6( *this );
-        return;
-    }
-
-    tracer.Trace( "handle_trap %#x\n", trap );
     psr &= ~ ( 1 << 5 ); // set Enable Traps ET to 0
-
     uint32_t supervisor = get_bit32( psr, 7 );
     psr &= ~ ( 1 << 6 ); // clear previous supervisor PS
     psr |= ( supervisor << 6 ); // set previous supervisor PS if needed
@@ -674,14 +661,24 @@ void Sparc::handle_trap( uint32_t trap )
     set_cwp( next_save_cwp( get_cwp() ) );
     Sparc_reg( 17 ) = pc;      // overwrite the record regardless of its state
     Sparc_reg( 18 ) = npc;
-
-    tbr &= ~ ( 255 << 4 );
-    tbr |= ( trap << 4 );
     npc = tbr;
 } //handle_trap
 
-template < typename T > inline uint32_t compare_floating( T a, T b )
+template < typename T > inline uint32_t Sparc::compare_floating( T a, T b, bool NaN_trap )
 {
+    bool anan = ( FP_NAN == fpclassify( a ) ); // fpclassify instead of isnan because T isnan takes a double and we don't want type conversions here
+    bool bnan = ( FP_NAN == fpclassify( b ) );
+
+    if ( ( NaN_trap && ( anan || bnan ) )
+#ifdef issignaling // Microsoft's compiler doesn't support this macro. GNU does.
+         || ( issignaling( a ) || issignaling( b ) )
+#endif
+       )
+    {
+        handle_trap( 8 ); // fp_exception
+        return fccU;
+    }
+
     if ( a == b )
         return fccE;
     if ( a < b )
@@ -836,6 +833,7 @@ uint64_t Sparc::run()
             delay_instruction++;
         else                            // 0 or 2
         {
+            assert( delay_instruction <= 2 );
             pc = npc;
             npc += 4;
             delay_instruction = 0;
@@ -905,11 +903,11 @@ uint64_t Sparc::run()
         }
         else // format 3: op=2/3. remaining instructions
         {
-            uint32_t rd = opbits( 25, 5 );
-            uint32_t op3 = opbits( 19, 6 );
-            uint32_t rs1 = opbits( 14, 5 );
-            uint32_t i = opbit( 13 );
             uint32_t rs2 = opbits( 0, 5 );
+            uint32_t i = opbit( 13 );
+            uint32_t rs1 = opbits( 14, 5 );
+            uint32_t op3 = opbits( 19, 6 );
+            uint32_t rd = opbits( 25, 5 );
             uint32_t val1 = Sparc_reg( rs1 );
             uint32_t val2 = i ? sign_extend( opbits( 0, 13 ), 12 ) : Sparc_reg( rs2 );
 
@@ -1217,12 +1215,12 @@ uint64_t Sparc::run()
                         uint32_t opf = opbits( 5, 9 );
                         switch( opf )
                         {
-                            case 0x51: set_fcc( compare_floating( fregs[ rs1 ], fregs[ rs2 ] ) ); break;        // fcmps
-                            case 0x52: set_fcc( compare_floating( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;  // fcmpd
-                            case 0x53: set_fcc( compare_floating( get_qreg( rs1 ), get_qreg( rs2 ) ) ); break;  // fcmpq
-                            case 0x55: set_fcc( compare_floating( fregs[ rs1 ], fregs[ rs2 ] ) ); break;        // fcmpes  bugbug: no exceptions yet for these 3 fcmpeX variants
-                            case 0x56: set_fcc( compare_floating( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;  // fcmped
-                            case 0x57: set_fcc( compare_floating( get_qreg( rs1 ), get_qreg( rs2 ) ) ); break;  // fcmpeq
+                            case 0x51: set_fcc( compare_floating( fregs[ rs1 ], fregs[ rs2 ] ) ); break;              // fcmps
+                            case 0x52: set_fcc( compare_floating( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;        // fcmpd
+                            case 0x53: set_fcc( compare_floating( get_qreg( rs1 ), get_qreg( rs2 ) ) ); break;        // fcmpq
+                            case 0x55: set_fcc( compare_floating( fregs[ rs1 ], fregs[ rs2 ], true ) ); break;        // fcmpes
+                            case 0x56: set_fcc( compare_floating( get_dreg( rs1 ), get_dreg( rs2 ), true ) ); break;  // fcmped
+                            case 0x57: set_fcc( compare_floating( get_qreg( rs1 ), get_qreg( rs2 ), true ) ); break;  // fcmpeq
                             default: unhandled();
                         }
                         trace_fregs();

@@ -288,14 +288,14 @@ private:
     } //set_fcc
 
     void handle_trap( uint32_t trap );
+    template < typename T > uint32_t compare_floating( T a, T b, bool NaN_trap = false );
     void trace_state( void );                  // trace the machine current status
     void unhandled( void );
     const char * render_flags( void );
     const char render_fflag( void );
     bool check_condition( uint32_t cond );
     bool check_fcondition( uint32_t cond );
-    void trace_canonical( const char * pins );
-    void trace_shift_canonical( const char * pins );
+    void trace_canonical( const char * pins, bool shift = false );
     void trace_ld_canonical( const char * pins );
     void trace_st_canonical( const char * pins );
     const char * condition_string( uint32_t cond );
