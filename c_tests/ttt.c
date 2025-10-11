@@ -14,7 +14,7 @@
 #define SCORE_LOSE  4
 #define SCORE_MAX 9
 #define SCORE_MIN 2
-#define DefaultIterations 10
+#define DefaultIterations 1
 
 #define PieceX 1
 #define PieceO 2

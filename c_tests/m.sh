@@ -19,16 +19,17 @@ else
 fi
 
 gccpath="../gcc-14.3.0/bin"
+mkdir bin"$optlevel" 2>/dev/null
 
 # use -mcpu=v7 to generate mulscc instructions for integer multiplication
-$gccpath/sparc-linux-gcc -x c++ -O$optlevel -mcpu=v8 $1.c -o $1.elf -l:libstdc++.a -static
+$gccpath/sparc-linux-gcc -x c++ -O$optlevel -mcpu=v8 $1.c -o bin$optlevel/$1.elf -l:libstdc++.a -static
 
 # generate s file for reference
-#$gccpath/sparc-linux-gcc -x c++ -O$optlevel -S -fverbose-asm -mcpu=v8 $1.c -o $1.s
+#$gccpath/sparc-linux-gcc -x c++ -O$optlevel -S -fverbose-asm -mcpu=v8 $1.c -o bin$optlevel/$1.s
 
 # generate disassembly
-$gccpath/sparc-buildroot-linux-uclibc-objdump -d $1.elf >$1.txt
+$gccpath/sparc-buildroot-linux-uclibc-objdump -d bin$optlevel/$1.elf >bin$optlevel/$1.txt
 
 #cp $1.c /mnt/c/users/david/onedrive/sparcos/c_tests
-#cp $1.elf /mnt/c/users/david/onedrive/sparcos/c_tests
-#cp $1.txt /mnt/c/users/david/onedrive/sparcos/c_tests
+#cp bin$optlevel/$1.elf /mnt/c/users/david/onedrive/sparcos/c_tests/bin$optlevel
+#cp bin$optlevel/$1.txt /mnt/c/users/david/onedrive/sparcos/c_tests/bin$optlevel

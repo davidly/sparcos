@@ -14,7 +14,16 @@ for arg in hidave tprintf tm tmuldiv ttt sieve e tstr targs tbits t tao \
            an ba fopentst tmmap;
 do
     echo $arg
-    m.sh $arg $optflags
+    for optflag in 0 1 2 3 fast;
+    do
+        mkdir bin"$optflag" 2>/dev/null
+
+        if [ "$optflag" != "fast" ]; then
+            m.sh $arg $optflag &
+        else    
+            m.sh $arg $optflag
+        fi
+    done
 done
 
 for arg in esp esp7 sievesp tttsp tttusp;
@@ -24,3 +33,6 @@ do
 done
 
 msparcos.sh
+
+echo "Waiting for all processes to complete..."
+wait

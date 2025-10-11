@@ -27,8 +27,17 @@ echo "$date_time" >$outputfile
 for arg in hidave tprintf tm tmuldiv ttt sieve e tstr targs tbits t tao \
            tcmp ttypes tarray trw trw2 terrno mm_old ttime fileops tpi \
            t_setjmp td tf tap tphi mm ts glob nantst pis tfo sleeptm \
-           nqueens nq1d tdir fopentst lenum trename triangle fact tld tmmap \
-           esp esp7 sievesp tttsp tttusp;
+           nqueens nq1d tdir fopentst lenum trename triangle fact tld tmmap;
+do
+    echo $arg
+    for optflag in 0 1 2 3 fast;
+    do
+        echo test bin$optflag/$arg >>$outputfile
+        $_sparcosruncmd bin$optflag/$arg.elf >>$outputfile
+    done
+done
+
+for arg in esp esp7 sievesp tttsp tttusp;
 do
     echo $arg
     echo test $arg >>$outputfile
@@ -36,16 +45,25 @@ do
 done
 
 echo test ff
-echo test ff >>$outputfile
-$_sparcosruncmd ff.elf -i . ff.c >>$outputfile
+for optflag in 0 1 2 3 fast;
+do
+    echo test bin$optflag/ff >>$outputfile
+    $_sparcosruncmd bin$optflag/ff.elf -i . ff.c >>$outputfile
+done    
 
 echo test ba
-echo test ba >>$outputfile
-$_sparcosruncmd ba.elf TP.BAS >>$outputfile
+for optflag in 0 1 2 3 fast;
+do
+    echo test bin$optflag/ba >>$outputfile
+    $_sparcosruncmd bin$optflag/ba.elf TP.BAS >>$outputfile
+done    
 
 echo test an
-echo test an >>$outputfile
-$_sparcosruncmd an.elf david lee >>$outputfile
+for optflag in 0 1 2 3 fast;
+do
+    echo test bin$optflag/an >>$outputfile
+    $_sparcosruncmd bin$optflag/an.elf david lee >>$outputfile
+done    
 
 date_time=$(date)
 echo "$date_time" >>$outputfile
