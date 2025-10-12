@@ -3,23 +3,12 @@
 // these instuctions don't exist on sparc v7: umul, umulcc, smul, smulcc, udiv, udivcc, sdiv, sdivcc
 
 #include <stdint.h>
-#include <memory.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <assert.h>
 #include <limits.h>
 #include <math.h>
 
 #include <djltrace.hxx>
-
 #include "sparc.hxx"
-
-using namespace std;
-using namespace std::chrono;
-
-#if defined( __GNUC__ ) && !defined( __APPLE__ ) && !defined( __clang__ ) // bogus warning in g++ (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
-#pragma GCC diagnostic ignored "-Wformat="
-#endif
 
 // different compilers and cpus result in different values for NAN. Often the sign bit is turned on.
 static const uint64_t g_NAN = 0x7ff8000000000000;
@@ -70,67 +59,33 @@ const char Sparc::render_fflag()
     return fcc_flags[ get_fcc() ];
 } //render_fflag
 
-static const char * render_fregstr( char * reg, uint32_t r )
+static const char * freg_strings[ 32 ] =
+{
+    "f0",  "f1",  "f2",  "f3",  "f4",  "f5",  "f6",  "f7",
+    "f8",  "f9",  "f10", "f11", "f12", "f13", "f14", "f15", 
+    "f16", "f17", "f18", "f19", "f20", "f21", "f22", "f23",
+    "f24", "f25", "f26", "f27", "f28", "f29", "f30", "f31"
+};
+
+static const char * fregstr( uint32_t r )
 {
     assert( r < 32 );
-    snprintf( reg, 4, "f%u", r );
-    return reg;
-} //render_fregstr
+    return freg_strings[ r ];
+} //fregstr
 
-static const char * fregstr1( uint32_t r )
+static const char * reg_strings[ 32 ] =
 {
-    static char reg[ 4 ];
-    return render_fregstr( reg, r );
-} //fregstr1
+    "g0", "g1", "g2", "g3", "g4", "g5", "g6", "g7",
+    "o0", "o1", "o2", "o3", "o4", "o5", "sp", "o7",
+    "l0", "l1", "l2", "l3", "l4", "l5", "l6", "l7",
+    "i0", "i1", "i2", "i3", "i4", "i5", "fp", "i7"
+};
 
-static const char * fregstr2( uint32_t r )
-{
-    static char reg[ 4 ];
-    return render_fregstr( reg, r );
-} //fregstr2
-
-static const char * fregstrd( uint32_t r )
-{
-    static char reg[ 4 ];
-    return render_fregstr( reg, r );
-} //fregstrd
-
-static const char * render_regstr( char * reg, uint32_t r )
+static const char * regstr( uint32_t r )
 {
     assert( r < 32 );
-    if ( r < 8 )
-        snprintf( reg, 4, "g%u", r );
-    else if ( 14 == r )
-        strcpy( reg, "sp" );
-    else if ( r < 16 )
-        snprintf( reg, 4, "o%u", r - 8 );
-    else if ( r < 24 )
-        snprintf( reg, 4, "l%u", r - 16 );
-    else if ( 30 == r )
-        strcpy( reg, "fp" );
-    else
-        snprintf( reg, 4, "i%u", r - 24 );
-
-    return reg;
-} //render_regstr
-
-static const char * regstr1( uint32_t r )
-{
-    static char reg[ 4 ];
-    return render_regstr( reg, r );
-} //regstr1
-
-static const char * regstr2( uint32_t r )
-{
-    static char reg[ 4 ];
-    return render_regstr( reg, r );
-} //regstr2
-
-static const char * regstrd( uint32_t r )
-{
-    static char reg[ 4 ];
-    return render_regstr( reg, r );
-} //regstrd
+    return reg_strings[ r ];
+} //regstr
 
 #ifdef _WIN32
 __declspec(noinline)
@@ -248,12 +203,12 @@ void Sparc::trace_canonical( const char * pins, bool shift )
         int32_t simm13 = sign_extend( opbits( 0, 13 ), 12 );
         if ( shift )
             simm13 &= 0x1f;
-        tracer.Trace( "%s %s, %#x, %s\n", pins, regstr1( rs1 ), simm13, regstrd( rd ) );
+        tracer.Trace( "%s %s, %#x, %s\n", pins, regstr( rs1 ), simm13, regstr( rd ) );
     }
     else
     {
         uint32_t rs2 = opbits( 0, 5 );
-        tracer.Trace( "%s %s, %s, %s\n", pins, regstr1( rs1 ), regstr2( rs2 ), regstrd( rd ) );
+        tracer.Trace( "%s %s, %s, %s\n", pins, regstr( rs1 ), regstr( rs2 ), regstr( rd ) );
     }
 } //trace_canonical
 
@@ -264,15 +219,15 @@ void Sparc::trace_ld_canonical( const char * pins )
     if ( opbit( 13 ) ) // immediate
     {
         int32_t simm13 = sign_extend( opbits( 0, 13 ), 12 );
-        tracer.Trace( "%s [%s + %#x], %s\n", pins, regstr1( rs1 ), simm13, regstrd( rd ) );
+        tracer.Trace( "%s [%s + %#x], %s\n", pins, regstr( rs1 ), simm13, regstr( rd ) );
     }
     else
     {
         uint32_t rs2 = opbits( 0, 5 );
         if ( 0 == rs2 )
-            tracer.Trace( "%s [%s], %s\n", pins, regstr1( rs1 ), regstrd( rd ) );
+            tracer.Trace( "%s [%s], %s\n", pins, regstr( rs1 ), regstr( rd ) );
         else
-            tracer.Trace( "%s [%s + %s], %s\n", pins, regstr1( rs1 ), regstr2( rs2 ), regstrd( rd ) );
+            tracer.Trace( "%s [%s + %s], %s\n", pins, regstr( rs1 ), regstr( rs2 ), regstr( rd ) );
     }
 } //trace_ld_canonical
 
@@ -283,15 +238,15 @@ void Sparc::trace_st_canonical( const char * pins )
     if ( opbit( 13 ) ) // immediate
     {
         int32_t simm13 = sign_extend( opbits( 0, 13 ), 12 );
-        tracer.Trace( "%s %s, [%s + %#x]\n", pins, regstrd( rd ), regstr1( rs1 ), simm13 );
+        tracer.Trace( "%s %s, [%s + %#x]\n", pins, regstr( rd ), regstr( rs1 ), simm13 );
     }
     else
     {
         uint32_t rs2 = opbits( 0, 5 );
         if ( 0 == rs2 )
-            tracer.Trace( "%s %s, [%s]\n", pins, regstrd( rd ), regstr1( rs1 ) );
+            tracer.Trace( "%s %s, [%s]\n", pins, regstr( rd ), regstr( rs1 ) );
         else
-            tracer.Trace( "%s %s, [%s + %s]\n", pins, regstrd( rd ), regstr1( rs1 ), regstr2( rs2 ) );
+            tracer.Trace( "%s %s, [%s + %s]\n", pins, regstr( rd ), regstr( rs1 ), regstr( rs2 ) );
     }
 } //trace_st_canonical
 
@@ -303,7 +258,7 @@ void Sparc::trace_state()
     if ( symbol_name == previous_symbol )
         symbol_name = "";
     else
-        previous_symbol = symbol_name;
+        previous_symbol = symbol_name; // the symbol changed, so trace the new one
 
     char symbol_offset[40];
     symbol_offset[ 0 ] = 0;
@@ -320,7 +275,7 @@ void Sparc::trace_state()
     int len = 0;
     for ( int r = 0; r < 32; r++ )
         if ( 0 != Sparc_reg( r ) )
-            len += snprintf( & acregs[ len ], 16, "%s:%x ", regstr1( r ), Sparc_reg( r ) );
+            len += snprintf( & acregs[ len ], 16, "%s:%x ", regstr( r ), Sparc_reg( r ) );
 
     if ( 0 != y )
         len += snprintf( & acregs[ len ], 16, "y:%x ", y );
@@ -346,7 +301,7 @@ void Sparc::trace_state()
             if ( 0 == rd && 0 == imm22 )
                 tracer.Trace( "nop\n" );
             else
-                tracer.Trace( "sethi %#x, %s\n", imm22, regstrd( rd ) );
+                tracer.Trace( "sethi %#x, %s\n", imm22, regstr( rd ) );
         }
         else if ( 6 == op2 ) // FBfcc
             tracer.Trace( "fb%s%s %#x # %#lx\n", fcondition_string( cond ), a ? ",a" : "", disp22 << 2, pc + ( disp22 << 2 ) );
@@ -380,11 +335,11 @@ void Sparc::trace_state()
                     if ( 0 == rs1 )
                         if ( i )
                             if ( 0 == simm13 )
-                                tracer.Trace( "clr %s\n", regstrd( rd ) );
+                                tracer.Trace( "clr %s\n", regstr( rd ) );
                             else
-                                tracer.Trace( "mov %#x, %s\n", simm13, regstrd( rd ) );
+                                tracer.Trace( "mov %#x, %s\n", simm13, regstr( rd ) );
                         else
-                            tracer.Trace( "mov %s, %s\n", regstr2( rs2 ), regstrd( rd ) );
+                            tracer.Trace( "mov %s, %s\n", regstr( rs2 ), regstr( rd ) );
                     else
                         trace_canonical( "or" );
                     break;
@@ -405,9 +360,9 @@ void Sparc::trace_state()
                 case 0x12: // orcc
                 {
                     if ( 0 == rs1 && 0 == rd && !i )
-                        tracer.Trace( "tst %s\n", regstr2( rs2 ) );
+                        tracer.Trace( "tst %s\n", regstr( rs2 ) );
                     else if ( 0 == rs2 && 0 == rd && !i )
-                        tracer.Trace( "tst %s\n", regstr1( rs1 ) );
+                        tracer.Trace( "tst %s\n", regstr( rs1 ) );
                     else
                         trace_canonical( "orcc" );
                     break;
@@ -417,9 +372,9 @@ void Sparc::trace_state()
                 {
                     if ( 0 == rd )
                         if ( i )
-                            tracer.Trace( "cmp %s, %#x\n", regstr1( rs1 ), simm13 );
+                            tracer.Trace( "cmp %s, %#x\n", regstr( rs1 ), simm13 );
                         else
-                            tracer.Trace( "cmp %s, %s\n", regstr1( rs1 ), regstr2( rs2 ) );
+                            tracer.Trace( "cmp %s, %s\n", regstr( rs1 ), regstr( rs2 ) );
                     else
                         trace_canonical( "subcc" );
                     break;
@@ -442,7 +397,7 @@ void Sparc::trace_state()
                 case 0x28: // rdy
                 {
                     if ( 0 == rs1 ) // rdy
-                        tracer.Trace( "rd y, %s\n", regstrd( rd ) );
+                        tracer.Trace( "rd y, %s\n", regstr( rd ) );
                     else if ( 0xf == rs1 ) // stbar
                         tracer.Trace( "stbar\n" );
                     else
@@ -453,9 +408,9 @@ void Sparc::trace_state()
                 {
                     if ( 0 == rd ) // wry
                         if ( i )
-                            tracer.Trace( "wr %#x ^ %s, y\n", simm13, regstr1( rs1 ) );
+                            tracer.Trace( "wr %#x ^ %s, y\n", simm13, regstr( rs1 ) );
                         else
-                            tracer.Trace( "wr %s ^ %s, y\n", regstr1( rs1 ), regstr2( rs2 ) );
+                            tracer.Trace( "wr %s ^ %s, y\n", regstr( rs1 ), regstr( rs2 ) );
                     else
                         unhandled();
                     break;
@@ -465,38 +420,38 @@ void Sparc::trace_state()
                     uint32_t opf = opbits( 5, 9 );
                     switch( opf )
                     {
-                        case 1: tracer.Trace( "fmovs %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 5: tracer.Trace( "fnegs %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 9: tracer.Trace( "fabss %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0x29: tracer.Trace( "fsqrts %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0x2a: tracer.Trace( "fsqrtd %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0x2b: tracer.Trace( "fsqrtq %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0x41: tracer.Trace( "fadds %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0x42: tracer.Trace( "faddd %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0x43: tracer.Trace( "faddq %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0x45: tracer.Trace( "fsubs %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0x46: tracer.Trace( "fsubd %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0x47: tracer.Trace( "fsubq %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0x49: tracer.Trace( "fmuls %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0x4a: tracer.Trace( "fmuld %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0x4b: tracer.Trace( "fmulq %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0x4d: tracer.Trace( "fdivs %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0x4e: tracer.Trace( "fdivd %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0x4f: tracer.Trace( "fdivq %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0x69: tracer.Trace( "fsmuld %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0x6e: tracer.Trace( "fsmulq %s, %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0xc4: tracer.Trace( "fitos %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0xc6: tracer.Trace( "fdtos %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0xc7: tracer.Trace( "fqtos %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0xc8: tracer.Trace( "fitod %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0xc9: tracer.Trace( "fstod %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0xcb: tracer.Trace( "fqtod %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0xcc: tracer.Trace( "fitoq %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0xcd: tracer.Trace( "fstoq %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0xce: tracer.Trace( "fdtoq %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0xd1: tracer.Trace( "fstoi %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0xd2: tracer.Trace( "fdtoi %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
-                        case 0xd3: tracer.Trace( "fqtoi %s, %s\n", fregstr2( rs2 ), fregstrd( rd ) ); break;
+                        case 1: tracer.Trace( "fmovs %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 5: tracer.Trace( "fnegs %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 9: tracer.Trace( "fabss %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0x29: tracer.Trace( "fsqrts %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0x2a: tracer.Trace( "fsqrtd %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0x2b: tracer.Trace( "fsqrtq %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0x41: tracer.Trace( "fadds %s, %s, %s\n", fregstr( rs1 ), fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0x42: tracer.Trace( "faddd %s, %s, %s\n", fregstr( rs1 ), fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0x43: tracer.Trace( "faddq %s, %s, %s\n", fregstr( rs1 ), fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0x45: tracer.Trace( "fsubs %s, %s, %s\n", fregstr( rs1 ), fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0x46: tracer.Trace( "fsubd %s, %s, %s\n", fregstr( rs1 ), fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0x47: tracer.Trace( "fsubq %s, %s, %s\n", fregstr( rs1 ), fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0x49: tracer.Trace( "fmuls %s, %s, %s\n", fregstr( rs1 ), fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0x4a: tracer.Trace( "fmuld %s, %s, %s\n", fregstr( rs1 ), fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0x4b: tracer.Trace( "fmulq %s, %s, %s\n", fregstr( rs1 ), fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0x4d: tracer.Trace( "fdivs %s, %s, %s\n", fregstr( rs1 ), fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0x4e: tracer.Trace( "fdivd %s, %s, %s\n", fregstr( rs1 ), fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0x4f: tracer.Trace( "fdivq %s, %s, %s\n", fregstr( rs1 ), fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0x69: tracer.Trace( "fsmuld %s, %s, %s\n", fregstr( rs1 ), fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0x6e: tracer.Trace( "fsmulq %s, %s, %s\n", fregstr( rs1 ), fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0xc4: tracer.Trace( "fitos %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0xc6: tracer.Trace( "fdtos %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0xc7: tracer.Trace( "fqtos %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0xc8: tracer.Trace( "fitod %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0xc9: tracer.Trace( "fstod %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0xcb: tracer.Trace( "fqtod %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0xcc: tracer.Trace( "fitoq %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0xcd: tracer.Trace( "fstoq %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0xce: tracer.Trace( "fdtoq %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0xd1: tracer.Trace( "fstoi %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0xd2: tracer.Trace( "fdtoi %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0xd3: tracer.Trace( "fqtoi %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
                         default: unhandled();
                     }
                     break;
@@ -506,12 +461,12 @@ void Sparc::trace_state()
                     uint32_t opf = opbits( 5, 9 );
                     switch( opf )
                     {
-                        case 0x51: tracer.Trace( "fcmps %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ) ); break;
-                        case 0x52: tracer.Trace( "fcmpd %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ) ); break;
-                        case 0x53: tracer.Trace( "fcmpq %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ) ); break;
-                        case 0x55: tracer.Trace( "fcmpes %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ) ); break;
-                        case 0x56: tracer.Trace( "fcmped %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ) ); break;
-                        case 0x57: tracer.Trace( "fcmpeq %s, %s\n", fregstr1( rs1 ), fregstr2( rs2 ) ); break;
+                        case 0x51: tracer.Trace( "fcmps %s, %s\n", fregstr( rs1 ), fregstr( rs2 ) ); break;
+                        case 0x52: tracer.Trace( "fcmpd %s, %s\n", fregstr( rs1 ), fregstr( rs2 ) ); break;
+                        case 0x53: tracer.Trace( "fcmpq %s, %s\n", fregstr( rs1 ), fregstr( rs2 ) ); break;
+                        case 0x55: tracer.Trace( "fcmpes %s, %s\n", fregstr( rs1 ), fregstr( rs2 ) ); break;
+                        case 0x56: tracer.Trace( "fcmped %s, %s\n", fregstr( rs1 ), fregstr( rs2 ) ); break;
+                        case 0x57: tracer.Trace( "fcmpeq %s, %s\n", fregstr( rs1 ), fregstr( rs2 ) ); break;
                         default: unhandled();
                     }
                     break;
@@ -528,16 +483,16 @@ void Sparc::trace_state()
                                 trace_canonical( "jmpl" );
                         else
                             if ( i )
-                                tracer.Trace( "jmp %s + %d\n", regstr1( rs1 ), simm13 );
+                                tracer.Trace( "jmp %s + %d\n", regstr( rs1 ), simm13 );
                             else
-                                tracer.Trace( "jmp %s + %s\n", regstr1( rs1 ), regstr2( rs2 ) );
+                                tracer.Trace( "jmp %s + %s\n", regstr( rs1 ), regstr( rs2 ) );
                     else if ( 15 == rd )
                         if ( i )
-                            tracer.Trace( "call %s + %d\n", regstr1( rs1 ), simm13 );
+                            tracer.Trace( "call %s + %d\n", regstr( rs1 ), simm13 );
                         else if ( 0 == rs2 )
-                            tracer.Trace( "call %s\n", regstr1( rs1 ) );
+                            tracer.Trace( "call %s\n", regstr( rs1 ) );
                         else
-                            tracer.Trace( "call %s + %s\n", regstr1( rs1 ), regstr2( rs2 ) );
+                            tracer.Trace( "call %s + %s\n", regstr( rs1 ), regstr( rs2 ) );
                     else
                         trace_canonical( "jmpl" );
                     break;
@@ -546,17 +501,17 @@ void Sparc::trace_state()
                 {
                     uint32_t cond = opbits( 25, 4 );
                     if ( i )
-                        tracer.Trace( "t%s %#x, %s\n", condition_string( cond ), simm13, regstr1( rs1 ) );
+                        tracer.Trace( "t%s %#x, %s\n", condition_string( cond ), simm13, regstr( rs1 ) );
                     else
-                        tracer.Trace( "t%s %s, %s\n", condition_string( cond ), regstr1( rs1 ), regstr2( rs2 ) );
+                        tracer.Trace( "t%s %s, %s\n", condition_string( cond ), regstr( rs1 ), regstr( rs2 ) );
                     break;
                 }
                 case 0x3b: // flush
                 {
                     if ( i )
-                        tracer.Trace( "flush %s + %d\n", regstr1( rs1 ), simm13 );
+                        tracer.Trace( "flush %s + %d\n", regstr( rs1 ), simm13 );
                     else
-                        tracer.Trace( "flush %s + %s\n", regstr1( rs1 ), regstr1( rs2 ) );
+                        tracer.Trace( "flush %s + %s\n", regstr( rs1 ), regstr( rs2 ) );
                     break;
                 }
                 case 0x3c: { trace_canonical( "save" ); break; }// save
@@ -589,9 +544,9 @@ void Sparc::trace_state()
                 case 0x21: // ldfsr
                 {
                     if ( i )
-                        tracer.Trace( "ld [%s + %#x], fsr\n", regstr1( rs1 ), simm13 );
+                        tracer.Trace( "ld [%s + %#x], fsr\n", regstr( rs1 ), simm13 );
                     else
-                        tracer.Trace( "ld [%s + %s], fsr\n", regstr1( rs1 ), regstr2( rs2 ) );
+                        tracer.Trace( "ld [%s + %s], fsr\n", regstr( rs1 ), regstr( rs2 ) );
                     break;
                 }
                 case 0x23: { trace_ld_canonical( "lddf" ); break; }
@@ -599,9 +554,9 @@ void Sparc::trace_state()
                 case 0x25: // stfsr
                 {
                     if ( i )
-                        tracer.Trace( "st fsr, [%s + %#x]\n", regstr1( rs1 ), simm13 );
+                        tracer.Trace( "st fsr, [%s + %#x]\n", regstr( rs1 ), simm13 );
                     else
-                        tracer.Trace( "st fsr, [%s + %s]\n", regstr1( rs1 ), regstr2( rs2 ) );
+                        tracer.Trace( "st fsr, [%s + %s]\n", regstr( rs1 ), regstr( rs2 ) );
                     break;
                 }
                 case 0x27: { trace_st_canonical( "stdf" ); break; }
