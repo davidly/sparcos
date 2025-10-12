@@ -1119,7 +1119,8 @@ uint64_t Sparc::run()
                         uint32_t operand1 = ( val1 >> 1 ) | ( ( flag_n() ^ flag_v() ) << 31 );
                         uint32_t operand2 = ( y & 1 ) ? val2 : 0;
                         uint32_t rdval = operand1 + operand2;
-                        Sparc_reg( rd ) = rdval;
+                        if ( 0 != rd )
+                            Sparc_reg( rd ) = rdval;
                         y = ( y >> 1 ) | ( ( val1 & 1 ) << 31 );
                         set_zn( rdval );
                         bool sign_op1 = sign32( operand1 );
@@ -1341,7 +1342,8 @@ uint64_t Sparc::run()
                     {
                         uint32_t val = getui32( address );
                         setui32( address, Sparc_reg( rd ) );
-                        Sparc_reg( rd ) = val;
+                        if ( 0 != rd )
+                            Sparc_reg( rd ) = val;
                         break;
                     }
                     case 0x20: // ldf
