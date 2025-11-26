@@ -1680,6 +1680,8 @@ static const char * lookup_syscall( uint32_t x )
     return "unknown";
 } //lookup_syscall
 
+#if defined( X64OS ) || defined( SPARCOS )
+
 struct SyscalltoRV { uint16_t s; uint16_t r; };
 
 static int syscall_compare( const void * a, const void * b )
@@ -1695,6 +1697,8 @@ static int syscall_compare( const void * a, const void * b )
 
     return 0;
 } //syscall_compare
+
+#endif
 
 #ifdef X64OS
 
