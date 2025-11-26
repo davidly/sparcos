@@ -100,8 +100,6 @@ float my_sin_f( float x, int n = 18 )
 
     for ( int64_t i = 1; i <= n; i++ )
     {
-        float powval = powf( x, ( 2 * i - 1 ) );
-        float factval = (float) factorial( 2 * i - 1 );
         result += sign * powf( x, ( 2 * i - 1 ) ) / factorial( 2 * i - 1 );
         sign *= -1;
     }
@@ -111,7 +109,7 @@ float my_sin_f( float x, int n = 18 )
 
 void many_trigonometrics()
 {
-    float f = ( -M_PI / 2 ) + 0x000001; // want to be >= negative half pi.
+    float f = ( -M_PI / 2 ) + 0.000001; // want to be >= negative half pi.
 
     //printf( "float epsilon: %.40lf\n", (double) FLT_EPSILON );
     //printf( "double epsilon: %.40lf\n", (double) DBL_EPSILON );

@@ -570,11 +570,52 @@ void Sparc::trace_state()
     }
 } //trace_state
 
+static const char * sparc_traps[] =
+{
+  /*  0 */  0, "instruction_access_exeption", "illegal_instruction", "privileged_instruction", "fp_disabled", "window_overflow", "window_underflow", "mem_address_not_aligned",
+  /*  8 */  "fp_exception", "data_access_exception", "tag_overflow", "watchpoint_detected", 0, 0, 0, 0,
+  /* 10 */  0, 0, 0, 0, 0, 0, 0, 0,
+  /* 18 */  0, 0, 0, 0, 0, 0, 0, 0,
+  /* 20 */  "r_register_access_error", "instruction_access_error", 0, 0, "cp_disabled", "unimplemented_FLUSH", 0, 0,
+  /* 28 */  "cp_exception", "data_access_error", "division_by_zero", "data_store_error", "data_access_MMU_miss", 0, 0, 0,
+  /* 30 */  0, 0, 0, 0, 0, 0, 0, 0,
+  /* 38 */  0, 0, 0, 0, "instruction_access_MMU_miss", 0, 0, 0,
+};
+
+static const char * sparc_trap_name( uint32_t trap )
+{
+    const char * name = 0;
+    if ( trap < _countof( sparc_traps ) )
+        name = sparc_traps[ trap ];
+    if ( 0 == name )
+    {
+        static char name_buf[ 40 ];
+        name_buf[ 0 ] = 0;
+        if ( trap >= 0x11 && trap <= 0x1f )
+            snprintf( name_buf, _countof( name_buf ), "interrupt_level_%u", trap );
+        else if ( 0x82 == trap )
+            strcpy( name_buf, "sparc v7 software divide by zero" );
+        else if ( 0x83 == trap )
+            strcpy( name_buf, "register window flush" );
+        else if ( 0x90 == trap )
+            strcpy( name_buf, "linux syscall" );
+        else
+            strcpy( name_buf, "unknown" );
+
+        return name_buf;
+    }
+
+    return name;
+} //sparc_trap_name
+
 void Sparc::handle_trap( uint32_t trap )
 {
     assert( trap < 256 );
     tbr &= ~ ( 255 << 4 );  // clear the old trap address
     tbr |= ( trap << 4 );   // set the new trap address
+
+    if ( g_State & stateTraceInstructions )
+        tracer.Trace( "handle_trap %#x %s, tbr %#x\n", trap, sparc_trap_name( trap), tbr );
 
     if ( !is_address_valid( tbr ) || ( 0 == getui32( tbr ) ) ) // if no trap handler is installed, special-case some conditions for the emulator
     {
@@ -604,8 +645,6 @@ void Sparc::handle_trap( uint32_t trap )
                 emulator_hard_termination( *this, "no handler installed for trap ", trap );
         }
     }
-
-    tracer.Trace( "handle_trap %#x, tbr %#x\n", trap, tbr );
 
     psr &= ~ ( 1 << 5 ); // set Enable Traps ET to 0
     uint32_t supervisor = get_bit32( psr, 7 );
@@ -881,7 +920,7 @@ uint64_t Sparc::run()
                         uint32_t result32 = 0xffffffff & result64;
                         if ( 0 != rd )
                             Sparc_reg( rd ) = result32;
-                        if ( 0x10 == op3 || 0x18 == op3 || 0x20 == op3 )
+                        if ( op3 >= 0x10 )
                         {
                             set_zn( result32 );
                             setflag_c( 0 != ( 0xffffffff00000000 & result64 ) );
@@ -936,7 +975,7 @@ uint64_t Sparc::run()
                         uint32_t diff = val1 - val2 - c;
                         if ( 0 != rd )
                             Sparc_reg( rd ) = diff;
-                        if ( 0x14 == op3 || 0x1c == op3 || 0x21 == op3 )
+                        if ( op3 >= 0x14 )
                         {
                             set_zn( diff );
                             bool sign1 = sign32( val1 );

@@ -129,7 +129,7 @@ template <class T> T test( T & min, T & max )
 
 #pragma GCC pop_options
 
-#if 0
+#ifdef __SIZEOF_INT128__ 
 void validate_128mul()
 {
     // the gnu compiler generates mulhu for each of these, not mulh or mulhsu
@@ -192,8 +192,6 @@ template <class T> void show_result( const char *text, T x )
 
 int main( int argc, char * argv[] )
 {
-//    validate_128mul();
-
     int8_t i8min = -127, i8max = 127;
     int8_t i8 = test( i8min, i8max );
     show_result( "int8_t", (int32_t) i8 );
@@ -226,7 +224,7 @@ int main( int argc, char * argv[] )
     uint64_t u64 = test( ui64min, ui64max );
     show_result( "uint64_t", (uint32_t) u64 );
 
-#if 0
+#ifdef __SIZEOF_INT128__ 
     __int128 i128min = -228, i128max = 227;
     __int128 i128 = test( i128min, i128max );
     show_result( "int128_t", (int64_t) i128 );
@@ -234,6 +232,8 @@ int main( int argc, char * argv[] )
     unsigned __int128 ui128min = 0, ui128max = 300;
     unsigned __int128 u128 = test( ui128min, ui128max );
     show_result( "uint128_t", (uint64_t) u128 );
+
+    validate_128mul();
 #endif
 
     printf( "end of the app\n" );
