@@ -17,6 +17,10 @@ if "%1" == "x64os" (
   set _sparcosruncmd=..\..\x64os\x64os -h:120 ..\..\x64os\bin\sparcos
 )
 
+if "%1" == "x32os" (
+  set _sparcosruncmd=..\..\x64os\x32os -h:120 ..\..\x64os\x32bin\sparcos
+)
+
 if "%1" == "m68" (
   set _sparcosruncmd=..\..\m68\m68 -h:120 ..\..\m68\sparcos\sparcos.elf
 )
