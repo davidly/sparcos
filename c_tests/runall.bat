@@ -81,6 +81,12 @@ echo test an
     %_sparcosruncmd% %%f\an david lee >>%outputfile%
 ))
 
+echo test an
+( for %%f in (%_folderlist%) do (
+    echo test %%f/tgets >>%outputfile%
+    %_sparcosruncmd% %%f\tgets <tgets.txt >>%outputfile%
+))
+
 echo %date% %time% >>%outputfile%
 diff baseline_%outputfile% %outputfile%
 

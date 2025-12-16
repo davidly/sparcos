@@ -1,4 +1,4 @@
-Sat 10/11/2025  9:10:04.63 
+Tue 12/16/2025  5:31:33.18 
 test bin0/hidave 
 hi dave
 test bin1/hidave 
@@ -1673,27 +1673,27 @@ test bin0/targs
 argc: 1
 argv[ 0 ]: 'bin0/targs.elf'
 penv[ 0 ]: 'OS=SPARCOS'
-penv[ 1 ]: 'TZ=PacificDaylightTime+8'
+penv[ 1 ]: 'TZ=PacificStandardTime+8'
 test bin1/targs 
 argc: 1
 argv[ 0 ]: 'bin1/targs.elf'
 penv[ 0 ]: 'OS=SPARCOS'
-penv[ 1 ]: 'TZ=PacificDaylightTime+8'
+penv[ 1 ]: 'TZ=PacificStandardTime+8'
 test bin2/targs 
 argc: 1
 argv[ 0 ]: 'bin2/targs.elf'
 penv[ 0 ]: 'OS=SPARCOS'
-penv[ 1 ]: 'TZ=PacificDaylightTime+8'
+penv[ 1 ]: 'TZ=PacificStandardTime+8'
 test bin3/targs 
 argc: 1
 argv[ 0 ]: 'bin3/targs.elf'
 penv[ 0 ]: 'OS=SPARCOS'
-penv[ 1 ]: 'TZ=PacificDaylightTime+8'
+penv[ 1 ]: 'TZ=PacificStandardTime+8'
 test binfast/targs 
 argc: 1
 argv[ 0 ]: 'binfast/targs.elf'
 penv[ 0 ]: 'OS=SPARCOS'
-penv[ 1 ]: 'TZ=PacificDaylightTime+8'
+penv[ 1 ]: 'TZ=PacificStandardTime+8'
 test bin0/tbits 
 uint8_t:
   and 3, or 7, xor 4, nota f8, notb fc
@@ -18755,30 +18755,30 @@ fillc
 starting mult
 summ is : 465880
 test bin0/ttime 
-before TZ is set: tz: 'PacificDaylightTime+8', year: 2025, month 10, day 11, hour 16, min 10, sec 14
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 10, day 11, hour 11, min 10, sec 14
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 10, day 11, hour 8, min 10, sec 14
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 10, day 11, hour 16, min 10, sec 14
+before TZ is set: tz: 'PacificStandardTime+8', year: 2025, month 12, day 16, hour 13, min 31, sec 49
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 12, day 16, hour 8, min 31, sec 49
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 12, day 16, hour 5, min 31, sec 49
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 12, day 16, hour 13, min 31, sec 49
 test bin1/ttime 
-before TZ is set: tz: 'PacificDaylightTime+8', year: 2025, month 10, day 11, hour 16, min 10, sec 14
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 10, day 11, hour 11, min 10, sec 14
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 10, day 11, hour 8, min 10, sec 14
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 10, day 11, hour 16, min 10, sec 14
+before TZ is set: tz: 'PacificStandardTime+8', year: 2025, month 12, day 16, hour 13, min 31, sec 49
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 12, day 16, hour 8, min 31, sec 49
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 12, day 16, hour 5, min 31, sec 49
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 12, day 16, hour 13, min 31, sec 49
 test bin2/ttime 
-before TZ is set: tz: 'PacificDaylightTime+8', year: 2025, month 10, day 11, hour 16, min 10, sec 14
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 10, day 11, hour 11, min 10, sec 14
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 10, day 11, hour 8, min 10, sec 14
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 10, day 11, hour 16, min 10, sec 14
+before TZ is set: tz: 'PacificStandardTime+8', year: 2025, month 12, day 16, hour 13, min 31, sec 49
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 12, day 16, hour 8, min 31, sec 49
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 12, day 16, hour 5, min 31, sec 49
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 12, day 16, hour 13, min 31, sec 49
 test bin3/ttime 
-before TZ is set: tz: 'PacificDaylightTime+8', year: 2025, month 10, day 11, hour 16, min 10, sec 14
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 10, day 11, hour 11, min 10, sec 14
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 10, day 11, hour 8, min 10, sec 14
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 10, day 11, hour 16, min 10, sec 14
+before TZ is set: tz: 'PacificStandardTime+8', year: 2025, month 12, day 16, hour 13, min 31, sec 49
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 12, day 16, hour 8, min 31, sec 49
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 12, day 16, hour 5, min 31, sec 49
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 12, day 16, hour 13, min 31, sec 49
 test binfast/ttime 
-before TZ is set: tz: 'PacificDaylightTime+8', year: 2025, month 10, day 11, hour 16, min 10, sec 14
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 10, day 11, hour 11, min 10, sec 14
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 10, day 11, hour 8, min 10, sec 14
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 10, day 11, hour 16, min 10, sec 14
+before TZ is set: tz: 'PacificStandardTime+8', year: 2025, month 12, day 16, hour 13, min 31, sec 50
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 12, day 16, hour 8, min 31, sec 50
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 12, day 16, hour 5, min 31, sec 50
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 12, day 16, hour 13, min 31, sec 50
 test bin0/fileops 
 current offset: 0
 result of fseek: 0
@@ -29598,7 +29598,6 @@ test binfast/sleeptm
 clk_tck / number of linux ticks per second: 100
 sleeping for 1.5 seconds
 busy loop for 1.0 seconds
-getrusage user time in ms: 1015, system time 0
 sleepy time ended with great success
 test bin0/nqueens 
   size    solutions
@@ -29726,7 +29725,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2025, month 10, day 11, hour 8, min 10, sec 32
+tz: 'PST+8', year: 2025, month 12, day 16, hour 5, min 32, sec 9
 len in pfl: 0
 exiting fopentst with great success
 test bin1/fopentst 
@@ -29745,7 +29744,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2025, month 10, day 11, hour 8, min 10, sec 32
+tz: 'PST+8', year: 2025, month 12, day 16, hour 5, min 32, sec 9
 len in pfl: 0
 exiting fopentst with great success
 test bin2/fopentst 
@@ -29764,7 +29763,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2025, month 10, day 11, hour 8, min 10, sec 32
+tz: 'PST+8', year: 2025, month 12, day 16, hour 5, min 32, sec 9
 len in pfl: 0
 exiting fopentst with great success
 test bin3/fopentst 
@@ -29783,7 +29782,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2025, month 10, day 11, hour 8, min 10, sec 32
+tz: 'PST+8', year: 2025, month 12, day 16, hour 5, min 32, sec 9
 len in pfl: 0
 exiting fopentst with great success
 test binfast/fopentst 
@@ -29802,7 +29801,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2025, month 10, day 11, hour 8, min 10, sec 32
+tz: 'PST+8', year: 2025, month 12, day 16, hour 5, min 32, sec 9
 len in pfl: 0
 exiting fopentst with great success
 test bin0/lenum 
@@ -30017,38 +30016,38 @@ test tttusp
 moves: 6493
 iterations: 1
 test bin0/ff 
-  rwxrwxrwx           8961  2025-10-11 15:58:16  /Users/david/OneDrive/sparcos/c_tests/ff.c
+  rwxrwxrwx           8961  2025-12-16 13:19:38  /Users/david/OneDrive/sparcos/c_tests/ff.c
 test bin1/ff 
-  rwxrwxrwx           8961  2025-10-11 15:58:16  /Users/david/OneDrive/sparcos/c_tests/ff.c
+  rwxrwxrwx           8961  2025-12-16 13:19:38  /Users/david/OneDrive/sparcos/c_tests/ff.c
 test bin2/ff 
-  rwxrwxrwx           8961  2025-10-11 15:58:16  /Users/david/OneDrive/sparcos/c_tests/ff.c
+  rwxrwxrwx           8961  2025-12-16 13:19:38  /Users/david/OneDrive/sparcos/c_tests/ff.c
 test bin3/ff 
-  rwxrwxrwx           8961  2025-10-11 15:58:16  /Users/david/OneDrive/sparcos/c_tests/ff.c
+  rwxrwxrwx           8961  2025-12-16 13:19:38  /Users/david/OneDrive/sparcos/c_tests/ff.c
 test binfast/ff 
-  rwxrwxrwx           8961  2025-10-11 15:58:16  /Users/david/OneDrive/sparcos/c_tests/ff.c
+  rwxrwxrwx           8961  2025-12-16 13:19:38  /Users/david/OneDrive/sparcos/c_tests/ff.c
 test bin0/ba 
 parsing input file TP.BAS
-528 ms for 1 iterations
+1,057 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin1/ba 
 parsing input file TP.BAS
-123 ms for 1 iterations
+223 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin2/ba 
 parsing input file TP.BAS
-115 ms for 1 iterations
+204 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin3/ba 
 parsing input file TP.BAS
-118 ms for 1 iterations
+210 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test binfast/ba 
 parsing input file TP.BAS
-119 ms for 1 iterations
+210 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin0/an 
@@ -30271,4 +30270,69 @@ id leaved
 idea veld
 lade vied
 lead vied
-Sat 10/11/2025  9:10:37.72 
+test bin0/tgets 
+read: 'f' == 102 == 0x66
+read: 'i' == 105 == 0x69
+read: 'l' == 108 == 0x6c
+read: 'e' == 101 == 0x65
+read: ' ' == 32 == 0x20
+read: 'd' == 100 == 0x64
+read: 'a' == 97 == 0x61
+read: 't' == 116 == 0x74
+read: 'a' == 97 == 0x61
+read: '
+' == 10 == 0xa
+tgets completed with great success
+test bin1/tgets 
+read: 'f' == 102 == 0x66
+read: 'i' == 105 == 0x69
+read: 'l' == 108 == 0x6c
+read: 'e' == 101 == 0x65
+read: ' ' == 32 == 0x20
+read: 'd' == 100 == 0x64
+read: 'a' == 97 == 0x61
+read: 't' == 116 == 0x74
+read: 'a' == 97 == 0x61
+read: '
+' == 10 == 0xa
+tgets completed with great success
+test bin2/tgets 
+read: 'f' == 102 == 0x66
+read: 'i' == 105 == 0x69
+read: 'l' == 108 == 0x6c
+read: 'e' == 101 == 0x65
+read: ' ' == 32 == 0x20
+read: 'd' == 100 == 0x64
+read: 'a' == 97 == 0x61
+read: 't' == 116 == 0x74
+read: 'a' == 97 == 0x61
+read: '
+' == 10 == 0xa
+tgets completed with great success
+test bin3/tgets 
+read: 'f' == 102 == 0x66
+read: 'i' == 105 == 0x69
+read: 'l' == 108 == 0x6c
+read: 'e' == 101 == 0x65
+read: ' ' == 32 == 0x20
+read: 'd' == 100 == 0x64
+read: 'a' == 97 == 0x61
+read: 't' == 116 == 0x74
+read: 'a' == 97 == 0x61
+read: '
+' == 10 == 0xa
+tgets completed with great success
+test binfast/tgets 
+read: 'f' == 102 == 0x66
+read: 'i' == 105 == 0x69
+read: 'l' == 108 == 0x6c
+read: 'e' == 101 == 0x65
+read: ' ' == 32 == 0x20
+read: 'd' == 100 == 0x64
+read: 'a' == 97 == 0x61
+read: 't' == 116 == 0x74
+read: 'a' == 97 == 0x61
+read: '
+' == 10 == 0xa
+tgets completed with great success
+Tue 12/16/2025  5:32:17.13 

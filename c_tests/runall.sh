@@ -63,6 +63,13 @@ for optflag in 0 1 2 3 fast;
 do
     echo test bin$optflag/an >>$outputfile
     $_sparcosruncmd bin$optflag/an.elf david lee >>$outputfile
+done
+
+echo running tgets with redirected stdin
+for optflag in 0 1 2 3 fast;
+do
+    echo test bin$optflag/tgets >>$outputfile
+    $_sparcosruncmd bin$optflag/tgets <tgets.txt >>$outputfile
 done    
 
 date_time=$(date)

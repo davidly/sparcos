@@ -3,7 +3,7 @@
 int main( int argc, char * argv[] )
 {
     char acbuf[ 100 ];
-    char * result = gets( acbuf );
+    char * result = fgets( acbuf, sizeof( acbuf ), stdin );
     if ( 0 == result )
         printf( "gets failed\n" );
     else
