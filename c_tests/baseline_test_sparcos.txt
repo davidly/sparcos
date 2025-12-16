@@ -1,4 +1,4 @@
-Tue 12/16/2025  5:31:33.18 
+Tue 12/16/2025 12:34:02.75 
 test bin0/hidave 
 hi dave
 test bin1/hidave 
@@ -1669,31 +1669,6 @@ testing wcslen
 testing wcschr and wcsrchr
 testing wcsstr
 tstr completed with great success
-test bin0/targs 
-argc: 1
-argv[ 0 ]: 'bin0/targs.elf'
-penv[ 0 ]: 'OS=SPARCOS'
-penv[ 1 ]: 'TZ=PacificStandardTime+8'
-test bin1/targs 
-argc: 1
-argv[ 0 ]: 'bin1/targs.elf'
-penv[ 0 ]: 'OS=SPARCOS'
-penv[ 1 ]: 'TZ=PacificStandardTime+8'
-test bin2/targs 
-argc: 1
-argv[ 0 ]: 'bin2/targs.elf'
-penv[ 0 ]: 'OS=SPARCOS'
-penv[ 1 ]: 'TZ=PacificStandardTime+8'
-test bin3/targs 
-argc: 1
-argv[ 0 ]: 'bin3/targs.elf'
-penv[ 0 ]: 'OS=SPARCOS'
-penv[ 1 ]: 'TZ=PacificStandardTime+8'
-test binfast/targs 
-argc: 1
-argv[ 0 ]: 'binfast/targs.elf'
-penv[ 0 ]: 'OS=SPARCOS'
-penv[ 1 ]: 'TZ=PacificStandardTime+8'
 test bin0/tbits 
 uint8_t:
   and 3, or 7, xor 4, nota f8, notb fc
@@ -18755,30 +18730,30 @@ fillc
 starting mult
 summ is : 465880
 test bin0/ttime 
-before TZ is set: tz: 'PacificStandardTime+8', year: 2025, month 12, day 16, hour 13, min 31, sec 49
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 12, day 16, hour 8, min 31, sec 49
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 12, day 16, hour 5, min 31, sec 49
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 12, day 16, hour 13, min 31, sec 49
+before TZ is set: tz: 'PacificStandardTime+8', year: 2025, month 12, day 16, hour 20, min 34, sec 17
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 12, day 16, hour 15, min 34, sec 17
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 12, day 16, hour 12, min 34, sec 17
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 12, day 16, hour 20, min 34, sec 17
 test bin1/ttime 
-before TZ is set: tz: 'PacificStandardTime+8', year: 2025, month 12, day 16, hour 13, min 31, sec 49
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 12, day 16, hour 8, min 31, sec 49
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 12, day 16, hour 5, min 31, sec 49
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 12, day 16, hour 13, min 31, sec 49
+before TZ is set: tz: 'PacificStandardTime+8', year: 2025, month 12, day 16, hour 20, min 34, sec 17
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 12, day 16, hour 15, min 34, sec 17
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 12, day 16, hour 12, min 34, sec 17
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 12, day 16, hour 20, min 34, sec 17
 test bin2/ttime 
-before TZ is set: tz: 'PacificStandardTime+8', year: 2025, month 12, day 16, hour 13, min 31, sec 49
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 12, day 16, hour 8, min 31, sec 49
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 12, day 16, hour 5, min 31, sec 49
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 12, day 16, hour 13, min 31, sec 49
+before TZ is set: tz: 'PacificStandardTime+8', year: 2025, month 12, day 16, hour 20, min 34, sec 17
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 12, day 16, hour 15, min 34, sec 17
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 12, day 16, hour 12, min 34, sec 17
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 12, day 16, hour 20, min 34, sec 17
 test bin3/ttime 
-before TZ is set: tz: 'PacificStandardTime+8', year: 2025, month 12, day 16, hour 13, min 31, sec 49
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 12, day 16, hour 8, min 31, sec 49
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 12, day 16, hour 5, min 31, sec 49
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 12, day 16, hour 13, min 31, sec 49
+before TZ is set: tz: 'PacificStandardTime+8', year: 2025, month 12, day 16, hour 20, min 34, sec 17
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 12, day 16, hour 15, min 34, sec 17
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 12, day 16, hour 12, min 34, sec 17
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 12, day 16, hour 20, min 34, sec 17
 test binfast/ttime 
-before TZ is set: tz: 'PacificStandardTime+8', year: 2025, month 12, day 16, hour 13, min 31, sec 50
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 12, day 16, hour 8, min 31, sec 50
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 12, day 16, hour 5, min 31, sec 50
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 12, day 16, hour 13, min 31, sec 50
+before TZ is set: tz: 'PacificStandardTime+8', year: 2025, month 12, day 16, hour 20, min 34, sec 17
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 12, day 16, hour 15, min 34, sec 17
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 12, day 16, hour 12, min 34, sec 17
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 12, day 16, hour 20, min 34, sec 17
 test bin0/fileops 
 current offset: 0
 result of fseek: 0
@@ -29725,7 +29700,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2025, month 12, day 16, hour 5, min 32, sec 9
+tz: 'PST+8', year: 2025, month 12, day 16, hour 12, min 34, sec 36
 len in pfl: 0
 exiting fopentst with great success
 test bin1/fopentst 
@@ -29744,7 +29719,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2025, month 12, day 16, hour 5, min 32, sec 9
+tz: 'PST+8', year: 2025, month 12, day 16, hour 12, min 34, sec 36
 len in pfl: 0
 exiting fopentst with great success
 test bin2/fopentst 
@@ -29763,7 +29738,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2025, month 12, day 16, hour 5, min 32, sec 9
+tz: 'PST+8', year: 2025, month 12, day 16, hour 12, min 34, sec 36
 len in pfl: 0
 exiting fopentst with great success
 test bin3/fopentst 
@@ -29782,7 +29757,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2025, month 12, day 16, hour 5, min 32, sec 9
+tz: 'PST+8', year: 2025, month 12, day 16, hour 12, min 34, sec 36
 len in pfl: 0
 exiting fopentst with great success
 test binfast/fopentst 
@@ -29801,7 +29776,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2025, month 12, day 16, hour 5, min 32, sec 9
+tz: 'PST+8', year: 2025, month 12, day 16, hour 12, min 34, sec 36
 len in pfl: 0
 exiting fopentst with great success
 test bin0/lenum 
@@ -30027,27 +30002,27 @@ test binfast/ff
   rwxrwxrwx           8961  2025-12-16 13:19:38  /Users/david/OneDrive/sparcos/c_tests/ff.c
 test bin0/ba 
 parsing input file TP.BAS
-1,057 ms for 1 iterations
+1,044 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin1/ba 
 parsing input file TP.BAS
-223 ms for 1 iterations
+228 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin2/ba 
 parsing input file TP.BAS
-204 ms for 1 iterations
+207 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin3/ba 
 parsing input file TP.BAS
-210 ms for 1 iterations
+212 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test binfast/ba 
 parsing input file TP.BAS
-210 ms for 1 iterations
+211 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin0/an 
@@ -30335,4 +30310,49 @@ read: 'a' == 97 == 0x61
 read: '
 ' == 10 == 0xa
 tgets completed with great success
-Tue 12/16/2025  5:32:17.13 
+test bin0/targs a bb ccc dddd 
+argc: 5
+argv[ 0 ]: 'bin0/targs.elf'
+argv[ 1 ]: 'a'
+argv[ 2 ]: 'bb'
+argv[ 3 ]: 'ccc'
+argv[ 4 ]: 'dddd'
+penv[ 0 ]: 'OS=SPARCOS'
+penv[ 1 ]: 'TZ=PacificStandardTime+8'
+test bin1/targs a bb ccc dddd 
+argc: 5
+argv[ 0 ]: 'bin1/targs.elf'
+argv[ 1 ]: 'a'
+argv[ 2 ]: 'bb'
+argv[ 3 ]: 'ccc'
+argv[ 4 ]: 'dddd'
+penv[ 0 ]: 'OS=SPARCOS'
+penv[ 1 ]: 'TZ=PacificStandardTime+8'
+test bin2/targs a bb ccc dddd 
+argc: 5
+argv[ 0 ]: 'bin2/targs.elf'
+argv[ 1 ]: 'a'
+argv[ 2 ]: 'bb'
+argv[ 3 ]: 'ccc'
+argv[ 4 ]: 'dddd'
+penv[ 0 ]: 'OS=SPARCOS'
+penv[ 1 ]: 'TZ=PacificStandardTime+8'
+test bin3/targs a bb ccc dddd 
+argc: 5
+argv[ 0 ]: 'bin3/targs.elf'
+argv[ 1 ]: 'a'
+argv[ 2 ]: 'bb'
+argv[ 3 ]: 'ccc'
+argv[ 4 ]: 'dddd'
+penv[ 0 ]: 'OS=SPARCOS'
+penv[ 1 ]: 'TZ=PacificStandardTime+8'
+test binfast/targs a bb ccc dddd 
+argc: 5
+argv[ 0 ]: 'binfast/targs.elf'
+argv[ 1 ]: 'a'
+argv[ 2 ]: 'bb'
+argv[ 3 ]: 'ccc'
+argv[ 4 ]: 'dddd'
+penv[ 0 ]: 'OS=SPARCOS'
+penv[ 1 ]: 'TZ=PacificStandardTime+8'
+Tue 12/16/2025 12:34:44.49 

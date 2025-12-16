@@ -40,10 +40,11 @@ if "%_sparcosruncmd%" == "" (
 set outputfile=test_sparcos.txt
 echo %date% %time% >%outputfile%
 
-set _elflist=hidave tprintf tm tmuldiv ttt sieve e tstr targs tbits t tao ^
+set _elflist=hidave tprintf tm tmuldiv ttt sieve e tstr tbits t tao ^
              tcmp ttypes tarray trw trw2 terrno mm_old ttime fileops tpi ^
              t_setjmp td tf tap tphi mm ts glob nantst pis tfo sleeptm ^
-             nqueens nq1d tdir fopentst lenum trename triangle fact tld tmmap
+             nqueens nq1d tdir fopentst lenum trename triangle fact tld ^
+             tmmap
 
 set _folderlist=bin0 bin1 bin2 bin3 binfast
 
@@ -81,10 +82,16 @@ echo test an
     %_sparcosruncmd% %%f\an david lee >>%outputfile%
 ))
 
-echo test an
+echo test tgets
 ( for %%f in (%_folderlist%) do (
     echo test %%f/tgets >>%outputfile%
     %_sparcosruncmd% %%f\tgets <tgets.txt >>%outputfile%
+))
+
+echo test targs
+( for %%f in (%_folderlist%) do (
+    echo test %%f/targs a bb ccc dddd >>%outputfile%
+    %_sparcosruncmd% %%f\targs a bb ccc dddd >>%outputfile%
 ))
 
 echo %date% %time% >>%outputfile%

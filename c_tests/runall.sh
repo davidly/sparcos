@@ -24,7 +24,7 @@ outputfile="test_sparcos.txt"
 date_time=$(date)
 echo "$date_time" >$outputfile
 
-for arg in hidave tprintf tm tmuldiv ttt sieve e tstr targs tbits t tao \
+for arg in hidave tprintf tm tmuldiv ttt sieve e tstr tbits t tao \
            tcmp ttypes tarray trw trw2 terrno mm_old ttime fileops tpi \
            t_setjmp td tf tap tphi mm ts glob nantst pis tfo sleeptm \
            nqueens nq1d tdir fopentst lenum trename triangle fact tld tmmap;
@@ -70,6 +70,13 @@ for optflag in 0 1 2 3 fast;
 do
     echo test bin$optflag/tgets >>$outputfile
     $_sparcosruncmd bin$optflag/tgets <tgets.txt >>$outputfile
+done    
+
+echo running targs
+for optflag in 0 1 2 3 fast;
+do
+    echo test bin$optflag/targs a bb ccc dddd >>$outputfile
+    $_sparcosruncmd bin$optflag/targs a bb ccc dddd >>$outputfile
 done    
 
 date_time=$(date)
