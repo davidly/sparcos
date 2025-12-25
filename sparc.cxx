@@ -762,8 +762,6 @@ double do_fmul( double a, double b )
 
     if ( ( ainf && bzero ) || ( azero && binf ) )
         return MY_NAN;
-    if ( ainf && binf )
-        set_double_sign( INFINITY, ( signbit( a ) != signbit( b ) ) );
     if ( ainf || binf )
         return set_double_sign( INFINITY, signbit( a ) != signbit( b ) );
     if ( azero || bzero )
@@ -788,9 +786,7 @@ double do_fdiv( double a, double b )
         return MY_NAN;
     if ( ainf )
         return set_double_sign( INFINITY, signbit( a ) != signbit( b ) );
-    if ( binf )
-        return set_double_sign( 0.0, signbit( a ) != signbit( b ) );
-    if ( azero )
+    if ( binf || azero )
         return set_double_sign( 0.0, signbit( a ) != signbit( b ) );
 
     return a / b;
@@ -802,7 +798,7 @@ uint64_t Sparc::run()
     tracer.TraceBinaryData( getmem( pc ), 128, 4 );
 
     uint32_t delay_instruction = 0; // 0 == no delay, 1 == execute delay, 2 == after a save/restore in a delay slot trap
-    uint64_t cycles = 0; // really just an instruction count but sparc makes claims about 1c per 1i
+    uint64_t cycles = 0; // really just an instruction count but sparc makes claims about 1 clock cycle per instruction
 
     for ( ;; )
     {
