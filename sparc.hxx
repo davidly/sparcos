@@ -37,7 +37,7 @@ struct Sparc
         if ( 0 != start )
         {
             npc = pc = start;                      // app start address
-            //               impl            version       enable FP     enable traps current window pointer is 0
+                  //               impl         version       enable FP    enable traps current window pointer is 0
             psr = (uint32_t) ( ( 0xd << 28 ) | ( 1 << 24 ) | ( 1 << 12 ) | ( 1 << 5 ) | 0 ); // reasonable defaults
             Sparc_reg( 14 ) = top_of_stack;
         }
