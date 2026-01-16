@@ -829,7 +829,7 @@ uint64_t Sparc::run()
             delay_instruction = 0;
         }
 
-        cycles++; // typical sparc v8 implemntations execute 1 instruction per cycle. branches, int mul/div, floating point, y register access, and traps take more.
+        cycles++; // typical sparc v8 implementations execute 1 instruction per cycle. branches, int mul/div, floating point, y register access, and traps take more.
         opcode = getui32( pc );
 
         if ( 0 != g_State )
@@ -848,7 +848,6 @@ uint64_t Sparc::run()
         {
             uint32_t op2 = opbits( 22, 3 );
             uint32_t imm22 = opbits( 0, 22 );
-            int32_t disp22 = sign_extend( imm22, 21 );
 
             switch( op2 )
             {
@@ -861,6 +860,7 @@ uint64_t Sparc::run()
                     bool branch = ( 2 == op2 ) ?  check_condition( cond ) : check_fcondition( cond );
                     if ( branch )
                     {
+                        int32_t disp22 = sign_extend( imm22, 21 );
                         npc = pc + ( disp22 << 2 );
                         if ( ! ( ( 8 == cond ) && a ) ) // delay slot instructions always executed unless it's BA (branch always) and annulled
                         {
