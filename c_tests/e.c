@@ -29,7 +29,7 @@ extern int main() {
       }
 
       position = output + out_len;
-      sprintf( position, "%u", x ); //itoa( x, position, 10 );
+      sprintf( position, "%u", x ); // itoa( x, position, 10 );
       out_len += strlen( position );
   }
 

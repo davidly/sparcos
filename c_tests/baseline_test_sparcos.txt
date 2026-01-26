@@ -1,4 +1,4 @@
-Tue 12/16/2025 12:34:02.75 
+Mon 01/26/2026  7:22:57.06 
 test bin0/hidave 
 hi dave
 test bin1/hidave 
@@ -18730,30 +18730,30 @@ fillc
 starting mult
 summ is : 465880
 test bin0/ttime 
-before TZ is set: tz: 'PacificStandardTime+8', year: 2025, month 12, day 16, hour 20, min 34, sec 17
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 12, day 16, hour 15, min 34, sec 17
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 12, day 16, hour 12, min 34, sec 17
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 12, day 16, hour 20, min 34, sec 17
+before TZ is set: tz: 'PacificStandardTime+8', year: 2026, month 1, day 26, hour 15, min 23, sec 8
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 1, day 26, hour 10, min 23, sec 8
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 1, day 26, hour 7, min 23, sec 8
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 1, day 26, hour 15, min 23, sec 8
 test bin1/ttime 
-before TZ is set: tz: 'PacificStandardTime+8', year: 2025, month 12, day 16, hour 20, min 34, sec 17
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 12, day 16, hour 15, min 34, sec 17
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 12, day 16, hour 12, min 34, sec 17
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 12, day 16, hour 20, min 34, sec 17
+before TZ is set: tz: 'PacificStandardTime+8', year: 2026, month 1, day 26, hour 15, min 23, sec 8
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 1, day 26, hour 10, min 23, sec 8
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 1, day 26, hour 7, min 23, sec 8
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 1, day 26, hour 15, min 23, sec 8
 test bin2/ttime 
-before TZ is set: tz: 'PacificStandardTime+8', year: 2025, month 12, day 16, hour 20, min 34, sec 17
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 12, day 16, hour 15, min 34, sec 17
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 12, day 16, hour 12, min 34, sec 17
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 12, day 16, hour 20, min 34, sec 17
+before TZ is set: tz: 'PacificStandardTime+8', year: 2026, month 1, day 26, hour 15, min 23, sec 8
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 1, day 26, hour 10, min 23, sec 8
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 1, day 26, hour 7, min 23, sec 8
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 1, day 26, hour 15, min 23, sec 8
 test bin3/ttime 
-before TZ is set: tz: 'PacificStandardTime+8', year: 2025, month 12, day 16, hour 20, min 34, sec 17
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 12, day 16, hour 15, min 34, sec 17
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 12, day 16, hour 12, min 34, sec 17
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 12, day 16, hour 20, min 34, sec 17
+before TZ is set: tz: 'PacificStandardTime+8', year: 2026, month 1, day 26, hour 15, min 23, sec 8
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 1, day 26, hour 10, min 23, sec 8
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 1, day 26, hour 7, min 23, sec 8
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 1, day 26, hour 15, min 23, sec 8
 test binfast/ttime 
-before TZ is set: tz: 'PacificStandardTime+8', year: 2025, month 12, day 16, hour 20, min 34, sec 17
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2025, month 12, day 16, hour 15, min 34, sec 17
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2025, month 12, day 16, hour 12, min 34, sec 17
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2025, month 12, day 16, hour 20, min 34, sec 17
+before TZ is set: tz: 'PacificStandardTime+8', year: 2026, month 1, day 26, hour 15, min 23, sec 8
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 1, day 26, hour 10, min 23, sec 8
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 1, day 26, hour 7, min 23, sec 8
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 1, day 26, hour 15, min 23, sec 8
 test bin0/fileops 
 current offset: 0
 result of fseek: 0
@@ -29700,7 +29700,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2025, month 12, day 16, hour 12, min 34, sec 36
+tz: 'PST+8', year: 2026, month 1, day 26, hour 7, min 23, sec 27
 len in pfl: 0
 exiting fopentst with great success
 test bin1/fopentst 
@@ -29719,7 +29719,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2025, month 12, day 16, hour 12, min 34, sec 36
+tz: 'PST+8', year: 2026, month 1, day 26, hour 7, min 23, sec 27
 len in pfl: 0
 exiting fopentst with great success
 test bin2/fopentst 
@@ -29738,7 +29738,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2025, month 12, day 16, hour 12, min 34, sec 36
+tz: 'PST+8', year: 2026, month 1, day 26, hour 7, min 23, sec 27
 len in pfl: 0
 exiting fopentst with great success
 test bin3/fopentst 
@@ -29757,7 +29757,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2025, month 12, day 16, hour 12, min 34, sec 36
+tz: 'PST+8', year: 2026, month 1, day 26, hour 7, min 23, sec 27
 len in pfl: 0
 exiting fopentst with great success
 test binfast/fopentst 
@@ -29776,7 +29776,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2025, month 12, day 16, hour 12, min 34, sec 36
+tz: 'PST+8', year: 2026, month 1, day 26, hour 7, min 23, sec 27
 len in pfl: 0
 exiting fopentst with great success
 test bin0/lenum 
@@ -29974,6 +29974,376 @@ MREMAP_MAYMOVE: 0x1
 PROT_READ: 0x1
 PROT_WRITE: 0x2
 mmap test completed with great success
+test bin0/termiosf 
+lflag:
+ icanon 0x2
+ echonl 0x40
+ echok 0x20
+ echoke 0x800
+ echoe 0x10
+ echo 0x8
+ echoprt 0x400
+ econl 0x40
+ isig 0x1
+ iexten 0x8000
+ echoctl 0x200
+ tostop 0x100
+oflag
+ opost 0x1
+ ocrnl 0x8
+ onocr 0x10
+ onlret 0x20
+iflag
+ ixon 0x400
+ ixoff 0x1000
+ icrnl 0x100
+ inlcr 0x40
+ igncr 0x80
+ iuclc 0x200
+ imaxbel 0x2000
+ brkint 0x2
+ inpck 0x10
+ istrip 0x20
+ ignbrk 0x1
+ ignpar 0x4
+ parmrk 0x8
+ ixany 0x800
+ iutf8 0x4000
+cflag
+ cs5 0
+ cs6 0x10
+ cs7 0x20
+ csize 0x30
+ cstopb 0x40
+ cread 0x80
+ parenb 0x100
+ cs8 0x30
+ hupcl 0x400
+ clocal 0x800
+ parodd 0x200
+ cmspar 0x40000000
+ crtscts 0x80000000
+cc_c
+ VMIN 0x4
+ VTIME 0x5
+ VINTR 0
+ VQUIT 0x1
+ VERASE 0x2
+ VKILL 0x3
+ VEOF 0x4
+ VSWTC 0x7
+ VSTART 0x8
+ VSTOP 0x9
+ VSUSP 0xa
+ VEOL 0x5
+ VEOL2 0x6
+ VREPRINT 0xc
+ VWERASE 0xe
+ VLNEXT 0xf
+ VDISCARD 0xd
+tcsetattr
+ TCSANOW 0
+ TCSADRAIN 0x1
+ TCSAFLUSH 0x2
+TIOCGWINSZ 0x40087468
+c_cc elements: 0x11
+termiosf completed with great success
+test bin1/termiosf 
+lflag:
+ icanon 0x2
+ echonl 0x40
+ echok 0x20
+ echoke 0x800
+ echoe 0x10
+ echo 0x8
+ echoprt 0x400
+ econl 0x40
+ isig 0x1
+ iexten 0x8000
+ echoctl 0x200
+ tostop 0x100
+oflag
+ opost 0x1
+ ocrnl 0x8
+ onocr 0x10
+ onlret 0x20
+iflag
+ ixon 0x400
+ ixoff 0x1000
+ icrnl 0x100
+ inlcr 0x40
+ igncr 0x80
+ iuclc 0x200
+ imaxbel 0x2000
+ brkint 0x2
+ inpck 0x10
+ istrip 0x20
+ ignbrk 0x1
+ ignpar 0x4
+ parmrk 0x8
+ ixany 0x800
+ iutf8 0x4000
+cflag
+ cs5 0
+ cs6 0x10
+ cs7 0x20
+ csize 0x30
+ cstopb 0x40
+ cread 0x80
+ parenb 0x100
+ cs8 0x30
+ hupcl 0x400
+ clocal 0x800
+ parodd 0x200
+ cmspar 0x40000000
+ crtscts 0x80000000
+cc_c
+ VMIN 0x4
+ VTIME 0x5
+ VINTR 0
+ VQUIT 0x1
+ VERASE 0x2
+ VKILL 0x3
+ VEOF 0x4
+ VSWTC 0x7
+ VSTART 0x8
+ VSTOP 0x9
+ VSUSP 0xa
+ VEOL 0x5
+ VEOL2 0x6
+ VREPRINT 0xc
+ VWERASE 0xe
+ VLNEXT 0xf
+ VDISCARD 0xd
+tcsetattr
+ TCSANOW 0
+ TCSADRAIN 0x1
+ TCSAFLUSH 0x2
+TIOCGWINSZ 0x40087468
+c_cc elements: 0x11
+termiosf completed with great success
+test bin2/termiosf 
+lflag:
+ icanon 0x2
+ echonl 0x40
+ echok 0x20
+ echoke 0x800
+ echoe 0x10
+ echo 0x8
+ echoprt 0x400
+ econl 0x40
+ isig 0x1
+ iexten 0x8000
+ echoctl 0x200
+ tostop 0x100
+oflag
+ opost 0x1
+ ocrnl 0x8
+ onocr 0x10
+ onlret 0x20
+iflag
+ ixon 0x400
+ ixoff 0x1000
+ icrnl 0x100
+ inlcr 0x40
+ igncr 0x80
+ iuclc 0x200
+ imaxbel 0x2000
+ brkint 0x2
+ inpck 0x10
+ istrip 0x20
+ ignbrk 0x1
+ ignpar 0x4
+ parmrk 0x8
+ ixany 0x800
+ iutf8 0x4000
+cflag
+ cs5 0
+ cs6 0x10
+ cs7 0x20
+ csize 0x30
+ cstopb 0x40
+ cread 0x80
+ parenb 0x100
+ cs8 0x30
+ hupcl 0x400
+ clocal 0x800
+ parodd 0x200
+ cmspar 0x40000000
+ crtscts 0x80000000
+cc_c
+ VMIN 0x4
+ VTIME 0x5
+ VINTR 0
+ VQUIT 0x1
+ VERASE 0x2
+ VKILL 0x3
+ VEOF 0x4
+ VSWTC 0x7
+ VSTART 0x8
+ VSTOP 0x9
+ VSUSP 0xa
+ VEOL 0x5
+ VEOL2 0x6
+ VREPRINT 0xc
+ VWERASE 0xe
+ VLNEXT 0xf
+ VDISCARD 0xd
+tcsetattr
+ TCSANOW 0
+ TCSADRAIN 0x1
+ TCSAFLUSH 0x2
+TIOCGWINSZ 0x40087468
+c_cc elements: 0x11
+termiosf completed with great success
+test bin3/termiosf 
+lflag:
+ icanon 0x2
+ echonl 0x40
+ echok 0x20
+ echoke 0x800
+ echoe 0x10
+ echo 0x8
+ echoprt 0x400
+ econl 0x40
+ isig 0x1
+ iexten 0x8000
+ echoctl 0x200
+ tostop 0x100
+oflag
+ opost 0x1
+ ocrnl 0x8
+ onocr 0x10
+ onlret 0x20
+iflag
+ ixon 0x400
+ ixoff 0x1000
+ icrnl 0x100
+ inlcr 0x40
+ igncr 0x80
+ iuclc 0x200
+ imaxbel 0x2000
+ brkint 0x2
+ inpck 0x10
+ istrip 0x20
+ ignbrk 0x1
+ ignpar 0x4
+ parmrk 0x8
+ ixany 0x800
+ iutf8 0x4000
+cflag
+ cs5 0
+ cs6 0x10
+ cs7 0x20
+ csize 0x30
+ cstopb 0x40
+ cread 0x80
+ parenb 0x100
+ cs8 0x30
+ hupcl 0x400
+ clocal 0x800
+ parodd 0x200
+ cmspar 0x40000000
+ crtscts 0x80000000
+cc_c
+ VMIN 0x4
+ VTIME 0x5
+ VINTR 0
+ VQUIT 0x1
+ VERASE 0x2
+ VKILL 0x3
+ VEOF 0x4
+ VSWTC 0x7
+ VSTART 0x8
+ VSTOP 0x9
+ VSUSP 0xa
+ VEOL 0x5
+ VEOL2 0x6
+ VREPRINT 0xc
+ VWERASE 0xe
+ VLNEXT 0xf
+ VDISCARD 0xd
+tcsetattr
+ TCSANOW 0
+ TCSADRAIN 0x1
+ TCSAFLUSH 0x2
+TIOCGWINSZ 0x40087468
+c_cc elements: 0x11
+termiosf completed with great success
+test binfast/termiosf 
+lflag:
+ icanon 0x2
+ echonl 0x40
+ echok 0x20
+ echoke 0x800
+ echoe 0x10
+ echo 0x8
+ echoprt 0x400
+ econl 0x40
+ isig 0x1
+ iexten 0x8000
+ echoctl 0x200
+ tostop 0x100
+oflag
+ opost 0x1
+ ocrnl 0x8
+ onocr 0x10
+ onlret 0x20
+iflag
+ ixon 0x400
+ ixoff 0x1000
+ icrnl 0x100
+ inlcr 0x40
+ igncr 0x80
+ iuclc 0x200
+ imaxbel 0x2000
+ brkint 0x2
+ inpck 0x10
+ istrip 0x20
+ ignbrk 0x1
+ ignpar 0x4
+ parmrk 0x8
+ ixany 0x800
+ iutf8 0x4000
+cflag
+ cs5 0
+ cs6 0x10
+ cs7 0x20
+ csize 0x30
+ cstopb 0x40
+ cread 0x80
+ parenb 0x100
+ cs8 0x30
+ hupcl 0x400
+ clocal 0x800
+ parodd 0x200
+ cmspar 0x40000000
+ crtscts 0x80000000
+cc_c
+ VMIN 0x4
+ VTIME 0x5
+ VINTR 0
+ VQUIT 0x1
+ VERASE 0x2
+ VKILL 0x3
+ VEOF 0x4
+ VSWTC 0x7
+ VSTART 0x8
+ VSTOP 0x9
+ VSUSP 0xa
+ VEOL 0x5
+ VEOL2 0x6
+ VREPRINT 0xc
+ VWERASE 0xe
+ VLNEXT 0xf
+ VDISCARD 0xd
+tcsetattr
+ TCSANOW 0
+ TCSADRAIN 0x1
+ TCSAFLUSH 0x2
+TIOCGWINSZ 0x40087468
+c_cc elements: 0x11
+termiosf completed with great success
 test esp 
 271828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746639193200305992181741359662904357290033429526059563073813232862794349076323382988075319
 done
@@ -29991,38 +30361,38 @@ test tttusp
 moves: 6493
 iterations: 1
 test bin0/ff 
-  rwxrwxrwx           8961  2025-12-16 13:19:38  /Users/david/OneDrive/sparcos/c_tests/ff.c
+  rwxrwxrwx           8961  2026-01-26 15:19:21  /Users/david/OneDrive/sparcos/c_tests/ff.c
 test bin1/ff 
-  rwxrwxrwx           8961  2025-12-16 13:19:38  /Users/david/OneDrive/sparcos/c_tests/ff.c
+  rwxrwxrwx           8961  2026-01-26 15:19:21  /Users/david/OneDrive/sparcos/c_tests/ff.c
 test bin2/ff 
-  rwxrwxrwx           8961  2025-12-16 13:19:38  /Users/david/OneDrive/sparcos/c_tests/ff.c
+  rwxrwxrwx           8961  2026-01-26 15:19:21  /Users/david/OneDrive/sparcos/c_tests/ff.c
 test bin3/ff 
-  rwxrwxrwx           8961  2025-12-16 13:19:38  /Users/david/OneDrive/sparcos/c_tests/ff.c
+  rwxrwxrwx           8961  2026-01-26 15:19:21  /Users/david/OneDrive/sparcos/c_tests/ff.c
 test binfast/ff 
-  rwxrwxrwx           8961  2025-12-16 13:19:38  /Users/david/OneDrive/sparcos/c_tests/ff.c
+  rwxrwxrwx           8961  2026-01-26 15:19:21  /Users/david/OneDrive/sparcos/c_tests/ff.c
 test bin0/ba 
 parsing input file TP.BAS
-1,044 ms for 1 iterations
+970 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin1/ba 
 parsing input file TP.BAS
-228 ms for 1 iterations
+211 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin2/ba 
 parsing input file TP.BAS
-207 ms for 1 iterations
+188 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin3/ba 
 parsing input file TP.BAS
-212 ms for 1 iterations
+133 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test binfast/ba 
 parsing input file TP.BAS
-211 ms for 1 iterations
+137 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin0/an 
@@ -30355,4 +30725,4 @@ argv[ 3 ]: 'ccc'
 argv[ 4 ]: 'dddd'
 penv[ 0 ]: 'OS=SPARCOS'
 penv[ 1 ]: 'TZ=PacificStandardTime+8'
-Tue 12/16/2025 12:34:44.49 
+Mon 01/26/2026  7:23:35.93 
