@@ -1,4 +1,4 @@
-Mon 01/26/2026  7:22:57.06 
+Wed 01/28/2026  7:44:15.50 
 test bin0/hidave 
 hi dave
 test bin1/hidave 
@@ -18414,6 +18414,14 @@ sum: 0xf8
     0200  00 00 00 00 00 00 88 00 22 00 00 00 44 ef ff ff : ff ff ff ff ff 78 ff de ff ff ff bc 12 00 00 00  ........"...D........x..........
     0220  00 00 00 00 90 00 24 00 00 00 48 ee ff ff ff ff : ff ff ff 70 ff dc ff ff ff b8 13 00 00 00 00 00  ......$...H........p............
     0240  00 00 98 00 26 00 00 00 4c ed ff ff ff ff ff ff : ff 68 ff da ff ff ff b4                          ....&...L........h......
+element 0: 1 = 0 0 0 1
+element 1: 16 = 0 0 0 16
+element 2: 256 = 0 0 1 0
+element 3: 4096 = 0 0 16 0
+element 4: 65536 = 0 1 0 0
+element 5: 1048576 = 0 16 0 0
+element 6: 16777216 = 1 0 0 0
+element 7: 268435456 = 16 0 0 0
 tarray completed with great success
 test bin1/tarray 
 sum: 0xf8
@@ -18455,6 +18463,14 @@ sum: 0xf8
     0200  00 00 00 00 00 00 88 00 22 00 00 00 44 ef ff ff : ff ff ff ff ff 78 ff de ff ff ff bc 12 00 00 00  ........"...D........x..........
     0220  00 00 00 00 90 00 24 00 00 00 48 ee ff ff ff ff : ff ff ff 70 ff dc ff ff ff b8 13 00 00 00 00 00  ......$...H........p............
     0240  00 00 98 00 26 00 00 00 4c ed ff ff ff ff ff ff : ff 68 ff da ff ff ff b4                          ....&...L........h......
+element 0: 1 = 0 0 0 1
+element 1: 16 = 0 0 0 16
+element 2: 256 = 0 0 1 0
+element 3: 4096 = 0 0 16 0
+element 4: 65536 = 0 1 0 0
+element 5: 1048576 = 0 16 0 0
+element 6: 16777216 = 1 0 0 0
+element 7: 268435456 = 16 0 0 0
 tarray completed with great success
 test bin2/tarray 
 sum: 0xf8
@@ -18496,6 +18512,14 @@ sum: 0xf8
     0200  00 00 00 00 00 00 88 00 22 00 00 00 44 ef ff ff : ff ff ff ff ff 78 ff de ff ff ff bc 12 00 00 00  ........"...D........x..........
     0220  00 00 00 00 90 00 24 00 00 00 48 ee ff ff ff ff : ff ff ff 70 ff dc ff ff ff b8 13 00 00 00 00 00  ......$...H........p............
     0240  00 00 98 00 26 00 00 00 4c ed ff ff ff ff ff ff : ff 68 ff da ff ff ff b4                          ....&...L........h......
+element 0: 1 = 0 0 0 1
+element 1: 16 = 0 0 0 16
+element 2: 256 = 0 0 1 0
+element 3: 4096 = 0 0 16 0
+element 4: 65536 = 0 1 0 0
+element 5: 1048576 = 0 16 0 0
+element 6: 16777216 = 1 0 0 0
+element 7: 268435456 = 16 0 0 0
 tarray completed with great success
 test bin3/tarray 
 sum: 0xf8
@@ -18537,6 +18561,14 @@ sum: 0xf8
     0200  00 00 00 00 00 00 88 00 22 00 00 00 44 ef ff ff : ff ff ff ff ff 78 ff de ff ff ff bc 12 00 00 00  ........"...D........x..........
     0220  00 00 00 00 90 00 24 00 00 00 48 ee ff ff ff ff : ff ff ff 70 ff dc ff ff ff b8 13 00 00 00 00 00  ......$...H........p............
     0240  00 00 98 00 26 00 00 00 4c ed ff ff ff ff ff ff : ff 68 ff da ff ff ff b4                          ....&...L........h......
+element 0: 1 = 0 0 0 1
+element 1: 16 = 0 0 0 16
+element 2: 256 = 0 0 1 0
+element 3: 4096 = 0 0 16 0
+element 4: 65536 = 0 1 0 0
+element 5: 1048576 = 0 16 0 0
+element 6: 16777216 = 1 0 0 0
+element 7: 268435456 = 16 0 0 0
 tarray completed with great success
 test binfast/tarray 
 sum: 0xf8
@@ -18578,6 +18610,14 @@ sum: 0xf8
     0200  00 00 00 00 00 00 88 00 22 00 00 00 44 ef ff ff : ff ff ff ff ff 78 ff de ff ff ff bc 12 00 00 00  ........"...D........x..........
     0220  00 00 00 00 90 00 24 00 00 00 48 ee ff ff ff ff : ff ff ff 70 ff dc ff ff ff b8 13 00 00 00 00 00  ......$...H........p............
     0240  00 00 98 00 26 00 00 00 4c ed ff ff ff ff ff ff : ff 68 ff da ff ff ff b4                          ....&...L........h......
+element 0: 1 = 0 0 0 1
+element 1: 16 = 0 0 0 16
+element 2: 256 = 0 0 1 0
+element 3: 4096 = 0 0 16 0
+element 4: 65536 = 0 1 0 0
+element 5: 1048576 = 0 16 0 0
+element 6: 16777216 = 1 0 0 0
+element 7: 268435456 = 16 0 0 0
 tarray completed with great success
 test bin0/trw 
 O_CREATE 200
@@ -18730,30 +18770,30 @@ fillc
 starting mult
 summ is : 465880
 test bin0/ttime 
-before TZ is set: tz: 'PacificStandardTime+8', year: 2026, month 1, day 26, hour 15, min 23, sec 8
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 1, day 26, hour 10, min 23, sec 8
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 1, day 26, hour 7, min 23, sec 8
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 1, day 26, hour 15, min 23, sec 8
+before TZ is set: tz: 'PacificStandardTime+8', year: 2026, month 1, day 28, hour 15, min 44, sec 25
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 1, day 28, hour 10, min 44, sec 25
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 1, day 28, hour 7, min 44, sec 25
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 1, day 28, hour 15, min 44, sec 25
 test bin1/ttime 
-before TZ is set: tz: 'PacificStandardTime+8', year: 2026, month 1, day 26, hour 15, min 23, sec 8
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 1, day 26, hour 10, min 23, sec 8
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 1, day 26, hour 7, min 23, sec 8
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 1, day 26, hour 15, min 23, sec 8
+before TZ is set: tz: 'PacificStandardTime+8', year: 2026, month 1, day 28, hour 15, min 44, sec 25
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 1, day 28, hour 10, min 44, sec 25
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 1, day 28, hour 7, min 44, sec 25
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 1, day 28, hour 15, min 44, sec 25
 test bin2/ttime 
-before TZ is set: tz: 'PacificStandardTime+8', year: 2026, month 1, day 26, hour 15, min 23, sec 8
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 1, day 26, hour 10, min 23, sec 8
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 1, day 26, hour 7, min 23, sec 8
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 1, day 26, hour 15, min 23, sec 8
+before TZ is set: tz: 'PacificStandardTime+8', year: 2026, month 1, day 28, hour 15, min 44, sec 25
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 1, day 28, hour 10, min 44, sec 25
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 1, day 28, hour 7, min 44, sec 25
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 1, day 28, hour 15, min 44, sec 25
 test bin3/ttime 
-before TZ is set: tz: 'PacificStandardTime+8', year: 2026, month 1, day 26, hour 15, min 23, sec 8
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 1, day 26, hour 10, min 23, sec 8
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 1, day 26, hour 7, min 23, sec 8
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 1, day 26, hour 15, min 23, sec 8
+before TZ is set: tz: 'PacificStandardTime+8', year: 2026, month 1, day 28, hour 15, min 44, sec 25
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 1, day 28, hour 10, min 44, sec 25
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 1, day 28, hour 7, min 44, sec 25
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 1, day 28, hour 15, min 44, sec 25
 test binfast/ttime 
-before TZ is set: tz: 'PacificStandardTime+8', year: 2026, month 1, day 26, hour 15, min 23, sec 8
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 1, day 26, hour 10, min 23, sec 8
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 1, day 26, hour 7, min 23, sec 8
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 1, day 26, hour 15, min 23, sec 8
+before TZ is set: tz: 'PacificStandardTime+8', year: 2026, month 1, day 28, hour 15, min 44, sec 25
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 1, day 28, hour 10, min 44, sec 25
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 1, day 28, hour 7, min 44, sec 25
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 1, day 28, hour 15, min 44, sec 25
 test bin0/fileops 
 current offset: 0
 result of fseek: 0
@@ -29700,7 +29740,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2026, month 1, day 26, hour 7, min 23, sec 27
+tz: 'PST+8', year: 2026, month 1, day 28, hour 7, min 44, sec 43
 len in pfl: 0
 exiting fopentst with great success
 test bin1/fopentst 
@@ -29719,7 +29759,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2026, month 1, day 26, hour 7, min 23, sec 27
+tz: 'PST+8', year: 2026, month 1, day 28, hour 7, min 44, sec 43
 len in pfl: 0
 exiting fopentst with great success
 test bin2/fopentst 
@@ -29738,7 +29778,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2026, month 1, day 26, hour 7, min 23, sec 27
+tz: 'PST+8', year: 2026, month 1, day 28, hour 7, min 44, sec 43
 len in pfl: 0
 exiting fopentst with great success
 test bin3/fopentst 
@@ -29757,7 +29797,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2026, month 1, day 26, hour 7, min 23, sec 27
+tz: 'PST+8', year: 2026, month 1, day 28, hour 7, min 44, sec 43
 len in pfl: 0
 exiting fopentst with great success
 test binfast/fopentst 
@@ -29776,7 +29816,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2026, month 1, day 26, hour 7, min 23, sec 27
+tz: 'PST+8', year: 2026, month 1, day 28, hour 7, min 44, sec 43
 len in pfl: 0
 exiting fopentst with great success
 test bin0/lenum 
@@ -30372,27 +30412,27 @@ test binfast/ff
   rwxrwxrwx           8961  2026-01-26 15:19:21  /Users/david/OneDrive/sparcos/c_tests/ff.c
 test bin0/ba 
 parsing input file TP.BAS
-970 ms for 1 iterations
+531 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin1/ba 
 parsing input file TP.BAS
-211 ms for 1 iterations
+126 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin2/ba 
 parsing input file TP.BAS
-188 ms for 1 iterations
+120 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin3/ba 
 parsing input file TP.BAS
-133 ms for 1 iterations
+122 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test binfast/ba 
 parsing input file TP.BAS
-137 ms for 1 iterations
+123 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin0/an 
@@ -30725,4 +30765,4 @@ argv[ 3 ]: 'ccc'
 argv[ 4 ]: 'dddd'
 penv[ 0 ]: 'OS=SPARCOS'
 penv[ 1 ]: 'TZ=PacificStandardTime+8'
-Mon 01/26/2026  7:23:35.93 
+Wed 01/28/2026  7:44:48.94 
