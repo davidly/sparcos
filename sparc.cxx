@@ -792,16 +792,19 @@ double do_fdiv( double a, double b )
     return a / b;
 } //do_fdiv
 
-int32_t saturate_int32_from_ld( long double ld )
+int32_t saturate_int32_from_d( double d ) // use double because it can cover the full range of int32_t
 {
-    ld = truncl( ld );
-    if ( ld > (long double) INT32_MAX )
+    if ( isnan( d ) )
+        return INT32_MAX; // LEON processors do this 
+
+    d = trunc( d );
+    if ( d > (double) INT32_MAX )
         return INT32_MAX;
-    if ( ld < (long double) INT32_MIN )
+    if ( d < (double) INT32_MIN )
         return INT32_MIN;
 
-    return (int32_t) ld;
-} //saturate_int32_from_ld
+    return (int32_t) d;
+} //saturate_int32_from_d
 
 uint64_t Sparc::run()
 {
@@ -1176,37 +1179,37 @@ uint64_t Sparc::run()
                         switch( opf )
                         {
                             case 1: fregs[ rd ] = fregs[ rs2 ]; break;                                                        // fmovs
-                            case 5: fregs[ rd ] = -fregs[ rs2 ]; break;                                                       // fnegs
-                            case 9: fregs[ rd ] = fabsf( fregs[ rs2 ] ); break;                                               // fabss
-                            case 0x29: fregs[ rd ] = sqrtf( fregs[ rs2 ] ); break;                                            // fsqrts
-                            case 0x2a: set_dreg( rd, sqrt( get_dreg( rs2 ) ) ); break;                                        // fsqrtd
-                            case 0x2b: set_qreg( rd, sqrtl( get_qreg( rs2 ) ) ); break;                                       // fsqrtq
-                            case 0x41: fregs[ rd ] = (float) do_fadd( fregs[ rs1 ], fregs[ rs2 ] ); break;                    // fadds
-                            case 0x42: set_dreg( rd, do_fadd( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;                    // faddd
-                            case 0x43: set_qreg( rd, get_qreg( rs1 ) + get_qreg( rs2 ) ); break;                              // faddq
-                            case 0x45: fregs[ rd ] = (float) do_fsub( fregs[ rs1 ], fregs[ rs2 ] ); break;                    // fsubs
-                            case 0x46: set_dreg( rd, do_fsub( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;                    // fsubd
-                            case 0x47: set_qreg( rd, get_qreg( rs1 ) - get_qreg( rs2 ) ); break;                              // fsubq
-                            case 0x49: fregs[ rd ] = (float) do_fmul( fregs[ rs1 ], fregs[ rs2 ] ); break;                    // fmuls
-                            case 0x4a: set_dreg( rd, do_fmul( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;                    // fmuld
-                            case 0x4b: set_qreg( rd, get_qreg( rs1 ) * get_qreg( rs2 ) ); break;                              // fmulq
-                            case 0x4d: fregs[ rd ] = (float) do_fdiv( fregs[ rs1 ], fregs[ rs2 ] ); break;                    // fdivs
-                            case 0x4e: set_dreg( rd, do_fdiv( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;                    // fdivd
-                            case 0x4f: set_qreg( rd, get_qreg( rs1 ) / get_qreg( rs2 ) ); break;                              // fdivq
-                            case 0x69: set_dreg( rd, do_fmul( fregs[ rs1 ], (double) fregs[ rs2 ] ) ); break;                 // fsmuld
-                            case 0x6e: set_qreg( rd, (long double) get_dreg( rs1 ) * (long double) get_dreg( rs2 ) ); break;  // fsmulq
-                            case 0xc4: fregs[ rd ] = (float) ( * (int32_t *) &fregs[ rs2 ] ); break;                          // fitos
-                            case 0xc6: fregs[ rd ] = (float) get_dreg( rs2 ); break;                                          // fdtos
-                            case 0xc7: fregs[ rd ] = (float) get_qreg( rs2 ); break;                                          // fqtos
-                            case 0xc8: set_dreg( rd, (double) ( * (int32_t *) &fregs[ rs2 ] ) ); break;                       // fitod
-                            case 0xc9: set_dreg( rd, fregs[ rs2 ] ); break;                                                   // fstod
-                            case 0xcb: set_dreg( rd, (double) get_qreg( rs2 ) ); break;                                       // fqtod
-                            case 0xcc: set_qreg( rd, (long double) ( * (int32_t *) &fregs[ rs2 ] ) ); break;                  // fitoq
-                            case 0xcd: set_qreg( rd, fregs[ rs2 ] ); break;                                                   // fstoq
-                            case 0xce: set_qreg( rd, get_dreg( rs2 ) ); break;                                                // fdtoq
-                            case 0xd1: * (int32_t *) & fregs[ rd ] = saturate_int32_from_ld( fregs[ rs2 ] ); break;           // fstoi  these 3 round towards 0 and ignore RD in FSR
-                            case 0xd2: * (int32_t *) & fregs[ rd ] = saturate_int32_from_ld( get_dreg( rs2 ) ); break;        // fdtoi
-                            case 0xd3: * (int32_t *) & fregs[ rd ] = saturate_int32_from_ld( get_qreg( rs2 ) ); break;        // fqtoi
+                            case 5: fregs[ rd ] = -fregs[ rs2 ]; break;                                                        // fnegs
+                            case 9: fregs[ rd ] = fabsf( fregs[ rs2 ] ); break;                                                // fabss
+                            case 0x29: fregs[ rd ] = sqrtf( fregs[ rs2 ] ); break;                                             // fsqrts
+                            case 0x2a: set_dreg( rd, sqrt( get_dreg( rs2 ) ) ); break;                                         // fsqrtd
+                            case 0x2b: set_qreg( rd, sqrtl( get_qreg( rs2 ) ) ); break;                                        // fsqrtq
+                            case 0x41: fregs[ rd ] = (float) do_fadd( fregs[ rs1 ], fregs[ rs2 ] ); break;                     // fadds
+                            case 0x42: set_dreg( rd, do_fadd( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;                     // faddd
+                            case 0x43: set_qreg( rd, get_qreg( rs1 ) + get_qreg( rs2 ) ); break;                               // faddq
+                            case 0x45: fregs[ rd ] = (float) do_fsub( fregs[ rs1 ], fregs[ rs2 ] ); break;                     // fsubs
+                            case 0x46: set_dreg( rd, do_fsub( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;                     // fsubd
+                            case 0x47: set_qreg( rd, get_qreg( rs1 ) - get_qreg( rs2 ) ); break;                               // fsubq
+                            case 0x49: fregs[ rd ] = (float) do_fmul( fregs[ rs1 ], fregs[ rs2 ] ); break;                     // fmuls
+                            case 0x4a: set_dreg( rd, do_fmul( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;                     // fmuld
+                            case 0x4b: set_qreg( rd, get_qreg( rs1 ) * get_qreg( rs2 ) ); break;                               // fmulq
+                            case 0x4d: fregs[ rd ] = (float) do_fdiv( fregs[ rs1 ], fregs[ rs2 ] ); break;                     // fdivs
+                            case 0x4e: set_dreg( rd, do_fdiv( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;                     // fdivd
+                            case 0x4f: set_qreg( rd, get_qreg( rs1 ) / get_qreg( rs2 ) ); break;                               // fdivq
+                            case 0x69: set_dreg( rd, do_fmul( fregs[ rs1 ], (double) fregs[ rs2 ] ) ); break;                  // fsmuld
+                            case 0x6e: set_qreg( rd, (long double) get_dreg( rs1 ) * (long double) get_dreg( rs2 ) ); break;   // fsmulq
+                            case 0xc4: fregs[ rd ] = (float) ( * (int32_t *) &fregs[ rs2 ] ); break;                           // fitos
+                            case 0xc6: fregs[ rd ] = (float) get_dreg( rs2 ); break;                                           // fdtos
+                            case 0xc7: fregs[ rd ] = (float) get_qreg( rs2 ); break;                                           // fqtos
+                            case 0xc8: set_dreg( rd, (double) ( * (int32_t *) &fregs[ rs2 ] ) ); break;                        // fitod
+                            case 0xc9: set_dreg( rd, fregs[ rs2 ] ); break;                                                    // fstod
+                            case 0xcb: set_dreg( rd, (double) get_qreg( rs2 ) ); break;                                        // fqtod
+                            case 0xcc: set_qreg( rd, (long double) ( * (int32_t *) &fregs[ rs2 ] ) ); break;                   // fitoq
+                            case 0xcd: set_qreg( rd, fregs[ rs2 ] ); break;                                                    // fstoq
+                            case 0xce: set_qreg( rd, get_dreg( rs2 ) ); break;                                                 // fdtoq
+                            case 0xd1: * (int32_t *) & fregs[ rd ] = saturate_int32_from_d( fregs[ rs2 ] ); break;             // fstoi  these 3 round towards 0 and ignore RD in FSR
+                            case 0xd2: * (int32_t *) & fregs[ rd ] = saturate_int32_from_d( get_dreg( rs2 ) ); break;          // fdtoi
+                            case 0xd3: * (int32_t *) & fregs[ rd ] = saturate_int32_from_d( (double) get_qreg( rs2 ) ); break; // fqtoi
                             default: unhandled();
                         }
                         trace_fregs();
