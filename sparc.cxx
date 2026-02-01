@@ -792,6 +792,17 @@ double do_fdiv( double a, double b )
     return a / b;
 } //do_fdiv
 
+int32_t saturate_int32_from_ld( long double ld )
+{
+    ld = truncl( ld );
+    if ( ld > (long double) INT32_MAX )
+        return INT32_MAX;
+    if ( ld < (long double) INT32_MIN )
+        return INT32_MIN;
+
+    return (int32_t) ld;
+} //saturate_int32_from_ld
+
 uint64_t Sparc::run()
 {
     tracer.Trace( "code at pc %x:\n", pc );
@@ -1193,9 +1204,9 @@ uint64_t Sparc::run()
                             case 0xcc: set_qreg( rd, (long double) ( * (int32_t *) &fregs[ rs2 ] ) ); break;                  // fitoq
                             case 0xcd: set_qreg( rd, fregs[ rs2 ] ); break;                                                   // fstoq
                             case 0xce: set_qreg( rd, get_dreg( rs2 ) ); break;                                                // fdtoq
-                            case 0xd1: * (int32_t *) & fregs[ rd ] = (int32_t) truncf( fregs[ rs2 ] ); break;                 // fstoi  these 3 round towards 0 and ignore RD in FSR
-                            case 0xd2: * (int32_t *) & fregs[ rd ] = (int32_t) trunc( get_dreg( rs2 ) ); break;               // fdtoi
-                            case 0xd3: * (int32_t *) & fregs[ rd ] = (int32_t) truncl( get_qreg( rs2 ) ); break;              // fqtoi
+                            case 0xd1: * (int32_t *) & fregs[ rd ] = saturate_int32_from_ld( fregs[ rs2 ] ); break;           // fstoi  these 3 round towards 0 and ignore RD in FSR
+                            case 0xd2: * (int32_t *) & fregs[ rd ] = saturate_int32_from_ld( get_dreg( rs2 ) ); break;        // fdtoi
+                            case 0xd3: * (int32_t *) & fregs[ rd ] = saturate_int32_from_ld( get_qreg( rs2 ) ); break;        // fqtoi
                             default: unhandled();
                         }
                         trace_fregs();
