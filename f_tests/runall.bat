@@ -33,7 +33,8 @@ set _elflist=primes sieve e ttt mm
 ))
 
 echo %date% %time% >>%outputfile%
-diff baseline_%outputfile% %outputfile%
+dos2unix %outputfile%
+diff -b baseline_%outputfile% %outputfile%
 
 :eof
 

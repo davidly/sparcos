@@ -51,7 +51,7 @@ set _folderlist=bin0 bin1 bin2 bin3 binfast
 ( for %%a in (%_elflist%) do (
     echo test %%a
     ( for %%f in (%_folderlist%) do (
-        echo test %%f/%%a >>%outputfile%
+        echo test %%f/%%a>>%outputfile%
         %_sparcosruncmd% %%f\%%a >>%outputfile%
     ))
 ))
@@ -60,42 +60,43 @@ set _s_elflist=esp esp7 sievesp tttsp tttusp
 
 ( for %%a in (%_s_elflist%) do (
     echo test %%a
-    echo test %%a >>%outputfile%
+    echo test %%a>>%outputfile%
     %_sparcosruncmd% %%a >>%outputfile%
 ))
 
 echo test ff
 ( for %%f in (%_folderlist%) do (
-    echo test %%f/ff >>%outputfile%
+    echo test %%f/ff>>%outputfile%
     %_sparcosruncmd% %%f\ff -i . ff.c >>%outputfile%
 ))
 
 echo test ba
 ( for %%f in (%_folderlist%) do (
-    echo test %%f/ba >>%outputfile%
+    echo test %%f/ba>>%outputfile%
     %_sparcosruncmd% %%f\ba TP.BAS >>%outputfile%
 ))
 
 echo test an
 ( for %%f in (%_folderlist%) do (
-    echo test %%f/an >>%outputfile%
+    echo test %%f/an>>%outputfile%
     %_sparcosruncmd% %%f\an david lee >>%outputfile%
 ))
 
 echo test tgets
 ( for %%f in (%_folderlist%) do (
-    echo test %%f/tgets >>%outputfile%
+    echo test %%f/tgets>>%outputfile%
     %_sparcosruncmd% %%f\tgets <tgets.txt >>%outputfile%
 ))
 
 echo test targs
 ( for %%f in (%_folderlist%) do (
-    echo test %%f/targs a bb ccc dddd >>%outputfile%
+    echo test %%f/targs a bb ccc dddd>>%outputfile%
     %_sparcosruncmd% %%f\targs a bb ccc dddd >>%outputfile%
 ))
 
 echo %date% %time% >>%outputfile%
-diff baseline_%outputfile% %outputfile%
+dos2unix %outputfile%
+diff -b baseline_%outputfile% %outputfile%
 
 :eof
 

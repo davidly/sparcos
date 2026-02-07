@@ -1178,7 +1178,7 @@ uint64_t Sparc::run()
                         uint32_t opf = opbits( 5, 9 );
                         switch( opf )
                         {
-                            case 1: fregs[ rd ] = fregs[ rs2 ]; break;                                                        // fmovs
+                            case 1: fregs[ rd ] = fregs[ rs2 ]; break;                                                         // fmovs
                             case 5: fregs[ rd ] = -fregs[ rs2 ]; break;                                                        // fnegs
                             case 9: fregs[ rd ] = fabsf( fregs[ rs2 ] ); break;                                                // fabss
                             case 0x29: fregs[ rd ] = sqrtf( fregs[ rs2 ] ); break;                                             // fsqrts
