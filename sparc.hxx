@@ -161,18 +161,15 @@ struct Sparc
             return gregs[ r ];
 
         uint32_t cwp = get_cwp();
-        uint32_t i = 0;
         if ( r < 16 ) // output. below cwp
         {
             if ( cwp > 0 )
-                i = ( ( cwp - 1 ) * 16 ) + r;
-            else
-                i = ( ( NWINDOWS - 1 ) * 16 ) + r;
-        }
-        else // local or in for cwp
-            i = ( cwp * 16 ) + r - 16;
+                return regs[ ( ( cwp - 1 ) << 4 ) + r ];
 
-        return regs[ i ];
+            return regs[ ( ( NWINDOWS - 1 ) << 4 ) + r ];
+        }
+
+        return regs[ ( cwp << 4 ) + r - 16 ]; // local or in for cwp
     } //Sparc_reg
 
     inline void setflag_c( bool f ) { psr &= ~( 1 << 20 ); psr |= ( ( 0 != f ) << 20 ); }

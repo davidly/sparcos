@@ -572,7 +572,7 @@ void Sparc::trace_state()
 
 static const char * sparc_traps[] =
 {
-  /*  0 */  0, "instruction_access_exeption", "illegal_instruction", "privileged_instruction", "fp_disabled", "window_overflow", "window_underflow", "mem_address_not_aligned",
+  /*  0 */  0, "instruction_access_exception", "illegal_instruction", "privileged_instruction", "fp_disabled", "window_overflow", "window_underflow", "mem_address_not_aligned",
   /*  8 */  "fp_exception", "data_access_exception", "tag_overflow", "watchpoint_detected", 0, 0, 0, 0,
   /* 10 */  0, 0, 0, 0, 0, 0, 0, 0,
   /* 18 */  0, 0, 0, 0, 0, 0, 0, 0,
@@ -893,8 +893,9 @@ uint64_t Sparc::run()
                         Sparc_reg( rd ) = ( imm22 << 10 );
                     break;
                 }
-                case 7: unhandled(); // CBccc. There is no coprocessor
-                default: unhandled();
+                case 7: // CBccc. There is no coprocessor
+                default:
+                    unhandled();
             }
         }
         else if ( 1 == op ) // format 1. call
