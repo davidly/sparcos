@@ -9,4 +9,4 @@ I validated sparcos built with the sparc compiler will run itself and pass all o
 
 Supervisor mode is not implemented. Only usermode static binaries will run.
 
-Sparcos was built and tested on Windows running on both AMD64 and Arm64. It was also tested on Ubuntu running on both AMD64 and Arm64. It was built for RISC-V64 and run in my RVOS emulator as well.
+Sparcos was built and tested on Windows running on both AMD64 and Arm64. It was also tested on Ubuntu running on both AMD64 and Arm64. It was built for RISC-V64 and run on RISC-V64 hardware and in my RVOS emulator as well. Also tested on 64-bit Raspbery PI 5 and 32-bit Raspberry PI 4.
