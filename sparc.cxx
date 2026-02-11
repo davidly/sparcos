@@ -691,7 +691,7 @@ void Sparc::trace_fregs()
         {
             if ( 0.0 != fregs[ r ] )
                 tracer.Trace( "freg[%u] = %f / %#x\n", r, fregs[ r ], * (uint32_t *) & fregs[ r ] );
-            if ( ( 0 == ( r % 2 ) ) )
+            if ( ( 0 == ( r & 1 ) ) )
             {
                 double d = get_dreg( r );
                 if ( 0.0 != d )
@@ -1016,7 +1016,7 @@ uint64_t Sparc::run()
                         uint32_t result = ( val1 | ~val2 );
                         if ( 0 != rd )
                             Sparc_reg( rd ) = result;
-                        if ( 0x15 == op3 )
+                        if ( 0x16 == op3 )
                             set_zn( result );
                         break;
                     }
