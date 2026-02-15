@@ -5,7 +5,7 @@ I built 32-bit sparc v8 compilers on AMD64 and Arm64 running Ubuntu using [build
 
 The c_tests and f_tests folders have C/C++ and FORTRAN test source files, build scripts, and test scripts. The build scripts assume the tools have been put in a folder under sparcos called gcc-14.3.0 (the version I built). (I copy buildroot's output/host/* files to the gcc-14.3.0 directory)
 
-I validated sparcos built with the sparc compiler will run itself and pass all of the tests when run nested. I've also tested with my emulators RVOS and NTVCM. When they are built for sparc and run in sparcos all of their test cases pass as well.
+I validated sparcos built with the sparc compiler will run itself and pass all of the tests when run nested. I've also tested with my emulators NTVCM, NTVAO, RVOS, ARMOS, M68, X64OS, and X32OS. When those emulators are built for sparc and run in sparcos all of their test cases pass as well.
 
 Supervisor mode is not implemented. Only usermode static binaries will run.
 
