@@ -1327,13 +1327,13 @@ uint64_t Sparc::run()
                     case 9: // ldsb
                     {
                         if ( 0 != rd )
-                            Sparc_reg( rd ) = sign_extend( getui8( address ), 7 );
+                            Sparc_reg( rd ) = (int8_t) getui8( address );
                         break;
                     }
                     case 0xa: // ldsh
                     {
                         if ( 0 != rd )
-                            Sparc_reg( rd ) = sign_extend( getui16( address ), 15 );
+                            Sparc_reg( rd ) = (int16_t) getui16( address );
                         break;
                     }
                     case 0xd: // ldstub
