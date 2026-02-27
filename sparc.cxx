@@ -953,7 +953,11 @@ uint64_t Sparc::run()
                         if ( 0 != rd )
                             Sparc_reg( rd ) = result;
                         if ( 0x11 == op3 )
+                        {
                             set_zn( result );
+                            setflag_v( false );
+                            setflag_c( false );
+                        }
                         break;
                     }
                     case 2: // or
@@ -963,7 +967,11 @@ uint64_t Sparc::run()
                         if ( 0 != rd )
                             Sparc_reg( rd ) = result;
                         if ( 0x12 == op3 )
+                        {
                             set_zn( result );
+                            setflag_v( false );
+                            setflag_c( false );
+                        }
                         break;
                     }
                     case 3: // xor
@@ -973,7 +981,12 @@ uint64_t Sparc::run()
                         if ( 0 != rd )
                             Sparc_reg( rd ) = result;
                         if ( 0x13 == op3 )
+                        {
                             set_zn( result );
+                            setflag_v( false );
+                            setflag_c( false );
+                        }
+
                         break;
                     }
                     case 4: // sub
@@ -1007,7 +1020,11 @@ uint64_t Sparc::run()
                         if ( 0 != rd )
                             Sparc_reg( rd ) = result;
                         if ( 0x15 == op3 )
+                        {
                             set_zn( result );
+                            setflag_v( false );
+                            setflag_c( false );
+                        }
                         break;
                     }
                     case 6: // orn
@@ -1017,7 +1034,11 @@ uint64_t Sparc::run()
                         if ( 0 != rd )
                             Sparc_reg( rd ) = result;
                         if ( 0x16 == op3 )
+                        {
                             set_zn( result );
+                            setflag_v( false );
+                            setflag_c( false );
+                        }
                         break;
                     }
                     case 7: // xnor
@@ -1027,7 +1048,11 @@ uint64_t Sparc::run()
                         if ( 0 != rd )
                             Sparc_reg( rd ) = result;
                         if ( 0x17 == op3 )
+                        {
                             set_zn( result );
+                            setflag_v( false );
+                            setflag_c( false );
+                        }
                         break;
                     }
                     case 0xa: // umul
