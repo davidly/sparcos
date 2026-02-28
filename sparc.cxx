@@ -926,7 +926,7 @@ uint64_t Sparc::run()
                     case 0x18: // addxcc
                     case 0x20: // taddcc
                     {
-                        uint32_t c = ( 0x8 == op3 || 0x18 == op3 ) ? flag_c() : 0;
+                        uint32_t c = ( (op3 & 0xf) == 0x8 ) ? flag_c() : 0;
                         uint64_t result64 = (uint64_t) val1 + (uint64_t) val2 + (uint64_t) c;
                         uint32_t result32 = 0xffffffff & result64;
                         if ( 0 != rd )
@@ -938,11 +938,8 @@ uint64_t Sparc::run()
                             bool sign1 = sign32( val1 );
                             bool sign2 = sign32( val2 );
                             bool signresult = sign32( result32 );
-                            bool overflow = ( ( sign1 == sign2 ) && ( sign1 != signresult ) );
-                            if ( ( 0x20 == op3 ) && ( ( val1 & 3 ) || ( val2 & 3 ) ) )
-                                overflow = true;
-                            setflag_v( overflow );
-
+                            setflag_v( ( ( sign1 == sign2 ) && ( sign1 != signresult ) ) ||
+                                       ( ( 0x20 == op3 ) && ( ( val1 & 3 ) || ( val2 & 3 ) ) ) );
                         }
                         break;
                     }
@@ -992,7 +989,7 @@ uint64_t Sparc::run()
                     case 0x1c: // subxcc
                     case 0x21: // tsubcc
                     {
-                        uint32_t c = ( 0xc == op3 || 0x1c == op3 ) ? flag_c() : 0;
+                        uint32_t c = ( (op3 & 0xf) == 0xc ) ? flag_c() : 0;
                         uint32_t diff = val1 - val2 - c;
                         if ( 0 != rd )
                             Sparc_reg( rd ) = diff;
@@ -1003,10 +1000,8 @@ uint64_t Sparc::run()
                             bool sign2 = sign32( val2 );
                             bool signdiff = sign32( diff );
                             setflag_c( ( !sign1 && sign2 ) || ( signdiff && ( !sign1 || sign2 ) ) );
-                            bool overflow = ( ( sign1 != sign2 ) && ( signdiff != sign1 ) );
-                            if ( ( 0x21 == op3 ) && ( ( val1 & 3 ) || ( val2 & 3 ) ) )
-                                overflow = true;
-                            setflag_v( overflow );
+                            setflag_v( ( ( sign1 != sign2 ) && ( signdiff != sign1 ) ) || 
+                                       ( ( 0x21 == op3 ) && ( ( val1 & 3 ) || ( val2 & 3 ) ) ) );
                         }
                         break;
                     }
