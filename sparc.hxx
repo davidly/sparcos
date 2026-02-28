@@ -172,10 +172,7 @@ struct Sparc
         return regs[ ( cwp << 4 ) + r - 16 ]; // local or in for cwp
     } //Sparc_reg
 
-    inline void setflag_c( bool f ) { psr &= ~( 1 << 20 ); psr |= ( ( 0 != f ) << 20 ); }
-    inline void setflag_v( bool f ) { psr &= ~( 1 << 21 ); psr |= ( ( 0 != f ) << 21 ); }
-    inline void setflag_z( bool f ) { psr &= ~( 1 << 22 ); psr |= ( ( 0 != f ) << 22 ); }
-    inline void setflag_n( bool f ) { psr &= ~( 1 << 23 ); psr |= ( ( 0 != f ) << 23 ); }
+    inline void setflag_c( bool f ) { psr &= ~( 1 << 20 ); psr |= ( ( 0 != f ) << 20 ); } // syscall success/failure is here
 
 private:
     uint32_t opcode;                               // the currently executing opcode found at pc
@@ -205,6 +202,10 @@ private:
         return ( x ^ m ) - m;
     } //sign_extend
 
+    inline void setflag_v( bool f ) { psr &= ~( 1 << 21 ); psr |= ( ( 0 != f ) << 21 ); }
+    inline void setflag_z( bool f ) { psr &= ~( 1 << 22 ); psr |= ( ( 0 != f ) << 22 ); }
+    inline void setflag_n( bool f ) { psr &= ~( 1 << 23 ); psr |= ( ( 0 != f ) << 23 ); }
+
     inline bool flag_c() { return ( 0 != ( psr & ( 1 << 20 ) ) ); }
     inline bool flag_v() { return ( 0 != ( psr & ( 1 << 21 ) ) ); }
     inline bool flag_z() { return ( 0 != ( psr & ( 1 << 22 ) ) ); }
@@ -215,6 +216,11 @@ private:
         setflag_z( 0 == x );
         setflag_n( 0 != ( 0x80000000 & x ) );
     } //set_zn
+
+    inline void clear_cv()
+    {
+        psr &= ~ ( 3 << 20 );
+    } //clear_cv
 
     static inline uint32_t get_bit32( uint32_t x, uint32_t bit_number )
     {

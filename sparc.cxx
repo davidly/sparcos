@@ -955,8 +955,7 @@ uint64_t Sparc::run()
                         if ( 0x11 == op3 )
                         {
                             set_zn( result );
-                            setflag_v( false );
-                            setflag_c( false );
+                            clear_cv();
                         }
                         break;
                     }
@@ -969,8 +968,7 @@ uint64_t Sparc::run()
                         if ( 0x12 == op3 )
                         {
                             set_zn( result );
-                            setflag_v( false );
-                            setflag_c( false );
+                            clear_cv();
                         }
                         break;
                     }
@@ -983,8 +981,7 @@ uint64_t Sparc::run()
                         if ( 0x13 == op3 )
                         {
                             set_zn( result );
-                            setflag_v( false );
-                            setflag_c( false );
+                            clear_cv();
                         }
 
                         break;
@@ -1022,8 +1019,7 @@ uint64_t Sparc::run()
                         if ( 0x15 == op3 )
                         {
                             set_zn( result );
-                            setflag_v( false );
-                            setflag_c( false );
+                            clear_cv();
                         }
                         break;
                     }
@@ -1036,8 +1032,7 @@ uint64_t Sparc::run()
                         if ( 0x16 == op3 )
                         {
                             set_zn( result );
-                            setflag_v( false );
-                            setflag_c( false );
+                            clear_cv();
                         }
                         break;
                     }
@@ -1050,8 +1045,7 @@ uint64_t Sparc::run()
                         if ( 0x17 == op3 )
                         {
                             set_zn( result );
-                            setflag_v( false );
-                            setflag_c( false );
+                            clear_cv();
                         }
                         break;
                     }
@@ -1066,8 +1060,7 @@ uint64_t Sparc::run()
                         if ( 0x1a == op3 )
                         {
                             set_zn( result32 );
-                            setflag_v( false );
-                            setflag_c( false );
+                            clear_cv();
                         }
                         break;
                     }
@@ -1082,8 +1075,7 @@ uint64_t Sparc::run()
                         if ( 0x1b == op3 )
                         {
                             set_zn( result32 );
-                            setflag_v( false );
-                            setflag_c( false );
+                            clear_cv();
                         }
                         break;
                     }
@@ -1100,9 +1092,9 @@ uint64_t Sparc::run()
                             uint32_t result32 = overflow ? 0xffffffff : (uint32_t) result64;
                             if ( 0x1e == op3 )
                             {
+                                set_zn( result32 );
                                 setflag_c( false );
                                 setflag_v( overflow );
-                                set_zn( result32 );
                             }
                             if ( 0 != rd )
                                 Sparc_reg( rd ) = result32;
@@ -1126,9 +1118,9 @@ uint64_t Sparc::run()
                                 result32 = sign ? 0x80000000 : 0x7fffffff;
                             if ( 0x1f == op3 )
                             {
+                                set_zn( result32 );
                                 setflag_c( false );
                                 setflag_v( overflow );
-                                set_zn( result32 );
                             }
                             if ( 0 != rd )
                                 Sparc_reg( rd ) = result32;
