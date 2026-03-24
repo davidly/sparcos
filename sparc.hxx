@@ -322,18 +322,6 @@ private:
         #endif
     } //get_qreg
 
-    inline void set_qregold( uint32_t fr, quadfp_t q )
-    {
-        assert( 0 == ( fr & 3 ) );
-        * (quadfp_t *) ( & fregs[ fr ] ) = q;
-    } //set_dreg
-
-    inline quadfp_t get_qregold( uint32_t fr )
-    {
-        assert( 0 == ( fr & 3 ) );
-        return * (quadfp_t *) ( & fregs[ fr ] );
-    } //get_qreg
-
     inline uint32_t get_fcc() { return get_bits32( fsr, 10, 2 ); }
     inline uint32_t get_rounding_mode() { return get_bits32( fsr, 30, 2 ); }
 
