@@ -1,15 +1,15 @@
-Sun 02/01/2026 12:39:14.51 
-test bin0/hidave 
+Tue 03/24/2026 11:12:28.83 
+test bin0/hidave
 hi dave
-test bin1/hidave 
+test bin1/hidave
 hi dave
-test bin2/hidave 
+test bin2/hidave
 hi dave
-test bin3/hidave 
+test bin3/hidave
 hi dave
-test binfast/hidave 
+test binfast/hidave
 hi dave
-test bin0/tprintf 
+test bin0/tprintf
 float: 1.010000
   1.010
   1.0
@@ -58,7 +58,7 @@ Floating-point:
 Fixed-width types:
 	Largest 32-bit value is 4294967295 or 0xffffffff
 	Largest 64-bit value is 18446744073709551615 or 0xffffffffffffffff
-test bin1/tprintf 
+test bin1/tprintf
 float: 1.010000
   1.010
   1.0
@@ -107,7 +107,7 @@ Floating-point:
 Fixed-width types:
 	Largest 32-bit value is 4294967295 or 0xffffffff
 	Largest 64-bit value is 18446744073709551615 or 0xffffffffffffffff
-test bin2/tprintf 
+test bin2/tprintf
 float: 1.010000
   1.010
   1.0
@@ -156,7 +156,7 @@ Floating-point:
 Fixed-width types:
 	Largest 32-bit value is 4294967295 or 0xffffffff
 	Largest 64-bit value is 18446744073709551615 or 0xffffffffffffffff
-test bin3/tprintf 
+test bin3/tprintf
 float: 1.010000
   1.010
   1.0
@@ -205,7 +205,7 @@ Floating-point:
 Fixed-width types:
 	Largest 32-bit value is 4294967295 or 0xffffffff
 	Largest 64-bit value is 18446744073709551615 or 0xffffffffffffffff
-test binfast/tprintf 
+test binfast/tprintf
 float: 1.010000
   1.010
   1.0
@@ -254,17 +254,17 @@ Floating-point:
 Fixed-width types:
 	Largest 32-bit value is 4294967295 or 0xffffffff
 	Largest 64-bit value is 18446744073709551615 or 0xffffffffffffffff
-test bin0/tm 
+test bin0/tm
 tm has completed with great success
-test bin1/tm 
+test bin1/tm
 tm has completed with great success
-test bin2/tm 
+test bin2/tm
 tm has completed with great success
-test bin3/tm 
+test bin3/tm
 tm has completed with great success
-test binfast/tm 
+test binfast/tm
 tm has completed with great success
-test bin0/tmuldiv 
+test bin0/tmuldiv
 app start
 i8 3 * 14: 42
 i8 3 % 14: 3
@@ -507,7 +507,7 @@ ui64 18446716073709551616 * 18446744073709551612: 112000000000000
 ui64 18446716073709551616 % 18446744073709551612: 18446716073709551616
 ui64 18446716073709551616 / 18446744073709551612: 0
 tmuldiv ended with great success
-test bin1/tmuldiv 
+test bin1/tmuldiv
 app start
 i8 3 * 14: 42
 i8 3 % 14: 3
@@ -750,7 +750,7 @@ ui64 18446716073709551616 * 18446744073709551612: 112000000000000
 ui64 18446716073709551616 % 18446744073709551612: 18446716073709551616
 ui64 18446716073709551616 / 18446744073709551612: 0
 tmuldiv ended with great success
-test bin2/tmuldiv 
+test bin2/tmuldiv
 app start
 i8 3 * 14: 42
 i8 3 % 14: 3
@@ -993,7 +993,7 @@ ui64 18446716073709551616 * 18446744073709551612: 112000000000000
 ui64 18446716073709551616 % 18446744073709551612: 18446716073709551616
 ui64 18446716073709551616 / 18446744073709551612: 0
 tmuldiv ended with great success
-test bin3/tmuldiv 
+test bin3/tmuldiv
 app start
 i8 3 * 14: 42
 i8 3 % 14: 3
@@ -1236,7 +1236,7 @@ ui64 18446716073709551616 * 18446744073709551612: 112000000000000
 ui64 18446716073709551616 % 18446744073709551612: 18446716073709551616
 ui64 18446716073709551616 / 18446744073709551612: 0
 tmuldiv ended with great success
-test binfast/tmuldiv 
+test binfast/tmuldiv
 app start
 i8 3 * 14: 42
 i8 3 % 14: 3
@@ -1479,47 +1479,47 @@ ui64 18446716073709551616 * 18446744073709551612: 112000000000000
 ui64 18446716073709551616 % 18446744073709551612: 18446716073709551616
 ui64 18446716073709551616 / 18446744073709551612: 0
 tmuldiv ended with great success
-test bin0/ttt 
+test bin0/ttt
 6493 moves
 1 iterations
-test bin1/ttt 
+test bin1/ttt
 6493 moves
 1 iterations
-test bin2/ttt 
+test bin2/ttt
 6493 moves
 1 iterations
-test bin3/ttt 
+test bin3/ttt
 6493 moves
 1 iterations
-test binfast/ttt 
+test binfast/ttt
 6493 moves
 1 iterations
-test bin0/sieve 
+test bin0/sieve
 1899 primes.
-test bin1/sieve 
+test bin1/sieve
 1899 primes.
-test bin2/sieve 
+test bin2/sieve
 1899 primes.
-test bin3/sieve 
+test bin3/sieve
 1899 primes.
-test binfast/sieve 
+test binfast/sieve
 1899 primes.
-test bin0/e 
+test bin0/e
 271828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746639193200305992181741359662904357290033429526059563073813232862794349076323382988075319
 done
-test bin1/e 
+test bin1/e
 271828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746639193200305992181741359662904357290033429526059563073813232862794349076323382988075319
 done
-test bin2/e 
+test bin2/e
 271828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746639193200305992181741359662904357290033429526059563073813232862794349076323382988075319
 done
-test bin3/e 
+test bin3/e
 271828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746639193200305992181741359662904357290033429526059563073813232862794349076323382988075319
 done
-test binfast/e 
+test binfast/e
 271828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746639193200305992181741359662904357290033429526059563073813232862794349076323382988075319
 done
-test bin0/tstr 
+test bin0/tstr
 testing strlen
 testing strchr and strrchr
 testing strstr
@@ -1549,7 +1549,7 @@ testing wcslen
 testing wcschr and wcsrchr
 testing wcsstr
 tstr completed with great success
-test bin1/tstr 
+test bin1/tstr
 testing strlen
 testing strchr and strrchr
 testing strstr
@@ -1579,7 +1579,7 @@ testing wcslen
 testing wcschr and wcsrchr
 testing wcsstr
 tstr completed with great success
-test bin2/tstr 
+test bin2/tstr
 testing strlen
 testing strchr and strrchr
 testing strstr
@@ -1609,7 +1609,7 @@ testing wcslen
 testing wcschr and wcsrchr
 testing wcsstr
 tstr completed with great success
-test bin3/tstr 
+test bin3/tstr
 testing strlen
 testing strchr and strrchr
 testing strstr
@@ -1639,7 +1639,7 @@ testing wcslen
 testing wcschr and wcsrchr
 testing wcsstr
 tstr completed with great success
-test binfast/tstr 
+test binfast/tstr
 testing strlen
 testing strchr and strrchr
 testing strstr
@@ -1669,7 +1669,7 @@ testing wcslen
 testing wcschr and wcsrchr
 testing wcsstr
 tstr completed with great success
-test bin0/tbits 
+test bin0/tbits
 uint8_t:
   and 3, or 7, xor 4, nota f8, notb fc
   and 5, or ff, xor fa, nota f8, notb 2
@@ -1750,7 +1750,7 @@ int64_t:
   and f5, or ffffffffffffffff, xor ffffffffffffff0a, nota ffffffffffffff08, notb 2
   and 1, or ffffffffffffff0b, xor ffffffffffffff0a, nota f6, notb fffffffffffffffc
   and ffffffffffffff09, or ffffffffffffff09, xor 0, nota f6, notb f6
-test bin1/tbits 
+test bin1/tbits
 uint8_t:
   and 3, or 7, xor 4, nota f8, notb fc
   and 5, or ff, xor fa, nota f8, notb 2
@@ -1831,7 +1831,7 @@ int64_t:
   and f5, or ffffffffffffffff, xor ffffffffffffff0a, nota ffffffffffffff08, notb 2
   and 1, or ffffffffffffff0b, xor ffffffffffffff0a, nota f6, notb fffffffffffffffc
   and ffffffffffffff09, or ffffffffffffff09, xor 0, nota f6, notb f6
-test bin2/tbits 
+test bin2/tbits
 uint8_t:
   and 3, or 7, xor 4, nota f8, notb fc
   and 5, or ff, xor fa, nota f8, notb 2
@@ -1912,7 +1912,7 @@ int64_t:
   and f5, or ffffffffffffffff, xor ffffffffffffff0a, nota ffffffffffffff08, notb 2
   and 1, or ffffffffffffff0b, xor ffffffffffffff0a, nota f6, notb fffffffffffffffc
   and ffffffffffffff09, or ffffffffffffff09, xor 0, nota f6, notb f6
-test bin3/tbits 
+test bin3/tbits
 uint8_t:
   and 3, or 7, xor 4, nota f8, notb fc
   and 5, or ff, xor fa, nota f8, notb 2
@@ -1993,7 +1993,7 @@ int64_t:
   and f5, or ffffffffffffffff, xor ffffffffffffff0a, nota ffffffffffffff08, notb 2
   and 1, or ffffffffffffff0b, xor ffffffffffffff0a, nota f6, notb fffffffffffffffc
   and ffffffffffffff09, or ffffffffffffff09, xor 0, nota f6, notb f6
-test binfast/tbits 
+test binfast/tbits
 uint8_t:
   and 3, or 7, xor 4, nota f8, notb fc
   and 5, or ff, xor fa, nota f8, notb 2
@@ -2074,7 +2074,7 @@ int64_t:
   and f5, or ffffffffffffffff, xor ffffffffffffff0a, nota ffffffffffffff08, notb 2
   and 1, or ffffffffffffff0b, xor ffffffffffffff0a, nota f6, notb fffffffffffffffc
   and ffffffffffffff09, or ffffffffffffff09, xor 0, nota f6, notb f6
-test bin0/t 
+test bin0/t
 int8_t result: 6
 uint8_t result: 6
 int16_t result: 6
@@ -2084,7 +2084,7 @@ uint32_t result: 6
 int64_t result: 6
 uint64_t result: 6
 end of the app
-test bin1/t 
+test bin1/t
 int8_t result: 6
 uint8_t result: 6
 int16_t result: 6
@@ -2094,7 +2094,7 @@ uint32_t result: 6
 int64_t result: 6
 uint64_t result: 6
 end of the app
-test bin2/t 
+test bin2/t
 int8_t result: 6
 uint8_t result: 6
 int16_t result: 6
@@ -2104,7 +2104,7 @@ uint32_t result: 6
 int64_t result: 6
 uint64_t result: 6
 end of the app
-test bin3/t 
+test bin3/t
 int8_t result: 6
 uint8_t result: 6
 int16_t result: 6
@@ -2114,7 +2114,7 @@ uint32_t result: 6
 int64_t result: 6
 uint64_t result: 6
 end of the app
-test binfast/t 
+test binfast/t
 int8_t result: 6
 uint8_t result: 6
 int16_t result: 6
@@ -2124,7 +2124,7 @@ uint32_t result: 6
 int64_t result: 6
 uint64_t result: 6
 end of the app
-test bin0/tao 
+test bin0/tao
 type int8_t size 1, sum -52, magnitude 52 min, -52 max -52
 type int8_t size 2, sum -60, magnitude 60 min, -52 max -8
 type int8_t size 3, sum -56, magnitude 64 min, -52 max 4
@@ -2286,7 +2286,7 @@ type uint64_t size 18, sum 18428729675200071000, magnitude 18428729675200071000 
 type uint64_t size 19, sum 18428729675200071000, magnitude 18428729675200071000 min, 196 max 9223372036854776100
 type uint64_t size 20, sum 18428729675200071000, magnitude 18428729675200071000 min, 196 max 9223372036854776100
 array operations test completed with great success
-test bin1/tao 
+test bin1/tao
 type int8_t size 1, sum -52, magnitude 52 min, -52 max -52
 type int8_t size 2, sum -60, magnitude 60 min, -52 max -8
 type int8_t size 3, sum -56, magnitude 64 min, -52 max 4
@@ -2448,7 +2448,7 @@ type uint64_t size 18, sum 18428729675200071000, magnitude 18428729675200071000 
 type uint64_t size 19, sum 18428729675200071000, magnitude 18428729675200071000 min, 196 max 9223372036854776100
 type uint64_t size 20, sum 18428729675200071000, magnitude 18428729675200071000 min, 196 max 9223372036854776100
 array operations test completed with great success
-test bin2/tao 
+test bin2/tao
 type int8_t size 1, sum -52, magnitude 52 min, -52 max -52
 type int8_t size 2, sum -60, magnitude 60 min, -52 max -8
 type int8_t size 3, sum -56, magnitude 64 min, -52 max 4
@@ -2610,7 +2610,7 @@ type uint64_t size 18, sum 18428729675200071000, magnitude 18428729675200071000 
 type uint64_t size 19, sum 18428729675200071000, magnitude 18428729675200071000 min, 196 max 9223372036854776100
 type uint64_t size 20, sum 18428729675200071000, magnitude 18428729675200071000 min, 196 max 9223372036854776100
 array operations test completed with great success
-test bin3/tao 
+test bin3/tao
 type int8_t size 1, sum -52, magnitude 52 min, -52 max -52
 type int8_t size 2, sum -60, magnitude 60 min, -52 max -8
 type int8_t size 3, sum -56, magnitude 64 min, -52 max 4
@@ -2772,7 +2772,7 @@ type uint64_t size 18, sum 18428729675200071000, magnitude 18428729675200071000 
 type uint64_t size 19, sum 18428729675200071000, magnitude 18428729675200071000 min, 196 max 9223372036854776100
 type uint64_t size 20, sum 18428729675200071000, magnitude 18428729675200071000 min, 196 max 9223372036854776100
 array operations test completed with great success
-test binfast/tao 
+test binfast/tao
 type int8_t size 1, sum -52, magnitude 52 min, -52 max -52
 type int8_t size 2, sum -60, magnitude 60 min, -52 max -8
 type int8_t size 3, sum -56, magnitude 64 min, -52 max 4
@@ -2934,7 +2934,7 @@ type uint64_t size 18, sum 18428729675200071000, magnitude 18428729675200071000 
 type uint64_t size 19, sum 18428729675200071000, magnitude 18428729675200071000 min, 196 max 9223372036854776100
 type uint64_t size 20, sum 18428729675200071000, magnitude 18428729675200071000 min, 196 max 9223372036854776100
 array operations test completed with great success
-test bin0/tcmp 
+test bin0/tcmp
 uint8_t:
   lt 1 le 1 eq 0 ge 0 gt 0
   lt 1 le 1 eq 0 ge 0 gt 0
@@ -3110,7 +3110,7 @@ floating point:
   lt 0 le 0 eq 0 ge 1 gt 1
   lt 0 le 0 eq 0 ge 1 gt 1
   lt 0 le 0 eq 0 ge 1 gt 1
-test bin1/tcmp 
+test bin1/tcmp
 uint8_t:
   lt 1 le 1 eq 0 ge 0 gt 0
   lt 1 le 1 eq 0 ge 0 gt 0
@@ -3286,7 +3286,7 @@ floating point:
   lt 0 le 0 eq 0 ge 1 gt 1
   lt 0 le 0 eq 0 ge 1 gt 1
   lt 0 le 0 eq 0 ge 1 gt 1
-test bin2/tcmp 
+test bin2/tcmp
 uint8_t:
   lt 1 le 1 eq 0 ge 0 gt 0
   lt 1 le 1 eq 0 ge 0 gt 0
@@ -3462,7 +3462,7 @@ floating point:
   lt 0 le 0 eq 0 ge 1 gt 1
   lt 0 le 0 eq 0 ge 1 gt 1
   lt 0 le 0 eq 0 ge 1 gt 1
-test bin3/tcmp 
+test bin3/tcmp
 uint8_t:
   lt 1 le 1 eq 0 ge 0 gt 0
   lt 1 le 1 eq 0 ge 0 gt 0
@@ -3638,7 +3638,7 @@ floating point:
   lt 0 le 0 eq 0 ge 1 gt 1
   lt 0 le 0 eq 0 ge 1 gt 1
   lt 0 le 0 eq 0 ge 1 gt 1
-test binfast/tcmp 
+test binfast/tcmp
 uint8_t:
   lt 1 le 1 eq 0 ge 0 gt 0
   lt 1 le 1 eq 0 ge 0 gt 0
@@ -3814,7 +3814,7 @@ floating point:
   lt 0 le 0 eq 0 ge 1 gt 1
   lt 0 le 0 eq 0 ge 1 gt 1
   lt 0 le 0 eq 0 ge 1 gt 1
-test bin0/ttypes 
+test bin0/ttypes
 types: i8 a, ui8 h, i16 s, ui16 t, i32 i, ui32 j, i64 x, ui64 y, f f, d d, ld e
 int8_t is signed: 1, uint8_t is signed: 0
 int16_t is signed: 1, uint16_t is signed: 0
@@ -6726,7 +6726,7 @@ overflow: types ldouble +  double, size 128, sumA 939732557416611.070000000000, 
 cast:     types ldouble + ldouble, size 128, sumA 939732571419716.950000000000, sumB 2067411657123377.900000000000, sumC 4134823314246755.800000000000
 overflow: types ldouble + ldouble, size 128, sumA 939732557416611.070000000000, sumB 2067411626316544.400000000000, sumC 4134823252633088.800000000000
 test types completed with great success
-test bin1/ttypes 
+test bin1/ttypes
 types: i8 a, ui8 h, i16 s, ui16 t, i32 i, ui32 j, i64 x, ui64 y, f f, d d, ld e
 int8_t is signed: 1, uint8_t is signed: 0
 int16_t is signed: 1, uint16_t is signed: 0
@@ -9638,7 +9638,7 @@ overflow: types ldouble +  double, size 128, sumA 939732557416611.070000000000, 
 cast:     types ldouble + ldouble, size 128, sumA 939732571419716.950000000000, sumB 2067411657123377.900000000000, sumC 4134823314246755.800000000000
 overflow: types ldouble + ldouble, size 128, sumA 939732557416611.070000000000, sumB 2067411626316544.400000000000, sumC 4134823252633088.800000000000
 test types completed with great success
-test bin2/ttypes 
+test bin2/ttypes
 types: i8 a, ui8 h, i16 s, ui16 t, i32 i, ui32 j, i64 x, ui64 y, f f, d d, ld e
 int8_t is signed: 1, uint8_t is signed: 0
 int16_t is signed: 1, uint16_t is signed: 0
@@ -12550,7 +12550,7 @@ overflow: types ldouble +  double, size 128, sumA 939732557416611.070000000000, 
 cast:     types ldouble + ldouble, size 128, sumA 939732571419716.950000000000, sumB 2067411657123377.900000000000, sumC 4134823314246755.800000000000
 overflow: types ldouble + ldouble, size 128, sumA 939732557416611.070000000000, sumB 2067411626316544.400000000000, sumC 4134823252633088.800000000000
 test types completed with great success
-test bin3/ttypes 
+test bin3/ttypes
 types: i8 a, ui8 h, i16 s, ui16 t, i32 i, ui32 j, i64 x, ui64 y, f f, d d, ld e
 int8_t is signed: 1, uint8_t is signed: 0
 int16_t is signed: 1, uint16_t is signed: 0
@@ -15462,7 +15462,7 @@ overflow: types ldouble +  double, size 128, sumA 939732557416611.070000000000, 
 cast:     types ldouble + ldouble, size 128, sumA 939732571419716.950000000000, sumB 2067411657123377.900000000000, sumC 4134823314246755.800000000000
 overflow: types ldouble + ldouble, size 128, sumA 939732557416611.070000000000, sumB 2067411626316544.400000000000, sumC 4134823252633088.800000000000
 test types completed with great success
-test binfast/ttypes 
+test binfast/ttypes
 types: i8 a, ui8 h, i16 s, ui16 t, i32 i, ui32 j, i64 x, ui64 y, f f, d d, ld e
 int8_t is signed: 1, uint8_t is signed: 0
 int16_t is signed: 1, uint16_t is signed: 0
@@ -18374,7 +18374,7 @@ overflow: types ldouble +  double, size 128, sumA 939732557416611.070000000000, 
 cast:     types ldouble + ldouble, size 128, sumA 939732571419716.950000000000, sumB 2067411657123377.900000000000, sumC 4134823314246755.800000000000
 overflow: types ldouble + ldouble, size 128, sumA 939732557416611.070000000000, sumB 2067411626316544.400000000000, sumC 4134823252633088.800000000000
 test types completed with great success
-test bin0/tarray 
+test bin0/tarray
 sum: 0xf8
 sum: 0xf8
 sum: 0xfff8
@@ -18423,7 +18423,7 @@ element 5: 1048576 = 0 16 0 0
 element 6: 16777216 = 1 0 0 0
 element 7: 268435456 = 16 0 0 0
 tarray completed with great success
-test bin1/tarray 
+test bin1/tarray
 sum: 0xf8
 sum: 0xf8
 sum: 0xfff8
@@ -18472,7 +18472,7 @@ element 5: 1048576 = 0 16 0 0
 element 6: 16777216 = 1 0 0 0
 element 7: 268435456 = 16 0 0 0
 tarray completed with great success
-test bin2/tarray 
+test bin2/tarray
 sum: 0xf8
 sum: 0xf8
 sum: 0xfff8
@@ -18521,7 +18521,7 @@ element 5: 1048576 = 0 16 0 0
 element 6: 16777216 = 1 0 0 0
 element 7: 268435456 = 16 0 0 0
 tarray completed with great success
-test bin3/tarray 
+test bin3/tarray
 sum: 0xf8
 sum: 0xf8
 sum: 0xfff8
@@ -18570,7 +18570,7 @@ element 5: 1048576 = 0 16 0 0
 element 6: 16777216 = 1 0 0 0
 element 7: 268435456 = 16 0 0 0
 tarray completed with great success
-test binfast/tarray 
+test binfast/tarray
 sum: 0xf8
 sum: 0xf8
 sum: 0xfff8
@@ -18619,32 +18619,32 @@ element 5: 1048576 = 0 16 0 0
 element 6: 16777216 = 1 0 0 0
 element 7: 268435456 = 16 0 0 0
 tarray completed with great success
-test bin0/trw 
+test bin0/trw
 O_CREATE 200
 O_RDWR 2
 O_TRUNC 400
 trw completed with great success
-test bin1/trw 
+test bin1/trw
 O_CREATE 200
 O_RDWR 2
 O_TRUNC 400
 trw completed with great success
-test bin2/trw 
+test bin2/trw
 O_CREATE 200
 O_RDWR 2
 O_TRUNC 400
 trw completed with great success
-test bin3/trw 
+test bin3/trw
 O_CREATE 200
 O_RDWR 2
 O_TRUNC 400
 trw completed with great success
-test binfast/trw 
+test binfast/trw
 O_CREATE 200
 O_RDWR 2
 O_TRUNC 400
 trw completed with great success
-test bin0/trw2 
+test bin0/trw2
 pass 0 with element count 1
 pass 1 with element count 7
 pass 2 with element count 20
@@ -18658,7 +18658,7 @@ pass 9 with element count 128
 pass 10 with element count 129
 pass 11 with element count 701
 bin0/trw2.elf completed with great success
-test bin1/trw2 
+test bin1/trw2
 pass 0 with element count 1
 pass 1 with element count 7
 pass 2 with element count 20
@@ -18672,7 +18672,7 @@ pass 9 with element count 128
 pass 10 with element count 129
 pass 11 with element count 701
 bin1/trw2.elf completed with great success
-test bin2/trw2 
+test bin2/trw2
 pass 0 with element count 1
 pass 1 with element count 7
 pass 2 with element count 20
@@ -18686,7 +18686,7 @@ pass 9 with element count 128
 pass 10 with element count 129
 pass 11 with element count 701
 bin2/trw2.elf completed with great success
-test bin3/trw2 
+test bin3/trw2
 pass 0 with element count 1
 pass 1 with element count 7
 pass 2 with element count 20
@@ -18700,7 +18700,7 @@ pass 9 with element count 128
 pass 10 with element count 129
 pass 11 with element count 701
 bin3/trw2.elf completed with great success
-test binfast/trw2 
+test binfast/trw2
 pass 0 with element count 1
 pass 1 with element count 7
 pass 2 with element count 20
@@ -18714,87 +18714,87 @@ pass 9 with element count 128
 pass 10 with element count 129
 pass 11 with element count 701
 binfast/trw2.elf completed with great success
-test bin0/terrno 
+test bin0/terrno
 errno opening a file for read that doesn't exist: 2 (2 file not found expected)
 errno doing write to stdin file descriptor: 13. (13 permission denied expected)
 errno opening a file for read with invalid open flags: 22 (22 invalid argument expected)
 errno test completed with great success
-test bin1/terrno 
+test bin1/terrno
 errno opening a file for read that doesn't exist: 2 (2 file not found expected)
 errno doing write to stdin file descriptor: 13. (13 permission denied expected)
 errno opening a file for read with invalid open flags: 22 (22 invalid argument expected)
 errno test completed with great success
-test bin2/terrno 
+test bin2/terrno
 errno opening a file for read that doesn't exist: 2 (2 file not found expected)
 errno doing write to stdin file descriptor: 13. (13 permission denied expected)
 errno opening a file for read with invalid open flags: 22 (22 invalid argument expected)
 errno test completed with great success
-test bin3/terrno 
+test bin3/terrno
 errno opening a file for read that doesn't exist: 2 (2 file not found expected)
 errno doing write to stdin file descriptor: 13. (13 permission denied expected)
 errno opening a file for read with invalid open flags: 22 (22 invalid argument expected)
 errno test completed with great success
-test binfast/terrno 
+test binfast/terrno
 errno opening a file for read that doesn't exist: 2 (2 file not found expected)
 errno doing write to stdin file descriptor: 13. (13 permission denied expected)
 errno opening a file for read with invalid open flags: 22 (22 invalid argument expected)
 errno test completed with great success
-test bin0/mm_old 
+test bin0/mm_old
 filla
 fillb
 fillc
 starting mult
 summ is : 465880
-test bin1/mm_old 
+test bin1/mm_old
 filla
 fillb
 fillc
 starting mult
 summ is : 465880
-test bin2/mm_old 
+test bin2/mm_old
 filla
 fillb
 fillc
 starting mult
 summ is : 465880
-test bin3/mm_old 
+test bin3/mm_old
 filla
 fillb
 fillc
 starting mult
 summ is : 465880
-test binfast/mm_old 
+test binfast/mm_old
 filla
 fillb
 fillc
 starting mult
 summ is : 465880
-test bin0/ttime 
-before TZ is set: tz: 'PacificStandardTime+8', year: 2026, month 2, day 1, hour 20, min 39, sec 24
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 2, day 1, hour 15, min 39, sec 24
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 2, day 1, hour 12, min 39, sec 24
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 2, day 1, hour 20, min 39, sec 24
-test bin1/ttime 
-before TZ is set: tz: 'PacificStandardTime+8', year: 2026, month 2, day 1, hour 20, min 39, sec 24
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 2, day 1, hour 15, min 39, sec 24
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 2, day 1, hour 12, min 39, sec 24
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 2, day 1, hour 20, min 39, sec 24
-test bin2/ttime 
-before TZ is set: tz: 'PacificStandardTime+8', year: 2026, month 2, day 1, hour 20, min 39, sec 24
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 2, day 1, hour 15, min 39, sec 24
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 2, day 1, hour 12, min 39, sec 24
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 2, day 1, hour 20, min 39, sec 24
-test bin3/ttime 
-before TZ is set: tz: 'PacificStandardTime+8', year: 2026, month 2, day 1, hour 20, min 39, sec 24
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 2, day 1, hour 15, min 39, sec 24
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 2, day 1, hour 12, min 39, sec 24
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 2, day 1, hour 20, min 39, sec 24
-test binfast/ttime 
-before TZ is set: tz: 'PacificStandardTime+8', year: 2026, month 2, day 1, hour 20, min 39, sec 24
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 2, day 1, hour 15, min 39, sec 24
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 2, day 1, hour 12, min 39, sec 24
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 2, day 1, hour 20, min 39, sec 24
-test bin0/fileops 
+test bin0/ttime
+before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 3, day 24, hour 18, min 12, sec 37
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 3, day 24, hour 13, min 12, sec 37
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 3, day 24, hour 10, min 12, sec 37
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 3, day 24, hour 18, min 12, sec 37
+test bin1/ttime
+before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 3, day 24, hour 18, min 12, sec 37
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 3, day 24, hour 13, min 12, sec 37
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 3, day 24, hour 10, min 12, sec 37
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 3, day 24, hour 18, min 12, sec 37
+test bin2/ttime
+before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 3, day 24, hour 18, min 12, sec 37
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 3, day 24, hour 13, min 12, sec 37
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 3, day 24, hour 10, min 12, sec 37
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 3, day 24, hour 18, min 12, sec 37
+test bin3/ttime
+before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 3, day 24, hour 18, min 12, sec 37
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 3, day 24, hour 13, min 12, sec 37
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 3, day 24, hour 10, min 12, sec 37
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 3, day 24, hour 18, min 12, sec 37
+test binfast/ttime
+before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 3, day 24, hour 18, min 12, sec 37
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 3, day 24, hour 13, min 12, sec 37
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 3, day 24, hour 10, min 12, sec 37
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 3, day 24, hour 18, min 12, sec 37
+test bin0/fileops
 current offset: 0
 result of fseek: 0
 file length from ftell: 0
@@ -18847,7 +18847,7 @@ result of read at offset 1024: 512
 result of read at offset 512: 512
 result of read at offset 0: 512
 fileops has completed with great success
-test bin1/fileops 
+test bin1/fileops
 current offset: 0
 result of fseek: 0
 file length from ftell: 0
@@ -18900,7 +18900,7 @@ result of read at offset 1024: 512
 result of read at offset 512: 512
 result of read at offset 0: 512
 fileops has completed with great success
-test bin2/fileops 
+test bin2/fileops
 current offset: 0
 result of fseek: 0
 file length from ftell: 0
@@ -18953,7 +18953,7 @@ result of read at offset 1024: 512
 result of read at offset 512: 512
 result of read at offset 0: 512
 fileops has completed with great success
-test bin3/fileops 
+test bin3/fileops
 current offset: 0
 result of fseek: 0
 file length from ftell: 0
@@ -19006,7 +19006,7 @@ result of read at offset 1024: 512
 result of read at offset 512: 512
 result of read at offset 0: 512
 fileops has completed with great success
-test binfast/fileops 
+test binfast/fileops
 current offset: 0
 result of fseek: 0
 file length from ftell: 0
@@ -19059,37 +19059,37 @@ result of read at offset 1024: 512
 result of read at offset 512: 512
 result of read at offset 0: 512
 fileops has completed with great success
-test bin0/tpi 
+test bin0/tpi
 314159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535
-test bin1/tpi 
+test bin1/tpi
 314159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535
-test bin2/tpi 
+test bin2/tpi
 314159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535
-test bin3/tpi 
+test bin3/tpi
 314159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535
-test binfast/tpi 
+test binfast/tpi
 314159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535
-test bin0/t_setjmp 
+test bin0/t_setjmp
 second
 back in main
 falling out of main
-test bin1/t_setjmp 
+test bin1/t_setjmp
 second
 back in main
 falling out of main
-test bin2/t_setjmp 
+test bin2/t_setjmp
 second
 back in main
 falling out of main
-test bin3/t_setjmp 
+test bin3/t_setjmp
 second
 back in main
 falling out of main
-test binfast/t_setjmp 
+test binfast/t_setjmp
 second
 back in main
 falling out of main
-test bin0/td 
+test bin0/td
 sprintf double 3.14159265358979280000
 double from printf: 3.14159265358979280000
 float from printf: 1.202057
@@ -19119,7 +19119,7 @@ ceill of 1.1: 2.000000 == 2
 floorl of -1.8: -2.000000 == -2
 ceill of -1.8: -1.000000 == -1
 test td completed with great success
-test bin1/td 
+test bin1/td
 sprintf double 3.14159265358979280000
 double from printf: 3.14159265358979280000
 float from printf: 1.202057
@@ -19149,7 +19149,7 @@ ceill of 1.1: 2.000000 == 2
 floorl of -1.8: -2.000000 == -2
 ceill of -1.8: -1.000000 == -1
 test td completed with great success
-test bin2/td 
+test bin2/td
 sprintf double 3.14159265358979280000
 double from printf: 3.14159265358979280000
 float from printf: 1.202057
@@ -19179,7 +19179,7 @@ ceill of 1.1: 2.000000 == 2
 floorl of -1.8: -2.000000 == -2
 ceill of -1.8: -1.000000 == -1
 test td completed with great success
-test bin3/td 
+test bin3/td
 sprintf double 3.14159265358979280000
 double from printf: 3.14159265358979280000
 float from printf: 1.202057
@@ -19209,7 +19209,7 @@ ceill of 1.1: 2.000000 == 2
 floorl of -1.8: -2.000000 == -2
 ceill of -1.8: -1.000000 == -1
 test td completed with great success
-test binfast/td 
+test binfast/td
 sprintf double 3.14159265358979280000
 double from printf: 3.14159265358979280000
 float from printf: 1.202057
@@ -19239,7 +19239,7 @@ ceill of 1.1: 2.000000 == 2
 floorl of -1.8: -2.000000 == -2
 ceill of -1.8: -1.000000 == -1
 test td completed with great success
-test bin0/tf 
+test bin0/tf
 float converted by floattoa: -1.23456699
 float converted by floattoa: 1.23456699
 float converted by floattoa: 34.56700000
@@ -19268,7 +19268,7 @@ floor of -1.8: -2.000000 == -2
 ceil of -1.8: -1.000000 == -1
 l,le,l,le,l,le,l,le,l,le,l,le,l,le,l,le,g,ge,g,ge,g,ge,
 test tf completed with great success
-test bin1/tf 
+test bin1/tf
 float converted by floattoa: -1.23456699
 float converted by floattoa: 1.23456699
 float converted by floattoa: 34.56700000
@@ -19297,7 +19297,7 @@ floor of -1.8: -2.000000 == -2
 ceil of -1.8: -1.000000 == -1
 l,le,l,le,l,le,l,le,l,le,l,le,l,le,l,le,g,ge,g,ge,g,ge,
 test tf completed with great success
-test bin2/tf 
+test bin2/tf
 float converted by floattoa: -1.23456699
 float converted by floattoa: 1.23456699
 float converted by floattoa: 34.56700000
@@ -19326,7 +19326,7 @@ floor of -1.8: -2.000000 == -2
 ceil of -1.8: -1.000000 == -1
 l,le,l,le,l,le,l,le,l,le,l,le,l,le,l,le,g,ge,g,ge,g,ge,
 test tf completed with great success
-test bin3/tf 
+test bin3/tf
 float converted by floattoa: -1.23456699
 float converted by floattoa: 1.23456699
 float converted by floattoa: 34.56700000
@@ -19355,7 +19355,7 @@ floor of -1.8: -2.000000 == -2
 ceil of -1.8: -1.000000 == -1
 l,le,l,le,l,le,l,le,l,le,l,le,l,le,l,le,g,ge,g,ge,g,ge,
 test tf completed with great success
-test binfast/tf 
+test binfast/tf
 float converted by floattoa: -1.23456699
 float converted by floattoa: 1.23456699
 float converted by floattoa: 34.56700000
@@ -19384,7 +19384,7 @@ floor of -1.8: -2.000000 == -2
 ceil of -1.8: -1.000000 == -1
 l,le,l,le,l,le,l,le,l,le,l,le,l,le,l,le,g,ge,g,ge,g,ge,
 test tf completed with great success
-test bin0/tap 
+test bin0/tap
 starting, should tend towards 1.2020569031595942854...
   at           10 iterations: 1.19753198567419300000
   at          100 iterations: 1.20200740065967810000
@@ -19396,7 +19396,7 @@ next implementation...
   at         1000 iterations: 1.21802679658952500000
   at        10000 iterations: 1.20293516179477910000
 tap completed with great success
-test bin1/tap 
+test bin1/tap
 starting, should tend towards 1.2020569031595942854...
   at           10 iterations: 1.19753198567419300000
   at          100 iterations: 1.20200740065967810000
@@ -19408,7 +19408,7 @@ next implementation...
   at         1000 iterations: 1.21802679658952500000
   at        10000 iterations: 1.20293516179477910000
 tap completed with great success
-test bin2/tap 
+test bin2/tap
 starting, should tend towards 1.2020569031595942854...
   at           10 iterations: 1.19753198567419300000
   at          100 iterations: 1.20200740065967810000
@@ -19420,7 +19420,7 @@ next implementation...
   at         1000 iterations: 1.21802679658952500000
   at        10000 iterations: 1.20293516179477910000
 tap completed with great success
-test bin3/tap 
+test bin3/tap
 starting, should tend towards 1.2020569031595942854...
   at           10 iterations: 1.19753198567419300000
   at          100 iterations: 1.20200740065967810000
@@ -19432,7 +19432,7 @@ next implementation...
   at         1000 iterations: 1.21802679658952500000
   at        10000 iterations: 1.20293516179477910000
 tap completed with great success
-test binfast/tap 
+test binfast/tap
 starting, should tend towards 1.2020569031595942854...
   at           10 iterations: 1.19753198567419300000
   at          100 iterations: 1.20200740065967810000
@@ -19444,7 +19444,7 @@ next implementation...
   at         1000 iterations: 1.21802679658952500000
   at        10000 iterations: 1.20293516179477910000
 tap completed with great success
-test bin0/tphi 
+test bin0/tphi
 should tend towards 1.61803398874989484820458683436563811772030
   at  5 iterations: 1.6250000000000000
   at 10 iterations: 1.6179775280898875
@@ -19455,7 +19455,7 @@ should tend towards 1.61803398874989484820458683436563811772030
   at 35 iterations: 1.6180339887498969
   at 40 iterations: 1.6180339887498948
 done
-test bin1/tphi 
+test bin1/tphi
 should tend towards 1.61803398874989484820458683436563811772030
   at  5 iterations: 1.6250000000000000
   at 10 iterations: 1.6179775280898875
@@ -19466,7 +19466,7 @@ should tend towards 1.61803398874989484820458683436563811772030
   at 35 iterations: 1.6180339887498969
   at 40 iterations: 1.6180339887498948
 done
-test bin2/tphi 
+test bin2/tphi
 should tend towards 1.61803398874989484820458683436563811772030
   at  5 iterations: 1.6250000000000000
   at 10 iterations: 1.6179775280898875
@@ -19477,7 +19477,7 @@ should tend towards 1.61803398874989484820458683436563811772030
   at 35 iterations: 1.6180339887498969
   at 40 iterations: 1.6180339887498948
 done
-test bin3/tphi 
+test bin3/tphi
 should tend towards 1.61803398874989484820458683436563811772030
   at  5 iterations: 1.6250000000000000
   at 10 iterations: 1.6179775280898875
@@ -19488,7 +19488,7 @@ should tend towards 1.61803398874989484820458683436563811772030
   at 35 iterations: 1.6180339887498969
   at 40 iterations: 1.6180339887498948
 done
-test binfast/tphi 
+test binfast/tphi
 should tend towards 1.61803398874989484820458683436563811772030
   at  5 iterations: 1.6250000000000000
   at 10 iterations: 1.6179775280898875
@@ -19499,7 +19499,7 @@ should tend towards 1.61803398874989484820458683436563811772030
   at 35 iterations: 1.6180339887498969
   at 40 iterations: 1.6180339887498948
 done
-test bin0/mm 
+test bin0/mm
 float dim 1: sum 4.0, mag 4.0, min, 4.0 max 4.0, fmodsum 0.800, dotsum 4.0, sqrtsum 2.0
 float dim 2: sum 50.0, mag 50.0, min, 8.0 max 18.0, fmodsum 5.200, dotsum 24.0, sqrtsum 14.0
 float dim 3: sum 228.0, mag 228.0, min, 13.0 max 47.0, fmodsum 13.600, dotsum 71.0, sqrtsum 44.4
@@ -19721,7 +19721,7 @@ uint64_t dim 18: sum 302274.0, mag 302274.0, min, 208.0 max 5682.0, fmodsum 355.
 uint64_t dim 19: sum 376846.0, mag 376846.0, min, 229.0 max 6631.0, fmodsum 408.000, dotsum 16582.0, sqrtsum 10597.0
 uint64_t dim 20: sum 465880.0, mag 465880.0, min, 251.0 max 7680.0, fmodsum 449.000, dotsum 19421.0, sqrtsum 12388.0
 matrix multiply test completed with great success
-test bin1/mm 
+test bin1/mm
 float dim 1: sum 4.0, mag 4.0, min, 4.0 max 4.0, fmodsum 0.800, dotsum 4.0, sqrtsum 2.0
 float dim 2: sum 50.0, mag 50.0, min, 8.0 max 18.0, fmodsum 5.200, dotsum 24.0, sqrtsum 14.0
 float dim 3: sum 228.0, mag 228.0, min, 13.0 max 47.0, fmodsum 13.600, dotsum 71.0, sqrtsum 44.4
@@ -19943,7 +19943,7 @@ uint64_t dim 18: sum 302274.0, mag 302274.0, min, 208.0 max 5682.0, fmodsum 355.
 uint64_t dim 19: sum 376846.0, mag 376846.0, min, 229.0 max 6631.0, fmodsum 408.000, dotsum 16582.0, sqrtsum 10597.0
 uint64_t dim 20: sum 465880.0, mag 465880.0, min, 251.0 max 7680.0, fmodsum 449.000, dotsum 19421.0, sqrtsum 12388.0
 matrix multiply test completed with great success
-test bin2/mm 
+test bin2/mm
 float dim 1: sum 4.0, mag 4.0, min, 4.0 max 4.0, fmodsum 0.800, dotsum 4.0, sqrtsum 2.0
 float dim 2: sum 50.0, mag 50.0, min, 8.0 max 18.0, fmodsum 5.200, dotsum 24.0, sqrtsum 14.0
 float dim 3: sum 228.0, mag 228.0, min, 13.0 max 47.0, fmodsum 13.600, dotsum 71.0, sqrtsum 44.4
@@ -20165,7 +20165,7 @@ uint64_t dim 18: sum 302274.0, mag 302274.0, min, 208.0 max 5682.0, fmodsum 355.
 uint64_t dim 19: sum 376846.0, mag 376846.0, min, 229.0 max 6631.0, fmodsum 408.000, dotsum 16582.0, sqrtsum 10597.0
 uint64_t dim 20: sum 465880.0, mag 465880.0, min, 251.0 max 7680.0, fmodsum 449.000, dotsum 19421.0, sqrtsum 12388.0
 matrix multiply test completed with great success
-test bin3/mm 
+test bin3/mm
 float dim 1: sum 4.0, mag 4.0, min, 4.0 max 4.0, fmodsum 0.800, dotsum 4.0, sqrtsum 2.0
 float dim 2: sum 50.0, mag 50.0, min, 8.0 max 18.0, fmodsum 5.200, dotsum 24.0, sqrtsum 14.0
 float dim 3: sum 228.0, mag 228.0, min, 13.0 max 47.0, fmodsum 13.600, dotsum 71.0, sqrtsum 44.4
@@ -20387,7 +20387,7 @@ uint64_t dim 18: sum 302274.0, mag 302274.0, min, 208.0 max 5682.0, fmodsum 355.
 uint64_t dim 19: sum 376846.0, mag 376846.0, min, 229.0 max 6631.0, fmodsum 408.000, dotsum 16582.0, sqrtsum 10597.0
 uint64_t dim 20: sum 465880.0, mag 465880.0, min, 251.0 max 7680.0, fmodsum 449.000, dotsum 19421.0, sqrtsum 12388.0
 matrix multiply test completed with great success
-test binfast/mm 
+test binfast/mm
 float dim 1: sum 4.0, mag 4.0, min, 4.0 max 4.0, fmodsum 0.800, dotsum 4.0, sqrtsum 2.0
 float dim 2: sum 50.0, mag 50.0, min, 8.0 max 18.0, fmodsum 5.200, dotsum 24.0, sqrtsum 14.0
 float dim 3: sum 228.0, mag 228.0, min, 13.0 max 47.0, fmodsum 13.600, dotsum 71.0, sqrtsum 44.4
@@ -20609,7 +20609,7 @@ uint64_t dim 18: sum 302274.0, mag 302274.0, min, 208.0 max 5682.0, fmodsum 355.
 uint64_t dim 19: sum 376846.0, mag 376846.0, min, 229.0 max 6631.0, fmodsum 408.000, dotsum 16582.0, sqrtsum 10597.0
 uint64_t dim 20: sum 465880.0, mag 465880.0, min, 251.0 max 7680.0, fmodsum 449.000, dotsum 19421.0, sqrtsum 12388.0
 matrix multiply test completed with great success
-test bin0/ts 
+test bin0/ts
 test multiple shifts
     sizeof T: 1, result: ff
     sizeof T: 1, result: ff
@@ -21144,7 +21144,7 @@ testing inttoa
   ui8toa: 255
   i8toa: -1
 test shifts and comparisons completed with great success
-test bin1/ts 
+test bin1/ts
 test multiple shifts
     sizeof T: 1, result: ff
     sizeof T: 1, result: ff
@@ -21679,7 +21679,7 @@ testing inttoa
   ui8toa: 255
   i8toa: -1
 test shifts and comparisons completed with great success
-test bin2/ts 
+test bin2/ts
 test multiple shifts
     sizeof T: 1, result: ff
     sizeof T: 1, result: ff
@@ -22214,7 +22214,7 @@ testing inttoa
   ui8toa: 255
   i8toa: -1
 test shifts and comparisons completed with great success
-test bin3/ts 
+test bin3/ts
 test multiple shifts
     sizeof T: 1, result: ff
     sizeof T: 1, result: ff
@@ -22749,7 +22749,7 @@ testing inttoa
   ui8toa: 255
   i8toa: -1
 test shifts and comparisons completed with great success
-test binfast/ts 
+test binfast/ts
 test multiple shifts
     sizeof T: 1, result: ff
     sizeof T: 1, result: ff
@@ -23284,37 +23284,37 @@ testing inttoa
   ui8toa: 255
   i8toa: -1
 test shifts and comparisons completed with great success
-test bin0/glob 
+test bin0/glob
 in CTest constructor
 top main
 value of ctest::foo: 666
 end of main
 in ~CTest destructor
-test bin1/glob 
+test bin1/glob
 in CTest constructor
 top main
 value of ctest::foo: 666
 end of main
 in ~CTest destructor
-test bin2/glob 
+test bin2/glob
 in CTest constructor
 top main
 value of ctest::foo: 666
 end of main
 in ~CTest destructor
-test bin3/glob 
+test bin3/glob
 in CTest constructor
 top main
 value of ctest::foo: 666
 end of main
 in ~CTest destructor
-test binfast/glob 
+test binfast/glob
 in CTest constructor
 top main
 value of ctest::foo: 666
 end of main
 in ~CTest destructor
-test bin0/nantst 
+test bin0/nantst
 NAN: 0x7ff8000000000000
 -NAN: 0xfff8000000000000
 quiet NAN: 0x7ff8000000000000
@@ -24556,7 +24556,7 @@ testing with -0.0:
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
     minmax:  min -0.000000, max -0.000000
 nan test completed with great success
-test bin1/nantst 
+test bin1/nantst
 NAN: 0x7ff8000000000000
 -NAN: 0xfff8000000000000
 quiet NAN: 0x7ff8000000000000
@@ -25798,7 +25798,7 @@ testing with -0.0:
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
     minmax:  min -0.000000, max -0.000000
 nan test completed with great success
-test bin2/nantst 
+test bin2/nantst
 NAN: 0x7ff8000000000000
 -NAN: 0xfff8000000000000
 quiet NAN: 0x7ff8000000000000
@@ -27040,7 +27040,7 @@ testing with -0.0:
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
     minmax:  min -0.000000, max -0.000000
 nan test completed with great success
-test bin3/nantst 
+test bin3/nantst
 NAN: 0x7ff8000000000000
 -NAN: 0xfff8000000000000
 quiet NAN: 0x7ff8000000000000
@@ -28282,7 +28282,7 @@ testing with -0.0:
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
     minmax:  min -0.000000, max -0.000000
 nan test completed with great success
-test binfast/nantst 
+test binfast/nantst
 NAN: 0x7ff8000000000000
 -NAN: 0xfff8000000000000
 quiet NAN: 0x7ff8000000000000
@@ -29524,7 +29524,7 @@ testing with -0.0:
        cmp:  lt 0 le 1 eq 1 ge 1 gt 0
     minmax:  min -0.000000, max -0.000000
 nan test completed with great success
-test bin0/pis 
+test bin0/pis
 startingOffset128: 0, startingOffset: 0, countGenerated128 1, countGenerated 128
 startInChunks: 0, limitInChunks 4
 percent complete: 25.000000
@@ -29533,7 +29533,7 @@ percent complete: 75.000000
 percent complete: 100.000000
 results are valid
 final: 243f6a8885a308d313198a2e03707344a4093822299f31d0082efa98ec4e6c89452821e638d01377be5466cf34e90c6cc0ac29b7c97c50dd3f84d5b5b5470917
-test bin1/pis 
+test bin1/pis
 startingOffset128: 0, startingOffset: 0, countGenerated128 1, countGenerated 128
 startInChunks: 0, limitInChunks 4
 percent complete: 25.000000
@@ -29542,7 +29542,7 @@ percent complete: 75.000000
 percent complete: 100.000000
 results are valid
 final: 243f6a8885a308d313198a2e03707344a4093822299f31d0082efa98ec4e6c89452821e638d01377be5466cf34e90c6cc0ac29b7c97c50dd3f84d5b5b5470917
-test bin2/pis 
+test bin2/pis
 startingOffset128: 0, startingOffset: 0, countGenerated128 1, countGenerated 128
 startInChunks: 0, limitInChunks 4
 percent complete: 25.000000
@@ -29551,7 +29551,7 @@ percent complete: 75.000000
 percent complete: 100.000000
 results are valid
 final: 243f6a8885a308d313198a2e03707344a4093822299f31d0082efa98ec4e6c89452821e638d01377be5466cf34e90c6cc0ac29b7c97c50dd3f84d5b5b5470917
-test bin3/pis 
+test bin3/pis
 startingOffset128: 0, startingOffset: 0, countGenerated128 1, countGenerated 128
 startInChunks: 0, limitInChunks 4
 percent complete: 25.000000
@@ -29560,7 +29560,7 @@ percent complete: 75.000000
 percent complete: 100.000000
 results are valid
 final: 243f6a8885a308d313198a2e03707344a4093822299f31d0082efa98ec4e6c89452821e638d01377be5466cf34e90c6cc0ac29b7c97c50dd3f84d5b5b5470917
-test binfast/pis 
+test binfast/pis
 startingOffset128: 0, startingOffset: 0, countGenerated128 1, countGenerated 128
 startInChunks: 0, limitInChunks 4
 percent complete: 25.000000
@@ -29569,52 +29569,52 @@ percent complete: 75.000000
 percent complete: 100.000000
 results are valid
 final: 243f6a8885a308d313198a2e03707344a4093822299f31d0082efa98ec4e6c89452821e638d01377be5466cf34e90c6cc0ac29b7c97c50dd3f84d5b5b5470917
-test bin0/tfo 
+test bin0/tfo
 filelen: 0
 filelen: 31
 tfo completed with great success
-test bin1/tfo 
+test bin1/tfo
 filelen: 0
 filelen: 31
 tfo completed with great success
-test bin2/tfo 
+test bin2/tfo
 filelen: 0
 filelen: 31
 tfo completed with great success
-test bin3/tfo 
+test bin3/tfo
 filelen: 0
 filelen: 31
 tfo completed with great success
-test binfast/tfo 
+test binfast/tfo
 filelen: 0
 filelen: 31
 tfo completed with great success
-test bin0/sleeptm 
+test bin0/sleeptm
 clk_tck / number of linux ticks per second: 100
 sleeping for 1.5 seconds
 busy loop for 1.0 seconds
 sleepy time ended with great success
-test bin1/sleeptm 
+test bin1/sleeptm
 clk_tck / number of linux ticks per second: 100
 sleeping for 1.5 seconds
 busy loop for 1.0 seconds
 sleepy time ended with great success
-test bin2/sleeptm 
+test bin2/sleeptm
 clk_tck / number of linux ticks per second: 100
 sleeping for 1.5 seconds
 busy loop for 1.0 seconds
 sleepy time ended with great success
-test bin3/sleeptm 
+test bin3/sleeptm
 clk_tck / number of linux ticks per second: 100
 sleeping for 1.5 seconds
 busy loop for 1.0 seconds
 sleepy time ended with great success
-test binfast/sleeptm 
+test binfast/sleeptm
 clk_tck / number of linux ticks per second: 100
 sleeping for 1.5 seconds
 busy loop for 1.0 seconds
 sleepy time ended with great success
-test bin0/nqueens 
+test bin0/nqueens
   size    solutions
      1            1
      2            0
@@ -29624,7 +29624,7 @@ test bin0/nqueens
      6            4
      7           40
      8           92
-test bin1/nqueens 
+test bin1/nqueens
   size    solutions
      1            1
      2            0
@@ -29634,7 +29634,7 @@ test bin1/nqueens
      6            4
      7           40
      8           92
-test bin2/nqueens 
+test bin2/nqueens
   size    solutions
      1            1
      2            0
@@ -29644,7 +29644,7 @@ test bin2/nqueens
      6            4
      7           40
      8           92
-test bin3/nqueens 
+test bin3/nqueens
   size    solutions
      1            1
      2            0
@@ -29654,7 +29654,7 @@ test bin3/nqueens
      6            4
      7           40
      8           92
-test binfast/nqueens 
+test binfast/nqueens
   size    solutions
      1            1
      2            0
@@ -29664,7 +29664,7 @@ test binfast/nqueens
      6            4
      7           40
      8           92
-test bin0/nq1d 
+test bin0/nq1d
   size    solutions
      1            1
      2            0
@@ -29674,7 +29674,7 @@ test bin0/nq1d
      6            4
      7           40
      8           92
-test bin1/nq1d 
+test bin1/nq1d
   size    solutions
      1            1
      2            0
@@ -29684,7 +29684,7 @@ test bin1/nq1d
      6            4
      7           40
      8           92
-test bin2/nq1d 
+test bin2/nq1d
   size    solutions
      1            1
      2            0
@@ -29694,7 +29694,7 @@ test bin2/nq1d
      6            4
      7           40
      8           92
-test bin3/nq1d 
+test bin3/nq1d
   size    solutions
      1            1
      2            0
@@ -29704,7 +29704,7 @@ test bin3/nq1d
      6            4
      7           40
      8           92
-test binfast/nq1d 
+test binfast/nq1d
   size    solutions
      1            1
      2            0
@@ -29714,17 +29714,17 @@ test binfast/nq1d
      6            4
      7           40
      8           92
-test bin0/tdir 
+test bin0/tdir
 tdir completed with great success
-test bin1/tdir 
+test bin1/tdir
 tdir completed with great success
-test bin2/tdir 
+test bin2/tdir
 tdir completed with great success
-test bin3/tdir 
+test bin3/tdir
 tdir completed with great success
-test binfast/tdir 
+test binfast/tdir
 tdir completed with great success
-test bin0/fopentst 
+test bin0/fopentst
 O_CREAT: 0x200
 O_TRUNC: 0x400
 O_ASYNC: 0x40
@@ -29740,10 +29740,10 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2026, month 2, day 1, hour 12, min 39, sec 42
+tz: 'PST+8', year: 2026, month 3, day 24, hour 10, min 12, sec 54
 len in pfl: 0
 exiting fopentst with great success
-test bin1/fopentst 
+test bin1/fopentst
 O_CREAT: 0x200
 O_TRUNC: 0x400
 O_ASYNC: 0x40
@@ -29759,10 +29759,10 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2026, month 2, day 1, hour 12, min 39, sec 42
+tz: 'PST+8', year: 2026, month 3, day 24, hour 10, min 12, sec 54
 len in pfl: 0
 exiting fopentst with great success
-test bin2/fopentst 
+test bin2/fopentst
 O_CREAT: 0x200
 O_TRUNC: 0x400
 O_ASYNC: 0x40
@@ -29778,10 +29778,10 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2026, month 2, day 1, hour 12, min 39, sec 42
+tz: 'PST+8', year: 2026, month 3, day 24, hour 10, min 12, sec 54
 len in pfl: 0
 exiting fopentst with great success
-test bin3/fopentst 
+test bin3/fopentst
 O_CREAT: 0x200
 O_TRUNC: 0x400
 O_ASYNC: 0x40
@@ -29797,10 +29797,10 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2026, month 2, day 1, hour 12, min 39, sec 42
+tz: 'PST+8', year: 2026, month 3, day 24, hour 10, min 12, sec 54
 len in pfl: 0
 exiting fopentst with great success
-test binfast/fopentst 
+test binfast/fopentst
 O_CREAT: 0x200
 O_TRUNC: 0x400
 O_ASYNC: 0x40
@@ -29816,50 +29816,50 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2026, month 2, day 1, hour 12, min 39, sec 42
+tz: 'PST+8', year: 2026, month 3, day 24, hour 10, min 12, sec 55
 len in pfl: 0
 exiting fopentst with great success
-test bin0/lenum 
+test bin0/lenum
 linux file system enumeration completed with great success
-test bin1/lenum 
+test bin1/lenum
 linux file system enumeration completed with great success
-test bin2/lenum 
+test bin2/lenum
 linux file system enumeration completed with great success
-test bin3/lenum 
+test bin3/lenum
 linux file system enumeration completed with great success
-test binfast/lenum 
+test binfast/lenum
 linux file system enumeration completed with great success
-test bin0/trename 
+test bin0/trename
 trename completed with great success
-test bin1/trename 
+test bin1/trename
 trename completed with great success
-test bin2/trename 
+test bin2/trename
 trename completed with great success
-test bin3/trename 
+test bin3/trename
 trename completed with great success
-test binfast/trename 
+test binfast/trename
 trename completed with great success
-test bin0/triangle 
+test bin0/triangle
 triangle( 200 ) = 20100
-test bin1/triangle 
+test bin1/triangle
 triangle( 200 ) = 20100
-test bin2/triangle 
+test bin2/triangle
 triangle( 200 ) = 20100
-test bin3/triangle 
+test bin3/triangle
 triangle( 200 ) = 20100
-test binfast/triangle 
+test binfast/triangle
 triangle( 200 ) = 20100
-test bin0/fact 
+test bin0/fact
 factorial( 15 ) = 1307674368000
-test bin1/fact 
+test bin1/fact
 factorial( 15 ) = 1307674368000
-test bin2/fact 
+test bin2/fact
 factorial( 15 ) = 1307674368000
-test bin3/fact 
+test bin3/fact
 factorial( 15 ) = 1307674368000
-test binfast/fact 
+test binfast/fact
 factorial( 15 ) = 1307674368000
-test bin0/tld 
+test bin0/tld
 sprintf double 3.14159265358979280000
 long double from printf: 3.14159265358979280000
 sqrt of pi: 1.772454
@@ -29883,7 +29883,7 @@ ceill of 1.1: 2.000000 == 2
 floorl of -1.8: -2.000000 == -2
 ceill of -1.8: -1.000000 == -1
 test tld completed with great success
-test bin1/tld 
+test bin1/tld
 sprintf double 3.14159265358979280000
 long double from printf: 3.14159265358979280000
 sqrt of pi: 1.772454
@@ -29907,7 +29907,7 @@ ceill of 1.1: 2.000000 == 2
 floorl of -1.8: -2.000000 == -2
 ceill of -1.8: -1.000000 == -1
 test tld completed with great success
-test bin2/tld 
+test bin2/tld
 sprintf double 3.14159265358979280000
 long double from printf: 3.14159265358979280000
 sqrt of pi: 1.772454
@@ -29931,7 +29931,7 @@ ceill of 1.1: 2.000000 == 2
 floorl of -1.8: -2.000000 == -2
 ceill of -1.8: -1.000000 == -1
 test tld completed with great success
-test bin3/tld 
+test bin3/tld
 sprintf double 3.14159265358979280000
 long double from printf: 3.14159265358979280000
 sqrt of pi: 1.772454
@@ -29955,7 +29955,7 @@ ceill of 1.1: 2.000000 == 2
 floorl of -1.8: -2.000000 == -2
 ceill of -1.8: -1.000000 == -1
 test tld completed with great success
-test binfast/tld 
+test binfast/tld
 sprintf double 3.14159265358979280000
 long double from printf: 3.14159265358979280000
 sqrt of pi: 1.772454
@@ -29979,42 +29979,42 @@ ceill of 1.1: 2.000000 == 2
 floorl of -1.8: -2.000000 == -2
 ceill of -1.8: -1.000000 == -1
 test tld completed with great success
-test bin0/tmmap 
+test bin0/tmmap
 MAP_PRIVATE: 0x2
 MAP_ANONYMOUS: 0x20
 MREMAP_MAYMOVE: 0x1
 PROT_READ: 0x1
 PROT_WRITE: 0x2
 mmap test completed with great success
-test bin1/tmmap 
+test bin1/tmmap
 MAP_PRIVATE: 0x2
 MAP_ANONYMOUS: 0x20
 MREMAP_MAYMOVE: 0x1
 PROT_READ: 0x1
 PROT_WRITE: 0x2
 mmap test completed with great success
-test bin2/tmmap 
+test bin2/tmmap
 MAP_PRIVATE: 0x2
 MAP_ANONYMOUS: 0x20
 MREMAP_MAYMOVE: 0x1
 PROT_READ: 0x1
 PROT_WRITE: 0x2
 mmap test completed with great success
-test bin3/tmmap 
+test bin3/tmmap
 MAP_PRIVATE: 0x2
 MAP_ANONYMOUS: 0x20
 MREMAP_MAYMOVE: 0x1
 PROT_READ: 0x1
 PROT_WRITE: 0x2
 mmap test completed with great success
-test binfast/tmmap 
+test binfast/tmmap
 MAP_PRIVATE: 0x2
 MAP_ANONYMOUS: 0x20
 MREMAP_MAYMOVE: 0x1
 PROT_READ: 0x1
 PROT_WRITE: 0x2
 mmap test completed with great success
-test bin0/termiosf 
+test bin0/termiosf
 lflag:
  icanon 0x2
  echonl 0x40
@@ -30088,7 +30088,7 @@ tcsetattr
 TIOCGWINSZ 0x40087468
 c_cc elements: 0x11
 termiosf completed with great success
-test bin1/termiosf 
+test bin1/termiosf
 lflag:
  icanon 0x2
  echonl 0x40
@@ -30162,7 +30162,7 @@ tcsetattr
 TIOCGWINSZ 0x40087468
 c_cc elements: 0x11
 termiosf completed with great success
-test bin2/termiosf 
+test bin2/termiosf
 lflag:
  icanon 0x2
  echonl 0x40
@@ -30236,7 +30236,7 @@ tcsetattr
 TIOCGWINSZ 0x40087468
 c_cc elements: 0x11
 termiosf completed with great success
-test bin3/termiosf 
+test bin3/termiosf
 lflag:
  icanon 0x2
  echonl 0x40
@@ -30310,7 +30310,7 @@ tcsetattr
 TIOCGWINSZ 0x40087468
 c_cc elements: 0x11
 termiosf completed with great success
-test binfast/termiosf 
+test binfast/termiosf
 lflag:
  icanon 0x2
  echonl 0x40
@@ -30384,58 +30384,60 @@ tcsetattr
 TIOCGWINSZ 0x40087468
 c_cc elements: 0x11
 termiosf completed with great success
-test esp 
+test esp
 271828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746639193200305992181741359662904357290033429526059563073813232862794349076323382988075319
 done
 
-test esp7 
+test esp7
 271828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746639193200305992181741359662904357290033429526059563073813232862794349076323382988075319
 done
 
-test sievesp 
+test sievesp
 1899 primes.
-test tttsp 
+test tttsp
 moves: 6493
 iterations: 1
-test tttusp 
+test tttusp
 moves: 6493
 iterations: 1
-test bin0/ff 
-  rwxrwxrwx           8961  2026-01-26 15:19:21  /Users/david/OneDrive/sparcos/c_tests/ff.c
-test bin1/ff 
-  rwxrwxrwx           8961  2026-01-26 15:19:21  /Users/david/OneDrive/sparcos/c_tests/ff.c
-test bin2/ff 
-  rwxrwxrwx           8961  2026-01-26 15:19:21  /Users/david/OneDrive/sparcos/c_tests/ff.c
-test bin3/ff 
-  rwxrwxrwx           8961  2026-01-26 15:19:21  /Users/david/OneDrive/sparcos/c_tests/ff.c
-test binfast/ff 
-  rwxrwxrwx           8961  2026-01-26 15:19:21  /Users/david/OneDrive/sparcos/c_tests/ff.c
-test bin0/ba 
+test tf128
+tf128 completed with great success
+test bin0/ff
+  rwxrwxrwx           8961  2026-03-01 19:43:31  /Users/david/OneDrive/sparcos/c_tests/ff.c
+test bin1/ff
+  rwxrwxrwx           8961  2026-03-01 19:43:31  /Users/david/OneDrive/sparcos/c_tests/ff.c
+test bin2/ff
+  rwxrwxrwx           8961  2026-03-01 19:43:31  /Users/david/OneDrive/sparcos/c_tests/ff.c
+test bin3/ff
+  rwxrwxrwx           8961  2026-03-01 19:43:31  /Users/david/OneDrive/sparcos/c_tests/ff.c
+test binfast/ff
+  rwxrwxrwx           8961  2026-03-01 19:43:31  /Users/david/OneDrive/sparcos/c_tests/ff.c
+test bin0/ba
 parsing input file TP.BAS
-519 ms for 1 iterations
+438 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
-test bin1/ba 
+test bin1/ba
 parsing input file TP.BAS
-127 ms for 1 iterations
+110 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
-test bin2/ba 
+test bin2/ba
 parsing input file TP.BAS
-120 ms for 1 iterations
+104 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
-test bin3/ba 
+test bin3/ba
 parsing input file TP.BAS
-122 ms for 1 iterations
+107 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
-test binfast/ba 
+test binfast/ba
 parsing input file TP.BAS
-129 ms for 1 iterations
+107 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
-test bin0/an 
+test bin0/an
 a delve id
 a delved i
 a die veld
@@ -30479,7 +30481,7 @@ id leaved
 idea veld
 lade vied
 lead vied
-test bin1/an 
+test bin1/an
 a delve id
 a delved i
 a die veld
@@ -30523,7 +30525,7 @@ id leaved
 idea veld
 lade vied
 lead vied
-test bin2/an 
+test bin2/an
 a delve id
 a delved i
 a die veld
@@ -30567,7 +30569,7 @@ id leaved
 idea veld
 lade vied
 lead vied
-test bin3/an 
+test bin3/an
 a delve id
 a delved i
 a die veld
@@ -30611,7 +30613,7 @@ id leaved
 idea veld
 lade vied
 lead vied
-test binfast/an 
+test binfast/an
 a delve id
 a delved i
 a die veld
@@ -30655,7 +30657,7 @@ id leaved
 idea veld
 lade vied
 lead vied
-test bin0/tgets 
+test bin0/tgets
 read: 'f' == 102 == 0x66
 read: 'i' == 105 == 0x69
 read: 'l' == 108 == 0x6c
@@ -30668,7 +30670,7 @@ read: 'a' == 97 == 0x61
 read: '
 ' == 10 == 0xa
 tgets completed with great success
-test bin1/tgets 
+test bin1/tgets
 read: 'f' == 102 == 0x66
 read: 'i' == 105 == 0x69
 read: 'l' == 108 == 0x6c
@@ -30681,7 +30683,7 @@ read: 'a' == 97 == 0x61
 read: '
 ' == 10 == 0xa
 tgets completed with great success
-test bin2/tgets 
+test bin2/tgets
 read: 'f' == 102 == 0x66
 read: 'i' == 105 == 0x69
 read: 'l' == 108 == 0x6c
@@ -30694,7 +30696,7 @@ read: 'a' == 97 == 0x61
 read: '
 ' == 10 == 0xa
 tgets completed with great success
-test bin3/tgets 
+test bin3/tgets
 read: 'f' == 102 == 0x66
 read: 'i' == 105 == 0x69
 read: 'l' == 108 == 0x6c
@@ -30707,7 +30709,7 @@ read: 'a' == 97 == 0x61
 read: '
 ' == 10 == 0xa
 tgets completed with great success
-test binfast/tgets 
+test binfast/tgets
 read: 'f' == 102 == 0x66
 read: 'i' == 105 == 0x69
 read: 'l' == 108 == 0x6c
@@ -30720,7 +30722,7 @@ read: 'a' == 97 == 0x61
 read: '
 ' == 10 == 0xa
 tgets completed with great success
-test bin0/targs a bb ccc dddd 
+test bin0/targs a bb ccc dddd
 argc: 5
 argv[ 0 ]: 'bin0/targs.elf'
 argv[ 1 ]: 'a'
@@ -30728,8 +30730,8 @@ argv[ 2 ]: 'bb'
 argv[ 3 ]: 'ccc'
 argv[ 4 ]: 'dddd'
 penv[ 0 ]: 'OS=SPARCOS'
-penv[ 1 ]: 'TZ=PacificStandardTime+8'
-test bin1/targs a bb ccc dddd 
+penv[ 1 ]: 'TZ=PacificDaylightTime+8'
+test bin1/targs a bb ccc dddd
 argc: 5
 argv[ 0 ]: 'bin1/targs.elf'
 argv[ 1 ]: 'a'
@@ -30737,8 +30739,8 @@ argv[ 2 ]: 'bb'
 argv[ 3 ]: 'ccc'
 argv[ 4 ]: 'dddd'
 penv[ 0 ]: 'OS=SPARCOS'
-penv[ 1 ]: 'TZ=PacificStandardTime+8'
-test bin2/targs a bb ccc dddd 
+penv[ 1 ]: 'TZ=PacificDaylightTime+8'
+test bin2/targs a bb ccc dddd
 argc: 5
 argv[ 0 ]: 'bin2/targs.elf'
 argv[ 1 ]: 'a'
@@ -30746,8 +30748,8 @@ argv[ 2 ]: 'bb'
 argv[ 3 ]: 'ccc'
 argv[ 4 ]: 'dddd'
 penv[ 0 ]: 'OS=SPARCOS'
-penv[ 1 ]: 'TZ=PacificStandardTime+8'
-test bin3/targs a bb ccc dddd 
+penv[ 1 ]: 'TZ=PacificDaylightTime+8'
+test bin3/targs a bb ccc dddd
 argc: 5
 argv[ 0 ]: 'bin3/targs.elf'
 argv[ 1 ]: 'a'
@@ -30755,8 +30757,8 @@ argv[ 2 ]: 'bb'
 argv[ 3 ]: 'ccc'
 argv[ 4 ]: 'dddd'
 penv[ 0 ]: 'OS=SPARCOS'
-penv[ 1 ]: 'TZ=PacificStandardTime+8'
-test binfast/targs a bb ccc dddd 
+penv[ 1 ]: 'TZ=PacificDaylightTime+8'
+test binfast/targs a bb ccc dddd
 argc: 5
 argv[ 0 ]: 'binfast/targs.elf'
 argv[ 1 ]: 'a'
@@ -30764,5 +30766,5 @@ argv[ 2 ]: 'bb'
 argv[ 3 ]: 'ccc'
 argv[ 4 ]: 'dddd'
 penv[ 0 ]: 'OS=SPARCOS'
-penv[ 1 ]: 'TZ=PacificStandardTime+8'
-Sun 02/01/2026 12:39:48.32 
+penv[ 1 ]: 'TZ=PacificDaylightTime+8'
+Tue 03/24/2026 11:13:00.20 

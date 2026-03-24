@@ -32,6 +32,12 @@ do
     ma.sh $arg
 done
 
+for arg in tf128
+do
+    echo $arg
+    maa.sh $arg
+done
+
 msparcos.sh
 
 echo "Waiting for all processes to complete..."

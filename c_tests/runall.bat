@@ -56,7 +56,9 @@ set _folderlist=bin0 bin1 bin2 bin3 binfast
     ))
 ))
 
-set _s_elflist=esp esp7 sievesp tttsp tttusp
+rem NOTE: tf128 will fail when sparcos is built with msvc and succeed when built with gcc
+
+set _s_elflist=esp esp7 sievesp tttsp tttusp tf128
 
 ( for %%a in (%_s_elflist%) do (
     echo test %%a

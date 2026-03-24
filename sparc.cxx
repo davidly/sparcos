@@ -1,18 +1,22 @@
 // Emulates a sparc v8 cpu. No supervisor support.
 // August 24, 2025 by David Lee
 // these instuctions don't exist on sparc v7: umul, umulcc, smul, smulcc, udiv, udivcc, sdiv, sdivcc
+// quad floating point: sparc v7 implemented 80-bit fp. sparc v8 implemented 128-bit fp.
+//                      Both were implemented in software (the cpu trapped on these instructions).
+//                      For this emulator, on g++:
+//                          -- __float128 is used and sparc v8 128-bit floating point is emulated
+//                          -- link with -lquadmath and #include <quadmath.h> to enable this
+//                      for msvc and other compilers:
+//                          -- long double is used and results are not consistent/correct. avoid use of "fp q" instructions
 
 #include <stdint.h>
 #include <assert.h>
 #include <limits.h>
 #include <math.h>
+#include <cmath>
 
 #include <djltrace.hxx>
 #include "sparc.hxx"
-
-// different compilers and cpus result in different values for NAN. Often the sign bit is turned on.
-static const uint64_t g_NAN = 0x7ff8000000000000;
-#define MY_NAN ( * (double *) & g_NAN )
 
 static uint32_t g_State = 0; // 32 instead of 8 bits is faster with the msft compiler
 
@@ -62,7 +66,7 @@ const char Sparc::render_fflag()
 static const char * freg_strings[ 32 ] =
 {
     "f0",  "f1",  "f2",  "f3",  "f4",  "f5",  "f6",  "f7",
-    "f8",  "f9",  "f10", "f11", "f12", "f13", "f14", "f15", 
+    "f8",  "f9",  "f10", "f11", "f12", "f13", "f14", "f15",
     "f16", "f17", "f18", "f19", "f20", "f21", "f22", "f23",
     "f24", "f25", "f26", "f27", "f28", "f29", "f30", "f31"
 };
@@ -194,7 +198,7 @@ bool Sparc::check_fcondition( uint32_t cond )
     }
 } //check_fcondition
 
-void Sparc::trace_canonical( const char * pins, bool shift )
+void Sparc::trace_canonical( const char * instruction, bool shift )
 {
     uint32_t rd = opbits( 25, 5 );
     uint32_t rs1 = opbits( 14, 5 );
@@ -203,55 +207,59 @@ void Sparc::trace_canonical( const char * pins, bool shift )
         int32_t simm13 = sign_extend( opbits( 0, 13 ), 12 );
         if ( shift )
             simm13 &= 0x1f;
-        tracer.Trace( "%s %s, %#x, %s\n", pins, regstr( rs1 ), simm13, regstr( rd ) );
+        tracer.Trace( "%s %s, %#x, %s\n", instruction, regstr( rs1 ), simm13, regstr( rd ) );
     }
     else
     {
         uint32_t rs2 = opbits( 0, 5 );
-        tracer.Trace( "%s %s, %s, %s\n", pins, regstr( rs1 ), regstr( rs2 ), regstr( rd ) );
+        tracer.Trace( "%s %s, %s, %s\n", instruction, regstr( rs1 ), regstr( rs2 ), regstr( rd ) );
     }
 } //trace_canonical
 
-void Sparc::trace_ld_canonical( const char * pins )
+void Sparc::trace_ld_canonical( const char * instruction, bool fp )
 {
     uint32_t rd = opbits( 25, 5 );
     uint32_t rs1 = opbits( 14, 5 );
+    const char * dest = fp ? fregstr( rd ) : regstr( rd );
     if ( opbit( 13 ) ) // immediate
     {
         int32_t simm13 = sign_extend( opbits( 0, 13 ), 12 );
-        tracer.Trace( "%s [%s + %#x], %s\n", pins, regstr( rs1 ), simm13, regstr( rd ) );
+        tracer.Trace( "%s [%s + %#x], %s\n", instruction, regstr( rs1 ), simm13, dest );
     }
     else
     {
         uint32_t rs2 = opbits( 0, 5 );
         if ( 0 == rs2 )
-            tracer.Trace( "%s [%s], %s\n", pins, regstr( rs1 ), regstr( rd ) );
+            tracer.Trace( "%s [%s], %s\n", instruction, regstr( rs1 ), dest );
         else
-            tracer.Trace( "%s [%s + %s], %s\n", pins, regstr( rs1 ), regstr( rs2 ), regstr( rd ) );
+            tracer.Trace( "%s [%s + %s], %s\n", instruction, regstr( rs1 ), regstr( rs2 ), dest );
     }
 } //trace_ld_canonical
 
-void Sparc::trace_st_canonical( const char * pins )
+void Sparc::trace_st_canonical( const char * instruction, bool fp )
 {
     uint32_t rd = opbits( 25, 5 );
     uint32_t rs1 = opbits( 14, 5 );
+    const char * dest = fp ? fregstr( rd ) : regstr( rd );
     if ( opbit( 13 ) ) // immediate
     {
         int32_t simm13 = sign_extend( opbits( 0, 13 ), 12 );
-        tracer.Trace( "%s %s, [%s + %#x]\n", pins, regstr( rd ), regstr( rs1 ), simm13 );
+        tracer.Trace( "%s %s, [%s + %#x]\n", instruction, dest, regstr( rs1 ), simm13 );
     }
     else
     {
         uint32_t rs2 = opbits( 0, 5 );
         if ( 0 == rs2 )
-            tracer.Trace( "%s %s, [%s]\n", pins, regstr( rd ), regstr( rs1 ) );
+            tracer.Trace( "%s %s, [%s]\n", instruction, dest, regstr( rs1 ) );
         else
-            tracer.Trace( "%s %s, [%s + %s]\n", pins, regstr( rd ), regstr( rs1 ), regstr( rs2 ) );
+            tracer.Trace( "%s %s, [%s + %s]\n", instruction, dest, regstr( rs1 ), regstr( rs2 ) );
     }
 } //trace_st_canonical
 
 void Sparc::trace_state()
 {
+    //tracer.TraceBinaryData( getmem( 0x10500 ), 16, 4 );
+
     static const char * previous_symbol = 0;
     uint32_t offset;
     const char * symbol_name = emulator_symbol_lookup( pc, offset );
@@ -540,7 +548,7 @@ void Sparc::trace_state()
                 case 0xa: { trace_ld_canonical( "ldsh" ); break; }
                 case 0xd: { trace_ld_canonical( "ldstub" ); break; }
                 case 0xf: { trace_ld_canonical( "swap" ); break; }
-                case 0x20: { trace_ld_canonical( "ldf" ); break; }
+                case 0x20: { trace_ld_canonical( "ldf", true ); break; }
                 case 0x21: // ldfsr
                 {
                     if ( i )
@@ -549,8 +557,8 @@ void Sparc::trace_state()
                         tracer.Trace( "ld [%s + %s], fsr\n", regstr( rs1 ), regstr( rs2 ) );
                     break;
                 }
-                case 0x23: { trace_ld_canonical( "lddf" ); break; }
-                case 0x24: { trace_st_canonical( "stf" ); break; }
+                case 0x23: { trace_ld_canonical( "lddf", true ); break; }
+                case 0x24: { trace_st_canonical( "stf", true ); break; }
                 case 0x25: // stfsr
                 {
                     if ( i )
@@ -559,7 +567,7 @@ void Sparc::trace_state()
                         tracer.Trace( "st fsr, [%s + %s]\n", regstr( rs1 ), regstr( rs2 ) );
                     break;
                 }
-                case 0x27: { trace_st_canonical( "stdf" ); break; }
+                case 0x27: { trace_st_canonical( "stdf", true ); break; }
                 default:
                 {
                     tracer.Trace( "op 3 op %d, rd %d, op3 %#x, rs1 %d, rs2 %d, i %d\n", op, rd, op3, rs1, rs2, i );
@@ -658,18 +666,96 @@ void Sparc::handle_trap( uint32_t trap )
     npc = tbr;
 } //handle_trap
 
-template < typename T > inline uint32_t Sparc::compare_floating( T a, T b, bool NaN_trap )
+namespace Detail
 {
-    bool anan = ( FP_NAN == fpclassify( a ) ); // fpclassify instead of isnan because T isnan takes a double and we don't want type conversions here
-    bool bnan = ( FP_NAN == fpclassify( b ) );
-
-    if ( ( NaN_trap && ( anan || bnan ) )
-#ifdef issignaling // Microsoft's compiler doesn't support this macro. GNU does.
-         || ( issignaling( a ) || issignaling( b ) )
-#endif
-       )
+    template <typename T> struct FloatTraits
     {
-        handle_trap( 8 ); // fp_exception
+        static bool is_nan( T val )
+        {
+            #ifdef _MSC_VER
+                return std::isnan( static_cast<double>( val ) );
+            #else
+                return __builtin_isnan( val );
+            #endif
+        } //is_nan
+
+        static bool is_inf( T val )
+        {
+            #ifdef _MSC_VER
+                return std::isinf( static_cast<double>( val ) );
+            #else
+                return __builtin_isinf( val );
+            #endif
+        } //is_inf
+
+        static bool get_sign( T val )
+        {
+            #ifdef _MSC_VER
+                return ( std::signbit( static_cast<double>( val ) ) != 0 );
+            #else
+                return __builtin_signbit( val );
+            #endif
+        } //get_sign
+
+        static bool is_signaling( T val )
+        {
+            // Use the builtin if the compiler supports it (GCC 13+, Clang 11+)
+            #if defined(__has_builtin)
+                #if __has_builtin(__builtin_issignaling)
+                    return __builtin_issignaling( val );
+                #endif
+            #endif
+
+            // Fallback: If we can't detect it, assume it's not signaling 
+            // or use a custom bit-check if absolutely necessary.
+            (void)val;
+            return false; 
+        } //is_signaling
+
+        static T set_sign( T val, bool sign )
+        {
+            #ifdef _MSC_VER
+                // MSVC: Use double-based copysign for standard types
+                return static_cast<T>( std::copysign( static_cast<double>( val ), sign ? -1.0 : 1.0 ) );
+            #else
+                return __builtin_copysign( val, sign ? (T) -1.0 : (T) 1.0 );
+            #endif
+        } //set_sign
+
+        static T get_nan()
+        {
+            #ifdef _MSC_VER
+                return std::numeric_limits<T>::quiet_NaN();
+            #else
+                return __builtin_nan("");
+            #endif
+        } //get_nan
+    }; //FloatTraits
+
+    // Specialization for MSVC to prevent it from trying to do math on quadfp_t
+    #ifdef _MSC_VER
+        template <> struct FloatTraits<quadfp_t>
+        {
+            static bool is_nan(quadfp_t) { return false; }
+            static bool is_inf(quadfp_t) { return false; }
+            static bool get_sign(quadfp_t) { return false; }
+            static bool is_signaling(quadfp_t) { return false; }
+            static quadfp_t set_sign(quadfp_t v, bool) { return v; }
+            static quadfp_t get_nan() { quadfp_t q = {0}; return q; }
+        };
+    #endif
+} //Detail
+
+template <typename T> inline uint32_t Sparc::compare_floating( T a, T b, bool NaN_trap )
+{
+    using FT = Detail::FloatTraits<T>;
+
+    bool anan = FT::is_nan( a );
+    bool bnan = FT::is_nan( b );
+
+    if ( ( NaN_trap && ( anan || bnan ) ) || ( FT::is_signaling( a ) || FT::is_signaling( b ) ) )
+    {
+        handle_trap( 8 );
         return fccU;
     }
 
@@ -697,48 +783,38 @@ void Sparc::trace_fregs()
                 if ( 0.0 != d )
                     tracer.Trace( "dreg[%u] = %lf / %#llx\n", r, d, * (uint64_t *) & d );
             }
+
+            #if HAS_QUADFP_PRECISION
+                if ( ( 0 == ( r & 3 ) ) )
+                {
+                    quadfp_t q = get_qreg( r );
+                    if ( 0.0 != q )
+                    {
+                        char buffer[ 128 ];
+                        quadmath_snprintf( buffer, sizeof( buffer ), "%.30Qe", q );
+                        tracer.Trace( "qreg[%u] = %s\n", r, buffer );
+                    }
+                }
+            #endif
         }
     }
 } //trace_fregs
 
-double set_double_sign( double d, bool sign )
+template <typename T> T do_fadd( T a, T b )
 {
-    uint64_t val = sign ? ( ( * (uint64_t *) &d ) | 0x8000000000000000 ) : ( ( * (uint64_t *) &d ) & 0x7fffffffffffffff );
-    return * (double *) &val;
-} //set_double_sign
-
-double do_fsub( double a, double b )
-{
-    if ( isinf( a ) && isinf( b ) )
-    {
-        if ( signbit( a ) != signbit( b ) )
-            return a;
-        return MY_NAN; // msft C will return -nan if this check isn't here
-    }
-
-    if ( isnan( a ) )
-        return a;
-    if ( isnan( b ) )
-        return b;
-
-    return a - b;
-} //do_fsub
-
-double do_fadd( double a, double b )
-{
-    bool ainf = isinf( a );
-    bool binf = isinf( b );
-
+    using FT = Detail::FloatTraits<T>;
+    bool ainf = FT::is_inf(a);
+    bool binf = FT::is_inf(b);
     if ( ainf && binf )
     {
-        if ( signbit( a ) == signbit( b ) )
+        if ( FT::get_sign( a ) == FT::get_sign( b ) )
             return a;
-        return MY_NAN; // msft C will return -nan if this check isn't here
+        return FT::get_nan();
     }
 
-    if ( isnan( a ) )
+    if ( FT::is_nan( a ) )
         return a;
-    if ( isnan( b ) )
+    if ( FT::is_nan( b ) )
         return b;
     if ( ainf )
         return a;
@@ -748,46 +824,66 @@ double do_fadd( double a, double b )
     return a + b;
 } //do_fadd
 
-double do_fmul( double a, double b )
+template <typename T> T do_fsub( T a, T b )
 {
-    if ( isnan( a ) )
+    using FT = Detail::FloatTraits<T>;
+    if ( FT::is_inf( a ) && FT::is_inf( b ) )
+    {
+        if ( FT::get_sign(a) != FT::get_sign( b ) )
+            return a;
+        return FT::get_nan();
+    }
+
+    if ( FT::is_nan( a ) )
         return a;
-    if ( isnan( b ) )
+    if ( FT::is_nan( b ) )
         return b;
 
-    bool ainf = isinf( a );
-    bool binf = isinf( b );
-    bool azero = ( 0.0 == a );
-    bool bzero = ( 0.0 == b );
+    return a - b;
+} //do_fsub
+
+template <typename T> T do_fmul( T a, T b )
+{
+    using FT = Detail::FloatTraits<T>;
+    if ( FT::is_nan( a ) )
+        return a;
+    if ( FT::is_nan( b ) )
+        return b;
+
+    bool ainf = FT::is_inf( a ), binf = FT::is_inf( b );
+    bool azero = ( (T) 0.0 == a );
+    bool bzero = ( (T) 0.0 == b );
+    bool res_sign = ( FT::get_sign( a ) != FT::get_sign( b ) );
 
     if ( ( ainf && bzero ) || ( azero && binf ) )
-        return MY_NAN;
+        return FT::get_nan();
     if ( ainf || binf )
-        return set_double_sign( INFINITY, signbit( a ) != signbit( b ) );
+        return FT::set_sign( (T) INFINITY, res_sign );
     if ( azero || bzero )
-        return set_double_sign( 0.0, signbit( a ) != signbit( b ) );
+        return FT::set_sign( (T) 0.0, res_sign );
 
     return a * b;
 } //do_fmul
 
-double do_fdiv( double a, double b )
+template <typename T> T do_fdiv( T a, T b )
 {
-    if ( isnan( a ) )
+    using FT = Detail::FloatTraits<T>;
+    if ( FT::is_nan( a ) )
         return a;
-    if ( isnan( b ) )
+    if ( FT::is_nan( b ) )
         return b;
 
-    bool ainf = isinf( a );
-    bool binf = isinf( b );
-    bool azero = ( 0.0 == a );
-    bool bzero = ( 0.0 == b );
+    bool ainf = FT::is_inf( a ), binf = FT::is_inf( b );
+    bool azero = ( (T) 0.0 == a );
+    bool bzero = ( (T) 0.0 == b );
+    bool res_sign = ( FT::get_sign( a ) != FT::get_sign( b ) );
 
     if ( ( ainf && binf ) || ( azero && bzero ) )
-        return MY_NAN;
+        return FT::get_nan();
     if ( ainf )
-        return set_double_sign( INFINITY, signbit( a ) != signbit( b ) );
-    if ( binf || azero )
-        return set_double_sign( 0.0, signbit( a ) != signbit( b ) );
+        return FT::set_sign( (T) INFINITY, res_sign );
+    if  (binf || azero )
+        return FT::set_sign( (T) 0.0, res_sign );
 
     return a / b;
 } //do_fdiv
@@ -795,7 +891,7 @@ double do_fdiv( double a, double b )
 int32_t saturate_int32_from_d( double d ) // use double because it can cover the full range of int32_t
 {
     if ( isnan( d ) )
-        return INT32_MAX; // LEON processors do this 
+        return INT32_MAX; // LEON processors do this
 
     d = trunc( d );
     if ( d > (double) INT32_MAX )
@@ -1000,7 +1096,7 @@ uint64_t Sparc::run()
                             bool sign2 = sign32( val2 );
                             bool signdiff = sign32( diff );
                             setflag_c( ( !sign1 && sign2 ) || ( signdiff && ( !sign1 || sign2 ) ) );
-                            setflag_v( ( ( sign1 != sign2 ) && ( signdiff != sign1 ) ) || 
+                            setflag_v( ( ( sign1 != sign2 ) && ( signdiff != sign1 ) ) ||
                                        ( ( 0x21 == op3 ) && ( ( val1 & 3 ) || ( val2 & 3 ) ) ) );
                         }
                         break;
@@ -1191,33 +1287,33 @@ uint64_t Sparc::run()
                         uint32_t opf = opbits( 5, 9 );
                         switch( opf )
                         {
-                            case 1: fregs[ rd ] = fregs[ rs2 ]; break;                                                         // fmovs
-                            case 5: fregs[ rd ] = -fregs[ rs2 ]; break;                                                        // fnegs
-                            case 9: fregs[ rd ] = fabsf( fregs[ rs2 ] ); break;                                                // fabss
-                            case 0x29: fregs[ rd ] = sqrtf( fregs[ rs2 ] ); break;                                             // fsqrts
+                            case 1:    set_freg( rd, get_freg( rs2 ) ); break;                                                 // fmovs
+                            case 5:    set_freg( rd, - get_freg( rs2 ) ); break;                                               // fnegs
+                            case 9:    set_freg( rd, fabsf( get_freg( rs2 ) ) ); break;                                        // fabss
+                            case 0x29: set_freg( rd, sqrtf( get_freg( rs2 ) ) ); break;                                        // fsqrts
                             case 0x2a: set_dreg( rd, sqrt( get_dreg( rs2 ) ) ); break;                                         // fsqrtd
-                            case 0x2b: set_qreg( rd, sqrtl( get_qreg( rs2 ) ) ); break;                                        // fsqrtq
-                            case 0x41: fregs[ rd ] = (float) do_fadd( fregs[ rs1 ], fregs[ rs2 ] ); break;                     // fadds
+                            case 0x2b: set_qreg( rd, sqrtq( get_qreg( rs2 ) ) ); break;                                        // fsqrtq
+                            case 0x41: set_freg( rd, do_fadd( get_freg( rs1 ), get_freg( rs2 ) ) ); break;                     // fadds
                             case 0x42: set_dreg( rd, do_fadd( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;                     // faddd
-                            case 0x43: set_qreg( rd, get_qreg( rs1 ) + get_qreg( rs2 ) ); break;                               // faddq
-                            case 0x45: fregs[ rd ] = (float) do_fsub( fregs[ rs1 ], fregs[ rs2 ] ); break;                     // fsubs
+                            case 0x43: set_qreg( rd, do_fadd( get_qreg( rs1 ), get_qreg( rs2 ) ) ); break;                     // faddq
+                            case 0x45: set_freg( rd, do_fsub( get_freg( rs1 ), get_freg( rs2 ) ) ); break;                     // fsubs
                             case 0x46: set_dreg( rd, do_fsub( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;                     // fsubd
-                            case 0x47: set_qreg( rd, get_qreg( rs1 ) - get_qreg( rs2 ) ); break;                               // fsubq
-                            case 0x49: fregs[ rd ] = (float) do_fmul( fregs[ rs1 ], fregs[ rs2 ] ); break;                     // fmuls
+                            case 0x47: set_qreg( rd, do_fsub( get_qreg( rs1 ), get_qreg( rs2 ) ) ); break;                     // fsubq
+                            case 0x49: set_freg( rd, do_fmul( get_freg( rs1 ), get_freg( rs2 ) ) ); break;                     // fmuls
                             case 0x4a: set_dreg( rd, do_fmul( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;                     // fmuld
-                            case 0x4b: set_qreg( rd, get_qreg( rs1 ) * get_qreg( rs2 ) ); break;                               // fmulq
-                            case 0x4d: fregs[ rd ] = (float) do_fdiv( fregs[ rs1 ], fregs[ rs2 ] ); break;                     // fdivs
+                            case 0x4b: set_qreg( rd, do_fmul( get_qreg( rs1 ), get_qreg( rs2 ) ) ); break;                     // fmulq
+                            case 0x4d: set_freg( rd, do_fdiv( get_freg( rs1 ), get_freg( rs2 ) ) ); break;                     // fdivs
                             case 0x4e: set_dreg( rd, do_fdiv( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;                     // fdivd
-                            case 0x4f: set_qreg( rd, get_qreg( rs1 ) / get_qreg( rs2 ) ); break;                               // fdivq
-                            case 0x69: set_dreg( rd, do_fmul( fregs[ rs1 ], (double) fregs[ rs2 ] ) ); break;                  // fsmuld
-                            case 0x6e: set_qreg( rd, (long double) get_dreg( rs1 ) * (long double) get_dreg( rs2 ) ); break;   // fsmulq
-                            case 0xc4: fregs[ rd ] = (float) ( * (int32_t *) &fregs[ rs2 ] ); break;                           // fitos
-                            case 0xc6: fregs[ rd ] = (float) get_dreg( rs2 ); break;                                           // fdtos
-                            case 0xc7: fregs[ rd ] = (float) get_qreg( rs2 ); break;                                           // fqtos
+                            case 0x4f: set_qreg( rd, do_fdiv( get_qreg( rs1 ), get_qreg( rs2 ) ) ); break;                     // fdivq
+                            case 0x69: set_dreg( rd, do_fmul( (double) fregs[ rs1 ], (double) fregs[ rs2 ] ) ); break;         // fsmuld
+                            case 0x6e: set_qreg( rd, (quadfp_t) get_dreg( rs1 ) * (quadfp_t) get_dreg( rs2 ) ); break;         // fsmulq
+                            case 0xc4: set_freg( rd, (float) ( * (int32_t *) &fregs[ rs2 ] ) ); break;                         // fitos
+                            case 0xc6: set_freg( rd, (float) get_dreg( rs2 ) ); break;                                         // fdtos
+                            case 0xc7: set_freg( rd, (float) get_qreg( rs2 ) ); break;                                         // fqtos
                             case 0xc8: set_dreg( rd, (double) ( * (int32_t *) &fregs[ rs2 ] ) ); break;                        // fitod
                             case 0xc9: set_dreg( rd, fregs[ rs2 ] ); break;                                                    // fstod
                             case 0xcb: set_dreg( rd, (double) get_qreg( rs2 ) ); break;                                        // fqtod
-                            case 0xcc: set_qreg( rd, (long double) ( * (int32_t *) &fregs[ rs2 ] ) ); break;                   // fitoq
+                            case 0xcc: set_qreg( rd, (quadfp_t) ( * (int32_t *) &fregs[ rs2 ] ) ); break;                      // fitoq
                             case 0xcd: set_qreg( rd, fregs[ rs2 ] ); break;                                                    // fstoq
                             case 0xce: set_qreg( rd, get_dreg( rs2 ) ); break;                                                 // fdtoq
                             case 0xd1: * (int32_t *) & fregs[ rd ] = saturate_int32_from_d( fregs[ rs2 ] ); break;             // fstoi  these 3 round towards 0 and ignore RD in FSR
@@ -1233,10 +1329,10 @@ uint64_t Sparc::run()
                         uint32_t opf = opbits( 5, 9 );
                         switch( opf )
                         {
-                            case 0x51: set_fcc( compare_floating( fregs[ rs1 ], fregs[ rs2 ] ) ); break;              // fcmps
+                            case 0x51: set_fcc( compare_floating( get_freg( rs1 ), get_freg( rs2 ) ) ); break;        // fcmps
                             case 0x52: set_fcc( compare_floating( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;        // fcmpd
                             case 0x53: set_fcc( compare_floating( get_qreg( rs1 ), get_qreg( rs2 ) ) ); break;        // fcmpq
-                            case 0x55: set_fcc( compare_floating( fregs[ rs1 ], fregs[ rs2 ], true ) ); break;        // fcmpes
+                            case 0x55: set_fcc( compare_floating( get_freg( rs1 ), get_freg( rs2 ) ) ); break;        // fcmpes
                             case 0x56: set_fcc( compare_floating( get_dreg( rs1 ), get_dreg( rs2 ), true ) ); break;  // fcmped
                             case 0x57: set_fcc( compare_floating( get_qreg( rs1 ), get_qreg( rs2 ), true ) ); break;  // fcmpeq
                             default: unhandled();

@@ -38,7 +38,7 @@ do
     done
 done
 
-for arg in esp esp7 sievesp tttsp tttusp;
+for arg in esp esp7 sievesp tttsp tttusp tf128;
 do
     echo $arg
     echo test $arg >>$outputfile

@@ -10,6 +10,16 @@ extern void emulator_invoke_sparc_trap6( Sparc & cpu );                         
 extern const char * emulator_symbol_lookup( uint32_t address, uint32_t & offset );             // returns the best guess for a symbol name and offset for the address
 extern void emulator_hard_termination( Sparc & cpu, const char *pcerr, uint64_t error_value ); // show an error and exit
 
+#if defined(__FLOAT128__) || defined(__SIZEOF_FLOAT128__)
+    typedef __float128 quadfp_t;
+    #define HAS_QUADFP_PRECISION 1
+    #include <quadmath.h>
+#else // __float128 is NOT supported (e.g., MSVC, Apple Clang, or certain targets). fall back to using long double. MANY THINGS FAIL WITH THIS!
+    #define HAS_QUADFP_PRECISION 0
+    typedef long double quadfp_t;
+    #define sqrtq sqrtl
+#endif
+
 struct Sparc
 {
     bool trace_instructions( bool trace );         // enable/disable tracing each instruction
@@ -37,7 +47,7 @@ struct Sparc
         if ( 0 != start )
         {
             npc = pc = start;                      // app start address
-                  //               impl         version       enable FP    enable traps current window pointer is 0
+                                                   //               impl         version       enable FP    enable traps current window pointer is 0
             psr = (uint32_t) ( ( 0xd << 28 ) | ( 1 << 24 ) | ( 1 << 12 ) | ( 1 << 5 ) | 0 ); // reasonable defaults
             Sparc_reg( 14 ) = top_of_stack;
         }
@@ -147,7 +157,7 @@ struct Sparc
     uint32_t pc;                                   // program counter
     uint32_t npc;                                  // next program counter
 
-    float fregs[ 32 ];                             // 32 32-bit floating point registers
+    alignas(16) float fregs[ 32 ];                 // 32 32-bit floating point registers. Also 16 64-bit doubles and 8 128-bit quad floats
     uint32_t fsr;                                  // floating-point state register
 
     inline uint32_t & Sparc_psr() { return psr; }
@@ -248,6 +258,9 @@ private:
         return ( x >> 32 ) | ( x << 32 );
     } //flip_dwords
 
+    inline void set_freg( uint32_t fr, float f ) { fregs[ fr ] = f; }
+    inline float get_freg( uint32_t fr ) { return fregs[ fr ]; }
+
     inline void set_dreg( uint32_t fr, double d )
     {
         assert( 0 == ( fr & 1 ) );
@@ -269,16 +282,16 @@ private:
         #endif
     } //get_dreg
 
-    inline void set_qreg( uint32_t fr, long double d )
+    inline void set_qreg( uint32_t fr, quadfp_t q )
     {
         assert( 0 == ( fr & 3 ) );
-        * (long double *) ( & fregs[ fr ] ) = d;
+        * (quadfp_t *) ( & fregs[ fr ] ) = q;
     } //set_dreg
 
-    inline long double get_qreg( uint32_t fr )
+    inline quadfp_t get_qreg( uint32_t fr )
     {
         assert( 0 == ( fr & 3 ) );
-        return * (long double *) ( & fregs[ fr ] );
+        return * (quadfp_t *) ( & fregs[ fr ] );
     } //get_qreg
 
     inline uint32_t get_fcc() { return get_bits32( fsr, 10, 2 ); }
@@ -298,9 +311,9 @@ private:
     const char render_fflag( void );
     bool check_condition( uint32_t cond );
     bool check_fcondition( uint32_t cond );
-    void trace_canonical( const char * pins, bool shift = false );
-    void trace_ld_canonical( const char * pins );
-    void trace_st_canonical( const char * pins );
+    void trace_canonical( const char * instruction, bool shift = false );
+    void trace_ld_canonical( const char * instruction, bool fp = false );
+    void trace_st_canonical( const char * instruction, bool fp = false );
     const char * condition_string( uint32_t cond );
     const char * fcondition_string( uint32_t cond );
 };
