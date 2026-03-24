@@ -10,7 +10,7 @@ extern void emulator_invoke_sparc_trap6( Sparc & cpu );                         
 extern const char * emulator_symbol_lookup( uint32_t address, uint32_t & offset );             // returns the best guess for a symbol name and offset for the address
 extern void emulator_hard_termination( Sparc & cpu, const char *pcerr, uint64_t error_value ); // show an error and exit
 
-#if defined(__FLOAT128__) || defined(__SIZEOF_FLOAT128__)
+#if defined(__FLOAT128__) || defined(__SIZEOF_FLOAT128__) // afaik only g++ on x86/amd64/arm64 support this.
     typedef __float128 quadfp_t;
     #define HAS_QUADFP_PRECISION 1
     #include <quadmath.h>

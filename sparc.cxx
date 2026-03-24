@@ -748,6 +748,18 @@ namespace Detail
 
 template <typename T> inline uint32_t Sparc::compare_floating( T a, T b, bool NaN_trap )
 {
+#if 0
+    uint8_t * pa = (uint8_t *) &a;
+    uint8_t * pb = (uint8_t *) &b;
+    for ( int i = 0; i < sizeof( T ); i++ )
+    {
+        tracer.Trace( "pa[ %u ] = %#x\n", i, pa[ i ] );
+        tracer.Trace( "pb[ %u ] = %#x\n", i, pb[ i ] );
+    }
+
+    tracer.Trace( "a as double %lf, b as double %lf\n", (double) a, (double) b );
+#endif
+
     using FT = Detail::FloatTraits<T>;
 
     bool anan = FT::is_nan( a );
