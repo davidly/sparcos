@@ -253,10 +253,10 @@ private:
 
     inline void setfloat( uint32_t o, float fval ) { setui32( o, * (uint32_t *) &fval ); }
 
-    static inline uint64_t flip_dwords( uint64_t x )
+    static inline uint64_t flip_dwords64( uint64_t x )
     {
         return ( x >> 32 ) | ( x << 32 );
-    } //flip_dwords
+    } //flip_dwords64
 
     inline void set_freg( uint32_t fr, float f ) { fregs[ fr ] = f; }
     inline float get_freg( uint32_t fr ) { return fregs[ fr ]; }
@@ -267,7 +267,7 @@ private:
         #ifdef TARGET_BIG_ENDIAN
             * (double *) ( & fregs[ fr ] ) = d;
         #else
-            * (uint64_t *) ( & fregs[ fr ] ) = flip_dwords( * (uint64_t *) &d );
+            * (uint64_t *) ( & fregs[ fr ] ) = flip_dwords64( * (uint64_t *) &d );
         #endif
     } //set_dreg
 
@@ -277,18 +277,58 @@ private:
         #ifdef TARGET_BIG_ENDIAN
             return * (double *) ( & fregs[ fr ] );
         #else
-            uint64_t d = flip_dwords( * (uint64_t *) ( & fregs[ fr ] ) );
+            uint64_t d = flip_dwords64( * (uint64_t *) ( & fregs[ fr ] ) );
             return * (double *) &d;
         #endif
     } //get_dreg
 
+    static inline void flip_dwords128( uint32_t * pto, uint32_t * pfrom )
+    {
+        pto[ 0 ] = pfrom[ 3 ];
+        pto[ 1 ] = pfrom[ 2 ];
+        pto[ 2 ] = pfrom[ 1 ];
+        pto[ 3 ] = pfrom[ 0 ];
+    } //flip_dwords128
+
     inline void set_qreg( uint32_t fr, quadfp_t q )
+    {
+        assert( 0 == ( fr & 3 ) );
+
+        #ifdef TARGET_BIG_ENDIAN
+            * (quadfp_t *) ( & fregs[ fr ] ) = q;
+        #else
+            #ifdef HAS_QUADFP_PRECISION
+                flip_dwords128( (uint32_t *) & fregs[ fr ], (uint32_t *) & q );
+            #else
+                * (quadfp_t *) ( & fregs[ fr ] ) = q; // wrong in many ways
+            #endif
+        #endif
+    } //set_qreg
+    
+    inline quadfp_t get_qreg( uint32_t fr )
+    {
+        assert( 0 == ( fr & 3 ) );
+
+        #ifdef TARGET_BIG_ENDIAN
+            return * (quadfp_t *) ( & fregs[ fr ] );
+        #else
+            #ifdef HAS_QUADFP_PRECISION
+                quadfp_t q;
+                flip_dwords128( (uint32_t *) &q, (uint32_t *) & fregs[ fr ] );
+                return q;
+            #else
+                return * (quadfp_t *) ( & fregs[ fr ] ); // wrong in many ways
+            #endif
+        #endif
+    } //get_qreg
+
+    inline void set_qregold( uint32_t fr, quadfp_t q )
     {
         assert( 0 == ( fr & 3 ) );
         * (quadfp_t *) ( & fregs[ fr ] ) = q;
     } //set_dreg
 
-    inline quadfp_t get_qreg( uint32_t fr )
+    inline quadfp_t get_qregold( uint32_t fr )
     {
         assert( 0 == ( fr & 3 ) );
         return * (quadfp_t *) ( & fregs[ fr ] );

@@ -1,4 +1,4 @@
-! tf128.s
+! tf128_arch_correct.s
 ! GNU as syntax, Linux/SPARC V8, standalone _start
 !
 ! Covered instructions:
@@ -9,6 +9,15 @@
 ! Result:
 !   success -> writes "completed with great sucess\n", exits 0
 !   failure -> writes "failure\n", exits with failing test number
+!
+! Architectural assumptions:
+!   - SPARC target format is big-endian
+!   - binary128 constants are laid out in canonical big-endian word order
+!   - a quad occupies %fN,%fN+1,%fN+2,%fN+3
+!   - no swapped-pair workaround is assumed anywhere in this file
+!
+! Linux/SPARC syscall convention used here:
+!   %g1 = syscall number, %o0..%o2 = args, ta 0x10
 
         .section ".text"
         .align 4
@@ -50,7 +59,7 @@ _start:
 
 ! ----------------------------------------------------------------------
 ! int run_fp128_tests(void)
-!   returns %o0 = 0 on success, else test number on failure
+!   returns %o0 = 0 on success, else failure code
 ! ----------------------------------------------------------------------
 
         .align 4
@@ -93,9 +102,8 @@ run_fp128_tests:
         fitoq   %f0, %f4
 
         set     q_three, %l1
-        mov     %l1, %o0
-        call    loadq_f8
-        nop
+        ldd     [%l1],   %f8
+        ldd     [%l1+8], %f10
 
         fcmpq   %f4, %f8
         nop
@@ -112,9 +120,8 @@ run_fp128_tests:
 ! Test 2: fqtoi 3.0q -> 3
 ! ------------------------------------------------------------
         set     q_three, %l0
-        mov     %l0, %o0
-        call    loadq_f4
-        nop
+        ldd     [%l0],   %f4
+        ldd     [%l0+8], %f6
 
         fqtoi   %f4, %f0
         st      %f0, [%fp-16]
@@ -135,9 +142,8 @@ run_fp128_tests:
         fdtoq   %f0, %f4
 
         set     q_one_point_five, %l1
-        mov     %l1, %o0
-        call    loadq_f8
-        nop
+        ldd     [%l1],   %f8
+        ldd     [%l1+8], %f10
 
         fcmpq   %f4, %f8
         nop
@@ -158,9 +164,8 @@ run_fp128_tests:
         fstoq   %f0, %f4
 
         set     q_two, %l1
-        mov     %l1, %o0
-        call    loadq_f8
-        nop
+        ldd     [%l1],   %f8
+        ldd     [%l1+8], %f10
 
         fcmpq   %f4, %f8
         nop
@@ -177,9 +182,8 @@ run_fp128_tests:
 ! Test 5: fqtod 1.5q -> 1.5d
 ! ------------------------------------------------------------
         set     q_one_point_five, %l0
-        mov     %l0, %o0
-        call    loadq_f4
-        nop
+        ldd     [%l0],   %f4
+        ldd     [%l0+8], %f6
 
         fqtod   %f4, %f0
         std     %f0, [%fp-24]
@@ -205,9 +209,8 @@ run_fp128_tests:
 ! Test 6: fqtos 2.0q -> 2.0f
 ! ------------------------------------------------------------
         set     q_two, %l0
-        mov     %l0, %o0
-        call    loadq_f4
-        nop
+        ldd     [%l0],   %f4
+        ldd     [%l0+8], %f6
 
         fqtos   %f4, %f0
         st      %f0, [%fp-28]
@@ -234,9 +237,8 @@ run_fp128_tests:
         fdmulq  %f0, %f2, %f4
 
         set     q_one, %l2
-        mov     %l2, %o0
-        call    loadq_f8
-        nop
+        ldd     [%l2],   %f8
+        ldd     [%l2+8], %f10
 
         fcmpq   %f4, %f8
         nop
@@ -253,21 +255,18 @@ run_fp128_tests:
 ! Test 8: faddq 1.0q + 2.0q -> 3.0q
 ! ------------------------------------------------------------
         set     q_one, %l0
-        mov     %l0, %o0
-        call    loadq_f0
-        nop
+        ldd     [%l0],   %f0
+        ldd     [%l0+8], %f2
 
         set     q_two, %l1
-        mov     %l1, %o0
-        call    loadq_f4
-        nop
+        ldd     [%l1],   %f4
+        ldd     [%l1+8], %f6
 
         faddq   %f0, %f4, %f8
 
         set     q_three, %l2
-        mov     %l2, %o0
-        call    loadq_f12
-        nop
+        ldd     [%l2],   %f12
+        ldd     [%l2+8], %f14
 
         fcmpq   %f8, %f12
         nop
@@ -284,21 +283,18 @@ run_fp128_tests:
 ! Test 9: fsubq 3.0q - 1.0q -> 2.0q
 ! ------------------------------------------------------------
         set     q_three, %l0
-        mov     %l0, %o0
-        call    loadq_f0
-        nop
+        ldd     [%l0],   %f0
+        ldd     [%l0+8], %f2
 
         set     q_one, %l1
-        mov     %l1, %o0
-        call    loadq_f4
-        nop
+        ldd     [%l1],   %f4
+        ldd     [%l1+8], %f6
 
         fsubq   %f0, %f4, %f8
 
         set     q_two, %l2
-        mov     %l2, %o0
-        call    loadq_f12
-        nop
+        ldd     [%l2],   %f12
+        ldd     [%l2+8], %f14
 
         fcmpq   %f8, %f12
         nop
@@ -315,21 +311,18 @@ run_fp128_tests:
 ! Test 10: fmulq 3.0q * 0.5q -> 1.5q
 ! ------------------------------------------------------------
         set     q_three, %l0
-        mov     %l0, %o0
-        call    loadq_f0
-        nop
+        ldd     [%l0],   %f0
+        ldd     [%l0+8], %f2
 
         set     q_half, %l1
-        mov     %l1, %o0
-        call    loadq_f4
-        nop
+        ldd     [%l1],   %f4
+        ldd     [%l1+8], %f6
 
         fmulq   %f0, %f4, %f8
 
         set     q_one_point_five, %l2
-        mov     %l2, %o0
-        call    loadq_f12
-        nop
+        ldd     [%l2],   %f12
+        ldd     [%l2+8], %f14
 
         fcmpq   %f8, %f12
         nop
@@ -346,21 +339,18 @@ run_fp128_tests:
 ! Test 11: fdivq 3.0q / 2.0q -> 1.5q
 ! ------------------------------------------------------------
         set     q_three, %l0
-        mov     %l0, %o0
-        call    loadq_f0
-        nop
+        ldd     [%l0],   %f0
+        ldd     [%l0+8], %f2
 
         set     q_two, %l1
-        mov     %l1, %o0
-        call    loadq_f4
-        nop
+        ldd     [%l1],   %f4
+        ldd     [%l1+8], %f6
 
         fdivq   %f0, %f4, %f8
 
         set     q_one_point_five, %l2
-        mov     %l2, %o0
-        call    loadq_f12
-        nop
+        ldd     [%l2],   %f12
+        ldd     [%l2+8], %f14
 
         fcmpq   %f8, %f12
         nop
@@ -377,16 +367,14 @@ run_fp128_tests:
 ! Test 12: fsqrtq 4.0q -> 2.0q
 ! ------------------------------------------------------------
         set     q_four, %l0
-        mov     %l0, %o0
-        call    loadq_f4
-        nop
+        ldd     [%l0],   %f4
+        ldd     [%l0+8], %f6
 
         fsqrtq  %f4, %f8
 
         set     q_two, %l1
-        mov     %l1, %o0
-        call    loadq_f12
-        nop
+        ldd     [%l1],   %f12
+        ldd     [%l1+8], %f14
 
         fcmpq   %f8, %f12
         nop
@@ -403,14 +391,12 @@ run_fp128_tests:
 ! Test 13: fcmpq 1.0q < 2.0q
 ! ------------------------------------------------------------
         set     q_one, %l0
-        mov     %l0, %o0
-        call    loadq_f0
-        nop
+        ldd     [%l0],   %f0
+        ldd     [%l0+8], %f2
 
         set     q_two, %l1
-        mov     %l1, %o0
-        call    loadq_f4
-        nop
+        ldd     [%l1],   %f4
+        ldd     [%l1+8], %f6
 
         fcmpq   %f0, %f4
         nop
@@ -427,14 +413,12 @@ run_fp128_tests:
 ! Test 14: fcmpq 2.0q == 2.0q
 ! ------------------------------------------------------------
         set     q_two, %l0
-        mov     %l0, %o0
-        call    loadq_f0
-        nop
+        ldd     [%l0],   %f0
+        ldd     [%l0+8], %f2
 
         set     q_two, %l1
-        mov     %l1, %o0
-        call    loadq_f4
-        nop
+        ldd     [%l1],   %f4
+        ldd     [%l1+8], %f6
 
         fcmpq   %f0, %f4
         nop
@@ -451,14 +435,12 @@ run_fp128_tests:
 ! Test 15: fcmpq qNaN unordered with 1.0q
 ! ------------------------------------------------------------
         set     q_qnan, %l0
-        mov     %l0, %o0
-        call    loadq_f0
-        nop
+        ldd     [%l0],   %f0
+        ldd     [%l0+8], %f2
 
         set     q_one, %l1
-        mov     %l1, %o0
-        call    loadq_f4
-        nop
+        ldd     [%l1],   %f4
+        ldd     [%l1+8], %f6
 
         fcmpq   %f0, %f4
         nop
@@ -475,14 +457,12 @@ run_fp128_tests:
 ! Test 16: fcmpeq 2.0q == 2.0q
 ! ------------------------------------------------------------
         set     q_two, %l0
-        mov     %l0, %o0
-        call    loadq_f0
-        nop
+        ldd     [%l0],   %f0
+        ldd     [%l0+8], %f2
 
         set     q_two, %l1
-        mov     %l1, %o0
-        call    loadq_f4
-        nop
+        ldd     [%l1],   %f4
+        ldd     [%l1+8], %f6
 
         fcmpeq  %f0, %f4
         nop
@@ -499,14 +479,12 @@ run_fp128_tests:
 ! Test 17: fcmpeq 1.0q < 2.0q
 ! ------------------------------------------------------------
         set     q_one, %l0
-        mov     %l0, %o0
-        call    loadq_f0
-        nop
+        ldd     [%l0],   %f0
+        ldd     [%l0+8], %f2
 
         set     q_two, %l1
-        mov     %l1, %o0
-        call    loadq_f4
-        nop
+        ldd     [%l1],   %f4
+        ldd     [%l1+8], %f6
 
         fcmpeq  %f0, %f4
         nop
@@ -523,42 +501,6 @@ run_fp128_tests:
         ret
         restore
 
-! ----------------------------------------------------------------------
-! Quad load helpers
-! ----------------------------------------------------------------------
-
-        .align 4
-        .type loadq_f0, #function
-loadq_f0:
-        ldd     [%o0],   %f2
-        ldd     [%o0+8], %f0
-        retl
-        nop
-
-        .align 4
-        .type loadq_f4, #function
-loadq_f4:
-        ldd     [%o0],   %f6
-        ldd     [%o0+8], %f4
-        retl
-        nop
-
-        .align 4
-        .type loadq_f8, #function
-loadq_f8:
-        ldd     [%o0],   %f10
-        ldd     [%o0+8], %f8
-        retl
-        nop
-
-        .align 4
-        .type loadq_f12, #function
-loadq_f12:
-        ldd     [%o0],   %f14
-        ldd     [%o0+8], %f12
-        retl
-        nop
-
         .section ".rodata"
         .align 16
 
@@ -567,18 +509,18 @@ msg_success:
 msg_success_end:
 
 msg_failure:
-        .ascii  "tf128 failed. (expected if sparcos not compiled with g++)\n"
+        .ascii  "tf128 failure (expected on non-g++ builds of sparcos)\n"
 msg_failure_end:
 
         .align 8
 
-! single precision
+! single precision constants
 s_two:
         .word   0x40000000              ! 2.0f
 
         .align 8
 
-! double precision
+! double precision constants
 d_half:
         .word   0x3fe00000, 0x00000000  ! 0.5
 d_one_point_five:
@@ -588,24 +530,24 @@ d_two:
 
         .align 16
 
-! quad precision constants using the same layout convention as before
+! canonical big-endian IEEE-754 binary128 constants
 q_half:
-        .word   0x00000000, 0x3ffe0000, 0x00000000, 0x00000000
+        .word   0x3ffe0000, 0x00000000, 0x00000000, 0x00000000
 
 q_one:
-        .word   0x00000000, 0x3fff0000, 0x00000000, 0x00000000
+        .word   0x3fff0000, 0x00000000, 0x00000000, 0x00000000
 
 q_one_point_five:
-        .word   0x00000000, 0x3fff8000, 0x00000000, 0x00000000
+        .word   0x3fff8000, 0x00000000, 0x00000000, 0x00000000
 
 q_two:
-        .word   0x00000000, 0x40000000, 0x00000000, 0x00000000
+        .word   0x40000000, 0x00000000, 0x00000000, 0x00000000
 
 q_three:
-        .word   0x00000000, 0x40008000, 0x00000000, 0x00000000
+        .word   0x40008000, 0x00000000, 0x00000000, 0x00000000
 
 q_four:
-        .word   0x00000000, 0x40010000, 0x00000000, 0x00000000
+        .word   0x40010000, 0x00000000, 0x00000000, 0x00000000
 
 q_qnan:
-        .word   0x00000000, 0x7fff8000, 0x00000000, 0x00000000
+        .word   0x7fff8000, 0x00000000, 0x00000000, 0x00000000
