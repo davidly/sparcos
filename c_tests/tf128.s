@@ -509,7 +509,7 @@ msg_success:
 msg_success_end:
 
 msg_failure:
-        .ascii  "tf128 failure (expected on non-g++ builds of sparcos)\n"
+        .ascii  "tf128 failure (only sparcos built with g++ on x86/amd64/arm64 should work)\n"
 msg_failure_end:
 
         .align 8
