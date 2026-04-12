@@ -7,7 +7,7 @@
 !   fcmpq, fcmpeq
 !
 ! Result:
-!   success -> writes "completed with great sucess\n", exits 0
+!   success -> writes "completed with great success\n", exits 0
 !   failure -> writes "failure\n", exits with failing test number
 !
 ! Architectural assumptions:
