@@ -1,4 +1,4 @@
-Fri 04/24/2026  9:13:10.30 
+Thu 04/30/2026 16:46:41.86 
 test bin0/hidave
 hi dave
 test bin1/hidave
@@ -18770,30 +18770,30 @@ fillc
 starting mult
 summ is : 465880
 test bin0/ttime
-before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 4, day 24, hour 16, min 13, sec 25
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 4, day 24, hour 11, min 13, sec 25
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 4, day 24, hour 8, min 13, sec 25
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 4, day 24, hour 16, min 13, sec 25
+before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 4, day 30, hour 23, min 46, sec 58
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 4, day 30, hour 18, min 46, sec 58
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 4, day 30, hour 15, min 46, sec 58
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 4, day 30, hour 23, min 46, sec 58
 test bin1/ttime
-before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 4, day 24, hour 16, min 13, sec 25
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 4, day 24, hour 11, min 13, sec 25
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 4, day 24, hour 8, min 13, sec 25
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 4, day 24, hour 16, min 13, sec 25
+before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 4, day 30, hour 23, min 46, sec 58
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 4, day 30, hour 18, min 46, sec 58
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 4, day 30, hour 15, min 46, sec 58
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 4, day 30, hour 23, min 46, sec 58
 test bin2/ttime
-before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 4, day 24, hour 16, min 13, sec 25
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 4, day 24, hour 11, min 13, sec 25
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 4, day 24, hour 8, min 13, sec 25
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 4, day 24, hour 16, min 13, sec 25
+before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 4, day 30, hour 23, min 46, sec 58
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 4, day 30, hour 18, min 46, sec 58
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 4, day 30, hour 15, min 46, sec 58
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 4, day 30, hour 23, min 46, sec 58
 test bin3/ttime
-before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 4, day 24, hour 16, min 13, sec 25
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 4, day 24, hour 11, min 13, sec 25
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 4, day 24, hour 8, min 13, sec 25
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 4, day 24, hour 16, min 13, sec 25
+before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 4, day 30, hour 23, min 46, sec 58
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 4, day 30, hour 18, min 46, sec 58
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 4, day 30, hour 15, min 46, sec 58
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 4, day 30, hour 23, min 46, sec 58
 test binfast/ttime
-before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 4, day 24, hour 16, min 13, sec 25
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 4, day 24, hour 11, min 13, sec 25
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 4, day 24, hour 8, min 13, sec 25
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 4, day 24, hour 16, min 13, sec 25
+before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 4, day 30, hour 23, min 46, sec 58
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 4, day 30, hour 18, min 46, sec 58
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 4, day 30, hour 15, min 46, sec 58
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 4, day 30, hour 23, min 46, sec 58
 test bin0/fileops
 current offset: 0
 result of fseek: 0
@@ -29740,7 +29740,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2026, month 4, day 24, hour 8, min 13, sec 44
+tz: 'PST+8', year: 2026, month 4, day 30, hour 15, min 47, sec 17
 len in pfl: 0
 exiting fopentst with great success
 test bin1/fopentst
@@ -29759,7 +29759,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2026, month 4, day 24, hour 8, min 13, sec 44
+tz: 'PST+8', year: 2026, month 4, day 30, hour 15, min 47, sec 17
 len in pfl: 0
 exiting fopentst with great success
 test bin2/fopentst
@@ -29778,7 +29778,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2026, month 4, day 24, hour 8, min 13, sec 44
+tz: 'PST+8', year: 2026, month 4, day 30, hour 15, min 47, sec 17
 len in pfl: 0
 exiting fopentst with great success
 test bin3/fopentst
@@ -29797,7 +29797,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2026, month 4, day 24, hour 8, min 13, sec 44
+tz: 'PST+8', year: 2026, month 4, day 30, hour 15, min 47, sec 17
 len in pfl: 0
 exiting fopentst with great success
 test binfast/fopentst
@@ -29816,7 +29816,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2026, month 4, day 24, hour 8, min 13, sec 44
+tz: 'PST+8', year: 2026, month 4, day 30, hour 15, min 47, sec 17
 len in pfl: 0
 exiting fopentst with great success
 test bin0/lenum
@@ -30396,6 +30396,7 @@ ID  NAME               DATATYPE         VALUE
 13  AT_GID             gid_t            0x65616863  (1700882531)
 14  AT_EGID            gid_t            0x6e696873  (1852401779)
 31  AT_EXECFN          string address   0x2852cd3  "/Users/david/OneDrive/sparcos/c_tests/bin0/taux.elf"
+15  AT_PLATFORM        string address   0x2852d07  "sparc"
 0   AT_NULL            terminator       0x0
 test bin1/taux
 ID  NAME               DATATYPE         VALUE
@@ -30409,6 +30410,7 @@ ID  NAME               DATATYPE         VALUE
 13  AT_GID             gid_t            0x65616863  (1700882531)
 14  AT_EGID            gid_t            0x6e696873  (1852401779)
 31  AT_EXECFN          string address   0x2852cd3  "/Users/david/OneDrive/sparcos/c_tests/bin1/taux.elf"
+15  AT_PLATFORM        string address   0x2852d07  "sparc"
 0   AT_NULL            terminator       0x0
 test bin2/taux
 ID  NAME               DATATYPE         VALUE
@@ -30422,6 +30424,7 @@ ID  NAME               DATATYPE         VALUE
 13  AT_GID             gid_t            0x65616863  (1700882531)
 14  AT_EGID            gid_t            0x6e696873  (1852401779)
 31  AT_EXECFN          string address   0x2852cd3  "/Users/david/OneDrive/sparcos/c_tests/bin2/taux.elf"
+15  AT_PLATFORM        string address   0x2852d07  "sparc"
 0   AT_NULL            terminator       0x0
 test bin3/taux
 ID  NAME               DATATYPE         VALUE
@@ -30435,6 +30438,7 @@ ID  NAME               DATATYPE         VALUE
 13  AT_GID             gid_t            0x65616863  (1700882531)
 14  AT_EGID            gid_t            0x6e696873  (1852401779)
 31  AT_EXECFN          string address   0x2852cd3  "/Users/david/OneDrive/sparcos/c_tests/bin3/taux.elf"
+15  AT_PLATFORM        string address   0x2852d07  "sparc"
 0   AT_NULL            terminator       0x0
 test binfast/taux
 ID  NAME               DATATYPE         VALUE
@@ -30448,6 +30452,7 @@ ID  NAME               DATATYPE         VALUE
 13  AT_GID             gid_t            0x65616863  (1700882531)
 14  AT_EGID            gid_t            0x6e696873  (1852401779)
 31  AT_EXECFN          string address   0x2852cd6  "/Users/david/OneDrive/sparcos/c_tests/binfast/taux.elf"
+15  AT_PLATFORM        string address   0x2852d0d  "sparc"
 0   AT_NULL            terminator       0x0
 test esp
 271828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746639193200305992181741359662904357290033429526059563073813232862794349076323382988075319
@@ -30479,27 +30484,27 @@ test binfast/ff
   rwxrwxrwx           8961  2026-03-01 19:43:31  /Users/david/OneDrive/sparcos/c_tests/ff.c
 test bin0/ba
 parsing input file TP.BAS
-1,110 ms for 1 iterations
+1,107 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin1/ba
 parsing input file TP.BAS
-249 ms for 1 iterations
+251 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin2/ba
 parsing input file TP.BAS
-226 ms for 1 iterations
+234 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin3/ba
 parsing input file TP.BAS
-230 ms for 1 iterations
+237 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test binfast/ba
 parsing input file TP.BAS
-229 ms for 1 iterations
+239 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin0/an
@@ -30832,4 +30837,4 @@ argv[ 3 ]: 'ccc'
 argv[ 4 ]: 'dddd'
 penv[ 0 ]: 'OS=SPARCOS'
 penv[ 1 ]: 'TZ=PacificDaylightTime+8'
-Fri 04/24/2026  9:13:53.76 
+Thu 04/30/2026 16:47:26.70 
