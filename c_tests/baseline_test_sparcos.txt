@@ -1,4 +1,4 @@
-Thu 04/30/2026 16:46:41.86 
+Fri 05/08/2026  8:41:33.56 
 test bin0/hidave
 hi dave
 test bin1/hidave
@@ -18770,30 +18770,30 @@ fillc
 starting mult
 summ is : 465880
 test bin0/ttime
-before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 4, day 30, hour 23, min 46, sec 58
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 4, day 30, hour 18, min 46, sec 58
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 4, day 30, hour 15, min 46, sec 58
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 4, day 30, hour 23, min 46, sec 58
+before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 5, day 8, hour 15, min 41, sec 43
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 5, day 8, hour 10, min 41, sec 43
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 5, day 8, hour 7, min 41, sec 43
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 5, day 8, hour 15, min 41, sec 43
 test bin1/ttime
-before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 4, day 30, hour 23, min 46, sec 58
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 4, day 30, hour 18, min 46, sec 58
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 4, day 30, hour 15, min 46, sec 58
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 4, day 30, hour 23, min 46, sec 58
+before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 5, day 8, hour 15, min 41, sec 43
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 5, day 8, hour 10, min 41, sec 43
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 5, day 8, hour 7, min 41, sec 43
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 5, day 8, hour 15, min 41, sec 43
 test bin2/ttime
-before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 4, day 30, hour 23, min 46, sec 58
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 4, day 30, hour 18, min 46, sec 58
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 4, day 30, hour 15, min 46, sec 58
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 4, day 30, hour 23, min 46, sec 58
+before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 5, day 8, hour 15, min 41, sec 43
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 5, day 8, hour 10, min 41, sec 43
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 5, day 8, hour 7, min 41, sec 43
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 5, day 8, hour 15, min 41, sec 43
 test bin3/ttime
-before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 4, day 30, hour 23, min 46, sec 58
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 4, day 30, hour 18, min 46, sec 58
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 4, day 30, hour 15, min 46, sec 58
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 4, day 30, hour 23, min 46, sec 58
+before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 5, day 8, hour 15, min 41, sec 43
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 5, day 8, hour 10, min 41, sec 43
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 5, day 8, hour 7, min 41, sec 43
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 5, day 8, hour 15, min 41, sec 43
 test binfast/ttime
-before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 4, day 30, hour 23, min 46, sec 58
-east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 4, day 30, hour 18, min 46, sec 58
-west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 4, day 30, hour 15, min 46, sec 58
-TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 4, day 30, hour 23, min 46, sec 58
+before TZ is set: tz: 'PacificDaylightTime+8', year: 2026, month 5, day 8, hour 15, min 41, sec 43
+east coast time: set tz 'TZ=EST+5' tz: 'EST+5', year: 2026, month 5, day 8, hour 10, min 41, sec 43
+west coast time: set tz 'TZ=PST+8' tz: 'PST+8', year: 2026, month 5, day 8, hour 7, min 41, sec 43
+TZ=<blank>: set tz 'TZ=' tz: '', year: 2026, month 5, day 8, hour 15, min 41, sec 43
 test bin0/fileops
 current offset: 0
 result of fseek: 0
@@ -19258,7 +19258,7 @@ atanf of 1.000000 is 0.785398
 atan2f of 0.3, 0.2 is 0.982794
 acosf of 0.3 is 1.266104
 asinf of 0.3 is 0.304693
-tanhf of 2.2 is 0.304693
+tanhf of 2.2 is 0.975743
 logf of 0.3: -1.203973
 log10f of 300: 2.477121
 pi has mantissa: 0.785398, exponent 2
@@ -19287,7 +19287,7 @@ atanf of 1.000000 is 0.785398
 atan2f of 0.3, 0.2 is 0.982794
 acosf of 0.3 is 1.266104
 asinf of 0.3 is 0.304693
-tanhf of 2.2 is 0.304693
+tanhf of 2.2 is 0.975743
 logf of 0.3: -1.203973
 log10f of 300: 2.477121
 pi has mantissa: 0.785398, exponent 2
@@ -19316,7 +19316,7 @@ atanf of 1.000000 is 0.785398
 atan2f of 0.3, 0.2 is 0.982794
 acosf of 0.3 is 1.266104
 asinf of 0.3 is 0.304693
-tanhf of 2.2 is 0.304693
+tanhf of 2.2 is 0.975743
 logf of 0.3: -1.203973
 log10f of 300: 2.477121
 pi has mantissa: 0.785398, exponent 2
@@ -19345,7 +19345,7 @@ atanf of 1.000000 is 0.785398
 atan2f of 0.3, 0.2 is 0.982794
 acosf of 0.3 is 1.266104
 asinf of 0.3 is 0.304693
-tanhf of 2.2 is 0.304693
+tanhf of 2.2 is 0.975743
 logf of 0.3: -1.203973
 log10f of 300: 2.477121
 pi has mantissa: 0.785398, exponent 2
@@ -19374,7 +19374,7 @@ atanf of 1.000000 is 0.785398
 atan2f of 0.3, 0.2 is 0.982794
 acosf of 0.3 is 1.266104
 asinf of 0.3 is 0.304693
-tanhf of 2.2 is 0.304693
+tanhf of 2.2 is 0.975743
 logf of 0.3: -1.203973
 log10f of 300: 2.477121
 pi has mantissa: 0.785398, exponent 2
@@ -29740,7 +29740,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2026, month 4, day 30, hour 15, min 47, sec 17
+tz: 'PST+8', year: 2026, month 5, day 8, hour 7, min 42, sec 0
 len in pfl: 0
 exiting fopentst with great success
 test bin1/fopentst
@@ -29759,7 +29759,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2026, month 4, day 30, hour 15, min 47, sec 17
+tz: 'PST+8', year: 2026, month 5, day 8, hour 7, min 42, sec 0
 len in pfl: 0
 exiting fopentst with great success
 test bin2/fopentst
@@ -29778,7 +29778,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2026, month 4, day 30, hour 15, min 47, sec 17
+tz: 'PST+8', year: 2026, month 5, day 8, hour 7, min 42, sec 0
 len in pfl: 0
 exiting fopentst with great success
 test bin3/fopentst
@@ -29797,7 +29797,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2026, month 4, day 30, hour 15, min 47, sec 17
+tz: 'PST+8', year: 2026, month 5, day 8, hour 7, min 42, sec 0
 len in pfl: 0
 exiting fopentst with great success
 test binfast/fopentst
@@ -29816,7 +29816,7 @@ len in pfl: 70
 length of file before initial close: 70
 length from stat: 70
 length from fstat: 70
-tz: 'PST+8', year: 2026, month 4, day 30, hour 15, min 47, sec 17
+tz: 'PST+8', year: 2026, month 5, day 8, hour 7, min 42, sec 0
 len in pfl: 0
 exiting fopentst with great success
 test bin0/lenum
@@ -30484,27 +30484,27 @@ test binfast/ff
   rwxrwxrwx           8961  2026-03-01 19:43:31  /Users/david/OneDrive/sparcos/c_tests/ff.c
 test bin0/ba
 parsing input file TP.BAS
-1,107 ms for 1 iterations
+545 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin1/ba
 parsing input file TP.BAS
-251 ms for 1 iterations
+130 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin2/ba
 parsing input file TP.BAS
-234 ms for 1 iterations
+126 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin3/ba
 parsing input file TP.BAS
-237 ms for 1 iterations
+126 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test binfast/ba
 parsing input file TP.BAS
-239 ms for 1 iterations
+126 ms for 1 iterations
 final move count 6493
 exiting the basic interpreter
 test bin0/an
@@ -30837,4 +30837,4 @@ argv[ 3 ]: 'ccc'
 argv[ 4 ]: 'dddd'
 penv[ 0 ]: 'OS=SPARCOS'
 penv[ 1 ]: 'TZ=PacificDaylightTime+8'
-Thu 04/30/2026 16:47:26.70 
+Fri 05/08/2026  8:42:06.91 
