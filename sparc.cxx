@@ -101,28 +101,12 @@ void Sparc::unhandled()
     emulator_hard_termination( *this, "opcode not handled:", opcode ); // there won't be a a handler for gcc apps so terminate
 } //unhandled
 
-const char * Sparc::condition_string( uint32_t cond )
+const char * condition_strings[ 16 ] { "n", "e", "le", "l", "leu", "cs", "neg", "vs", "a", "ne", "g", "ge", "gu", "cc", "pos", "vc" };
+
+inline const char * Sparc::condition_string( uint32_t cond )
 {
-    switch( cond )
-    {
-        case 0: return "n";    // never
-        case 1: return "e";    // equal
-        case 2: return "le";   // less or equal
-        case 3: return "l";    // less
-        case 4: return "leu";  // less or equal unsigned
-        case 5: return "cs";   // carry set
-        case 6: return "neg";  // negative
-        case 7: return "vs";   // overflow set
-        case 8: return "a";    // always
-        case 9: return "ne";   // not equal
-        case 10: return "g";   // greater
-        case 11: return "ge";  // greater or equal
-        case 12: return "gu";  // greater unsigned
-        case 13: return "cc";  // carry clear == greater than or equal unsigned
-        case 14: return "pos"; // positive
-        case 15: return "vc";  // overflow clear
-        default: unhandled(); assume_false;
-    }
+    assert( cond <= _countof( condition_strings ) );
+    return condition_strings[ cond ];
 } //condition_string
 
 bool Sparc::check_condition( uint32_t cond )
@@ -149,28 +133,12 @@ bool Sparc::check_condition( uint32_t cond )
     }
 } //check_condition
 
+const char * fcondition_strings[ 16 ] { "n", "ne", "lg", "ul", "l", "ug", "g", "u", "a", "e", "ue", "ge", "uge", "le", "ule", "o" };
+
 const char * Sparc::fcondition_string( uint32_t cond )
 {
-    switch( cond )
-    {
-        case 0: return "n";    // never
-        case 1: return "ne";   // not equal
-        case 2: return "lge";  // less or greater
-        case 3: return "ul";   // unordered or less
-        case 4: return "l";    // less
-        case 5: return "ug";   // unordered or greater
-        case 6: return "g";    // greater
-        case 7: return "u";    // unordered
-        case 8: return "a";    // always
-        case 9: return "e";    // equal
-        case 10: return "ue";  // unordered or equal
-        case 11: return "ge";  // greater or equal
-        case 12: return "uge"; // unordered or greater or equal
-        case 13: return "le";  // less or equal
-        case 14: return "ule"; // unordered or less or equal
-        case 15: return "o";   // ordered
-        default: unhandled(); assume_false;
-    }
+    assert( cond <= _countof( fcondition_strings ) );
+    return fcondition_strings[ cond ];
 } //fcondition_string
 
 bool Sparc::check_fcondition( uint32_t cond )
