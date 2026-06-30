@@ -101,7 +101,7 @@ void Sparc::unhandled()
     emulator_hard_termination( *this, "opcode not handled:", opcode ); // there won't be a a handler for gcc apps so terminate
 } //unhandled
 
-const char * condition_strings[ 16 ] { "n", "e", "le", "l", "leu", "cs", "neg", "vs", "a", "ne", "g", "ge", "gu", "cc", "pos", "vc" };
+const char * condition_strings[ 16 ] = { "n", "e", "le", "l", "leu", "cs", "neg", "vs", "a", "ne", "g", "ge", "gu", "cc", "pos", "vc" };
 
 inline const char * Sparc::condition_string( uint32_t cond )
 {
@@ -133,7 +133,7 @@ bool Sparc::check_condition( uint32_t cond )
     }
 } //check_condition
 
-const char * fcondition_strings[ 16 ] { "n", "ne", "lg", "ul", "l", "ug", "g", "u", "a", "e", "ue", "ge", "uge", "le", "ule", "o" };
+const char * fcondition_strings[ 16 ] = { "n", "ne", "lg", "ul", "l", "ug", "g", "u", "a", "e", "ue", "ge", "uge", "le", "ule", "o" };
 
 const char * Sparc::fcondition_string( uint32_t cond )
 {
