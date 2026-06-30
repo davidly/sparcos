@@ -1019,44 +1019,44 @@ uint64_t Sparc::run()
                         }
                         break;
                     }
-                    case 1: // and
+                    case 1:    // and
                     case 0x11: // andcc
-                    {
-                        uint32_t result = val1 & val2;
-                        if ( 0 != rd )
-                            Sparc_reg( rd ) = result;
-                        if ( 0x11 == op3 )
-                        {
-                            set_zn( result );
-                            clear_cv();
-                        }
-                        break;
-                    }
-                    case 2: // or
+                    case 2:    // or
                     case 0x12: // orcc
-                    {
-                        uint32_t result = val1 | val2;
-                        if ( 0 != rd )
-                            Sparc_reg( rd ) = result;
-                        if ( 0x12 == op3 )
-                        {
-                            set_zn( result );
-                            clear_cv();
-                        }
-                        break;
-                    }
-                    case 3: // xor
+                    case 3:    // xor
                     case 0x13: // xorcc
+                    case 5:    // andn
+                    case 0x15: // andncc
+                    case 6:    // orn
+                    case 0x16: // orncc
+                    case 7:    // xnor
+                    case 0x17: // xnorcc
                     {
-                        uint32_t result = val1 ^ val2;
+                        uint32_t bitop = op3 & 7;
+                        uint32_t result;
+
+                        if ( 1 == bitop )
+                            result = val1 & val2; // and
+                        else if ( 2 == bitop )
+                            result = val1 | val2; // or
+                        else if ( 3 == bitop )
+                            result = val1 ^ val2; // xor
+                        else if ( 5 == bitop )
+                            result = ( val1 & ~val2 ); // andn
+                        else if ( 6 == bitop )
+                            result = ( val1 | ~val2 ); // orn
+                        else if ( 7 == bitop )
+                            result = ~ ( val1 ^ val2 ); // xnor
+                        else
+                            unhandled();
+
                         if ( 0 != rd )
                             Sparc_reg( rd ) = result;
-                        if ( 0x13 == op3 )
+                        if ( 0x10 & op3 ) // cc
                         {
                             set_zn( result );
                             clear_cv();
                         }
-
                         break;
                     }
                     case 4: // sub
@@ -1078,45 +1078,6 @@ uint64_t Sparc::run()
                             setflag_c( ( !sign1 && sign2 ) || ( signdiff && ( !sign1 || sign2 ) ) );
                             setflag_v( ( ( sign1 != sign2 ) && ( signdiff != sign1 ) ) ||
                                        ( ( 0x21 == op3 ) && ( ( val1 & 3 ) || ( val2 & 3 ) ) ) );
-                        }
-                        break;
-                    }
-                    case 5: // andn
-                    case 0x15: // andncc
-                    {
-                        uint32_t result = ( val1 & ~val2 );
-                        if ( 0 != rd )
-                            Sparc_reg( rd ) = result;
-                        if ( 0x15 == op3 )
-                        {
-                            set_zn( result );
-                            clear_cv();
-                        }
-                        break;
-                    }
-                    case 6: // orn
-                    case 0x16: // orncc
-                    {
-                        uint32_t result = ( val1 | ~val2 );
-                        if ( 0 != rd )
-                            Sparc_reg( rd ) = result;
-                        if ( 0x16 == op3 )
-                        {
-                            set_zn( result );
-                            clear_cv();
-                        }
-                        break;
-                    }
-                    case 7: // xnor
-                    case 0x17: // xnorcc
-                    {
-                        uint32_t result = ~ ( val1 ^ val2 );
-                        if ( 0 != rd )
-                            Sparc_reg( rd ) = result;
-                        if ( 0x17 == op3 )
-                        {
-                            set_zn( result );
-                            clear_cv();
                         }
                         break;
                     }
@@ -1347,7 +1308,7 @@ uint64_t Sparc::run()
                             if ( 2 == delay_instruction ) // if save/restore was in a delay slot, remember that
                                 delay_instruction = 1;
                             else
-                                npc = pc;
+                                npc = pc; // re-execute and this time there will be no trap
                             break;
                         }
                         else
