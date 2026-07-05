@@ -135,7 +135,7 @@ bool Sparc::check_condition( uint32_t cond )
 
 const char * fcondition_strings[ 16 ] = { "n", "ne", "lg", "ul", "l", "ug", "g", "u", "a", "e", "ue", "ge", "uge", "le", "ule", "o" };
 
-const char * Sparc::fcondition_string( uint32_t cond )
+inline const char * Sparc::fcondition_string( uint32_t cond )
 {
     assert( cond <= _countof( fcondition_strings ) );
     return fcondition_strings[ cond ];
@@ -984,6 +984,7 @@ uint64_t Sparc::run()
         }
         else // format 3: op=2/3. remaining instructions
         {
+            uint32_t result;
             uint32_t rs2 = opbits( 0, 5 );
             uint32_t i = opbit( 13 );
             uint32_t rs1 = opbits( 14, 5 );
@@ -1021,35 +1022,29 @@ uint64_t Sparc::run()
                     }
                     case 1:    // and
                     case 0x11: // andcc
+                            result = val1 & val2; // and
+                            goto finish_bitwise;
                     case 2:    // or
                     case 0x12: // orcc
+                            result = val1 | val2; // or
+                            goto finish_bitwise;
                     case 3:    // xor
                     case 0x13: // xorcc
+                            result = val1 ^ val2; // xor
+                            goto finish_bitwise;
                     case 5:    // andn
                     case 0x15: // andncc
+                            result = ( val1 & ~val2 ); // andn
+                            goto finish_bitwise;
                     case 6:    // orn
                     case 0x16: // orncc
+                            result = ( val1 | ~val2 ); // orn
+                            goto finish_bitwise;
                     case 7:    // xnor
                     case 0x17: // xnorcc
-                    {
-                        uint32_t bitop = op3 & 7;
-                        uint32_t result;
-
-                        if ( 1 == bitop )
-                            result = val1 & val2; // and
-                        else if ( 2 == bitop )
-                            result = val1 | val2; // or
-                        else if ( 3 == bitop )
-                            result = val1 ^ val2; // xor
-                        else if ( 5 == bitop )
-                            result = ( val1 & ~val2 ); // andn
-                        else if ( 6 == bitop )
-                            result = ( val1 | ~val2 ); // orn
-                        else if ( 7 == bitop )
                             result = ~ ( val1 ^ val2 ); // xnor
-                        else
-                            unhandled();
-
+                    finish_bitwise:
+                    {
                         if ( 0 != rd )
                             Sparc_reg( rd ) = result;
                         if ( 0x10 & op3 ) // cc

@@ -166,7 +166,7 @@ struct Sparc
 
     uint32_t & Sparc_reg( uint32_t r )
     {
-        assert ( r < 32 ); // 8 each of global, output, local, and input
+        assert( r < 32 ); // 8 each of global, output, local, and input
         if ( r < 8 ) // global. use of g0 is very common
             return gregs[ r ];
 
