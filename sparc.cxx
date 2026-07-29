@@ -172,7 +172,7 @@ void Sparc::trace_canonical( const char * instruction, bool shift )
     uint32_t rs1 = opbits( 14, 5 );
     if ( opbit( 13 ) ) // immediate
     {
-        int32_t simm13 = sign_extend( opbits( 0, 13 ), 12 );
+        int32_t simm13 = sign_extend( opcode, 12 );
         if ( shift )
             simm13 &= 0x1f;
         tracer.Trace( "%s %s, %#x, %s\n", instruction, regstr( rs1 ), simm13, regstr( rd ) );
@@ -191,7 +191,7 @@ void Sparc::trace_ld_canonical( const char * instruction, bool fp )
     const char * dest = fp ? fregstr( rd ) : regstr( rd );
     if ( opbit( 13 ) ) // immediate
     {
-        int32_t simm13 = sign_extend( opbits( 0, 13 ), 12 );
+        int32_t simm13 = sign_extend( opcode, 12 );
         tracer.Trace( "%s [%s + %#x], %s\n", instruction, regstr( rs1 ), simm13, dest );
     }
     else
@@ -211,7 +211,7 @@ void Sparc::trace_st_canonical( const char * instruction, bool fp )
     const char * dest = fp ? fregstr( rd ) : regstr( rd );
     if ( opbit( 13 ) ) // immediate
     {
-        int32_t simm13 = sign_extend( opbits( 0, 13 ), 12 );
+        int32_t simm13 = sign_extend( opcode, 12 );
         tracer.Trace( "%s %s, [%s + %#x]\n", instruction, dest, regstr( rs1 ), simm13 );
     }
     else
@@ -288,7 +288,7 @@ void Sparc::trace_state()
     }
     else if ( 1 == op ) // format 1. call
     {
-        int32_t disp30 = sign_extend( opbits( 0, 30 ), 29 );
+        int32_t disp30 = sign_extend( opcode, 29 );
         tracer.Trace( "call %#x\n", 4 * disp30 );
     }
     else // format 3: op=2/3. remaining instructions
@@ -298,7 +298,7 @@ void Sparc::trace_state()
         uint32_t rs1 = opbits( 14, 5 );
         uint32_t i = opbit( 13 );
         uint32_t rs2 =  opbits( 0, 5 );
-        int32_t simm13 = sign_extend( opbits( 0, 13 ), 12 );
+        int32_t simm13 = sign_extend( opcode, 12 );
 
         if ( 2 == op ) // arithmetic, logical, shift, and remaining
         {
@@ -976,7 +976,7 @@ uint64_t Sparc::run()
         }
         else if ( 1 == op ) // format 1. call
         {
-            int32_t disp30 = sign_extend( opbits( 0, 30 ), 29 );
+            int32_t disp30 = sign_extend( opcode, 29 );
             Sparc_reg( 15 ) = pc; // 15 is o7
             npc = pc + 4 * disp30; // where to branch after the delay slot instruction
             delay_instruction = 1;
@@ -991,7 +991,7 @@ uint64_t Sparc::run()
             uint32_t op3 = opbits( 19, 6 );
             uint32_t rd = opbits( 25, 5 );
             uint32_t val1 = Sparc_reg( rs1 );
-            uint32_t val2 = i ? sign_extend( opbits( 0, 13 ), 12 ) : Sparc_reg( rs2 );
+            uint32_t val2 = i ? sign_extend( opcode, 12 ) : Sparc_reg( rs2 );
 
             if ( 2 == op ) // arithmetic, logical, shift, and remaining
             {
