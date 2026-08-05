@@ -477,7 +477,7 @@ void Sparc::trace_state()
                 {
                     uint32_t cond = opbits( 25, 4 );
                     if ( i )
-                        tracer.Trace( "t%s %#x, %s\n", condition_string( cond ), simm13, regstr( rs1 ) );
+                        tracer.Trace( "t%s %#x, %s\n", condition_string( cond ), opbits( 0, 7 ), regstr( rs1 ) ); // imm7, not simm13
                     else
                         tracer.Trace( "t%s %s, %s\n", condition_string( cond ), regstr( rs1 ), regstr( rs2 ) );
                     break;
@@ -1289,7 +1289,10 @@ uint64_t Sparc::run()
                     {
                         uint32_t cond = opbits( 25, 4 );
                         if ( check_condition( cond ) )
-                            handle_trap( 128 + ( 0x7f & val1 ) + val2 );
+                        {
+                            uint32_t trap_operand2 = i ? opbits( 0, 7 ) : Sparc_reg( rs2 ); // imm7 is 7 bits, not simm13
+                            handle_trap( 128 + ( 0x7f & ( val1 + trap_operand2 ) ) );       // mask the sum, not val1 alone
+                        }
                         break;
                     }
                     case 0x3b: { break; } // flush
