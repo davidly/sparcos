@@ -1163,7 +1163,7 @@ uint64_t Sparc::run()
                         // n <== r[rd]<31>
                         // z <== if [r[rd]]=0 then 1, else 0
                         // v <== ((op1<31> AND op2<31> AND not r[rd]<31>) OR (not op1<31> AND not op2<31> AND r[rd]<31>))
-                        // c <== ((op1<31> AND op2<31>) OR (not r[rd] AND (op1<31> OR op2<31>))
+                        // c <== ((op1<31> AND op2<31>) OR (not r[rd]<31> AND (op1<31> OR op2<31>))
 
                         uint32_t operand1 = ( val1 >> 1 ) | ( ( flag_n() ^ flag_v() ) << 31 );
                         uint32_t operand2 = ( y & 1 ) ? val2 : 0;
@@ -1176,7 +1176,7 @@ uint64_t Sparc::run()
                         bool sign_op2 = sign32( operand2 );
                         bool sign_rdval = sign32( rdval );
                         setflag_v( ( sign_op1 & sign_op2 & !sign_rdval ) | ( !sign_op1 & !sign_op2 & sign_rdval ) );
-                        setflag_c( ( sign_op1 & sign_op2 ) | ( ( 0 == rdval ) & ( sign_op1 | sign_op2 ) ) );
+                        setflag_c( ( sign_op1 & sign_op2 ) | ( !sign_rdval & ( sign_op1 | sign_op2 ) ) );
                         break;
                     }
                     case 0x25: // sll
