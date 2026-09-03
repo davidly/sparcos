@@ -18,17 +18,26 @@ else
     optlevel="$2"
 fi
 
-gccpath="../gcc-14.3.0/bin"
+if [ "$(uname -s)" = "Darwin" ]; then
+    gccpath="../toolchains/sparc-gcc-15.1.0/bin"
+    gcc="$gccpath/sparc-linux-gnu-gcc"
+    objdump="$gccpath/sparc-linux-gnu-objdump"
+else
+    gccpath="../gcc-14.3.0/bin"
+    gcc="$gccpath/sparc-linux-gcc"
+    objdump="$gccpath/sparc-buildroot-linux-uclibc-objdump"
+fi
+
 mkdir bin"$optlevel" 2>/dev/null
 
 # use -mcpu=v7 to generate mulscc instructions for integer multiplication
-$gccpath/sparc-linux-gcc -x c++ -O$optlevel -mcpu=v8 $1.c -o bin$optlevel/$1.elf -l:libstdc++.a -static
+"$gcc" -x c++ -O"$optlevel" -mcpu=v8 "$1.c" -o "bin$optlevel/$1.elf" -l:libstdc++.a -static
 
 # generate s file for reference
-#$gccpath/sparc-linux-gcc -x c++ -O$optlevel -S -fverbose-asm -mcpu=v8 $1.c -o bin$optlevel/$1.s
+#"$gcc" -x c++ -O"$optlevel" -S -fverbose-asm -mcpu=v8 "$1.c" -o "bin$optlevel/$1.s"
 
 # generate disassembly
-$gccpath/sparc-buildroot-linux-uclibc-objdump -d bin$optlevel/$1.elf >bin$optlevel/$1.txt
+"$objdump" -d "bin$optlevel/$1.elf" >"bin$optlevel/$1.txt"
 
 #cp $1.c /mnt/c/users/david/onedrive/sparcos/c_tests
 #cp bin$optlevel/$1.elf /mnt/c/users/david/onedrive/sparcos/c_tests/bin$optlevel

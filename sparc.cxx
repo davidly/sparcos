@@ -148,7 +148,7 @@ bool Sparc::check_fcondition( uint32_t cond )
     {
         case 0: return false;                           // never
         case 1: return ( fccE != fcc );                 // not equal
-        case 2: return ( fccE == fcc || fccL == fcc );  // less or greater
+        case 2: return ( fccL == fcc || fccG == fcc );  // less or greater
         case 3: return ( fccU == fcc || fccL == fcc );  // unordered or less
         case 4: return ( fccL == fcc );                 // less
         case 5: return ( fccU == fcc || fccG == fcc );  // unordered or greater
@@ -270,7 +270,7 @@ void Sparc::trace_state()
         if ( 0 == op2 ) // unimp
             tracer.Trace( "unimp\n" );
         else if ( 2 == op2 ) // Bicc
-            tracer.Trace( "b%s%s %#x # %#lx\n", condition_string( cond ), a ? ",a" : "", disp22 << 2, pc + ( disp22 << 2 ) );
+            tracer.Trace( "b%s%s %#x # %#lx\n", condition_string( cond ), a ? ",a" : "", (uint32_t) disp22 << 2, pc + ( (uint32_t) disp22 << 2 ) );
         else if ( 4 == op2 ) // sethi
         {
             uint32_t rd = opbits( 25, 5 );
@@ -280,9 +280,9 @@ void Sparc::trace_state()
                 tracer.Trace( "sethi %#x, %s\n", imm22, regstr( rd ) );
         }
         else if ( 6 == op2 ) // FBfcc
-            tracer.Trace( "fb%s%s %#x # %#lx\n", fcondition_string( cond ), a ? ",a" : "", disp22 << 2, pc + ( disp22 << 2 ) );
+            tracer.Trace( "fb%s%s %#x # %#lx\n", fcondition_string( cond ), a ? ",a" : "", (uint32_t) disp22 << 2, pc + ( (uint32_t) disp22 << 2 ) );
         else if ( 7 == op2 ) // CBccc. There is no coprocessor
-            tracer.Trace( "cb%s%s %#x\n", condition_string( cond ), a ? ",a" : "", disp22 << 2 );
+            tracer.Trace( "cb%s%s %#x\n", condition_string( cond ), a ? ",a" : "", (uint32_t) disp22 << 2 );
         else
             unhandled();
     }
@@ -366,10 +366,12 @@ void Sparc::trace_state()
                 case 0x1f: { trace_canonical( "sdivcc" ); break; }
                 case 0x20: { trace_canonical( "taddcc" ); break; }
                 case 0x21: { trace_canonical( "tsubcc" ); break; }
+                case 0x22: { trace_canonical( "taddcctv" ); break; }
+                case 0x23: { trace_canonical( "tsubcctv" ); break; }
                 case 0x24: { trace_canonical( "mulscc" ); break; }
                 case 0x25: { trace_canonical( "sll", true ); break; }
                 case 0x26: { trace_canonical( "srl", true ); break; }
-                case 0x27: { trace_canonical( "sla", true ); break; }
+                case 0x27: { trace_canonical( "sra", true ); break; }
                 case 0x28: // rdy
                 {
                     if ( 0 == rs1 ) // rdy
@@ -415,7 +417,7 @@ void Sparc::trace_state()
                         case 0x4e: tracer.Trace( "fdivd %s, %s, %s\n", fregstr( rs1 ), fregstr( rs2 ), fregstr( rd ) ); break;
                         case 0x4f: tracer.Trace( "fdivq %s, %s, %s\n", fregstr( rs1 ), fregstr( rs2 ), fregstr( rd ) ); break;
                         case 0x69: tracer.Trace( "fsmuld %s, %s, %s\n", fregstr( rs1 ), fregstr( rs2 ), fregstr( rd ) ); break;
-                        case 0x6e: tracer.Trace( "fsmulq %s, %s, %s\n", fregstr( rs1 ), fregstr( rs2 ), fregstr( rd ) ); break;
+                        case 0x6e: tracer.Trace( "fdmulq %s, %s, %s\n", fregstr( rs1 ), fregstr( rs2 ), fregstr( rd ) ); break;
                         case 0xc4: tracer.Trace( "fitos %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
                         case 0xc6: tracer.Trace( "fdtos %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
                         case 0xc7: tracer.Trace( "fqtos %s, %s\n", fregstr( rs2 ), fregstr( rd ) ); break;
@@ -951,7 +953,7 @@ uint64_t Sparc::run()
                     if ( branch )
                     {
                         int32_t disp22 = sign_extend( imm22, 21 );
-                        npc = pc + ( disp22 << 2 );
+                        npc = pc + ( (uint32_t) disp22 << 2 );
                         if ( ! ( ( 8 == cond ) && a ) ) // delay slot instructions always executed unless it's BA (branch always) and annulled
                         {
                             delay_instruction = 1;
@@ -1020,6 +1022,26 @@ uint64_t Sparc::run()
                         }
                         break;
                     }
+                    case 0x22: // taddcctv
+                    {
+                        uint64_t result64 = (uint64_t) val1 + (uint64_t) val2;
+                        uint32_t result32 = (uint32_t) result64;
+                        bool sign1 = sign32( val1 );
+                        bool sign2 = sign32( val2 );
+                        bool signresult = sign32( result32 );
+                        bool overflow = ( ( val1 & 3 ) || ( val2 & 3 ) || ( ( sign1 == sign2 ) && ( sign1 != signresult ) ) );
+                        if ( overflow )
+                            handle_trap( 0xa );
+                        else
+                        {
+                            if ( 0 != rd )
+                                Sparc_reg( rd ) = result32;
+                            set_zn( result32 );
+                            setflag_c( 0 != ( 0xffffffff00000000 & result64 ) );
+                            setflag_v( false );
+                        }
+                        break;
+                    }
                     case 1:    // and
                     case 0x11: // andcc
                             result = val1 & val2; // and
@@ -1073,6 +1095,25 @@ uint64_t Sparc::run()
                             setflag_c( ( !sign1 && sign2 ) || ( signdiff && ( !sign1 || sign2 ) ) );
                             setflag_v( ( ( sign1 != sign2 ) && ( signdiff != sign1 ) ) ||
                                        ( ( 0x21 == op3 ) && ( ( val1 & 3 ) || ( val2 & 3 ) ) ) );
+                        }
+                        break;
+                    }
+                    case 0x23: // tsubcctv
+                    {
+                        uint32_t diff = val1 - val2;
+                        bool sign1 = sign32( val1 );
+                        bool sign2 = sign32( val2 );
+                        bool signdiff = sign32( diff );
+                        bool overflow = ( ( val1 & 3 ) || ( val2 & 3 ) || ( ( sign1 != sign2 ) && ( signdiff != sign1 ) ) );
+                        if ( overflow )
+                            handle_trap( 0xa );
+                        else
+                        {
+                            if ( 0 != rd )
+                                Sparc_reg( rd ) = diff;
+                            set_zn( diff );
+                            setflag_c( ( !sign1 && sign2 ) || ( signdiff && ( !sign1 || sign2 ) ) );
+                            setflag_v( false );
                         }
                         break;
                     }
@@ -1136,13 +1177,13 @@ uint64_t Sparc::run()
                            handle_trap( 0x2a );
                         else
                         {
-                            int64_t result64 = dividend / (int64_t ) (int32_t) val2;
-                            uint32_t hiresult = (uint32_t) ( result64 >> 32 );
-                            bool overflow = ( 0xffffffff != hiresult && 0 != hiresult );
-                            bool sign = sign32( hiresult );
+                            int32_t divisor = (int32_t) val2;
+                            bool int64_overflow = ( INT64_MIN == dividend && -1 == divisor );
+                            int64_t result64 = int64_overflow ? INT64_MAX : dividend / divisor;
+                            bool overflow = int64_overflow || result64 < INT32_MIN || result64 > INT32_MAX;
                             uint32_t result32 = (uint32_t) result64;
                             if ( overflow )
-                                result32 = sign ? 0x80000000 : 0x7fffffff;
+                                result32 = ( result64 < 0 ) ? 0x80000000 : 0x7fffffff;
                             if ( 0x1f == op3 )
                             {
                                 set_zn( result32 );
@@ -1242,7 +1283,7 @@ uint64_t Sparc::run()
                             case 0x4e: set_dreg( rd, do_fdiv( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;                     // fdivd
                             case 0x4f: set_qreg( rd, do_fdiv( get_qreg( rs1 ), get_qreg( rs2 ) ) ); break;                     // fdivq
                             case 0x69: set_dreg( rd, do_fmul( (double) fregs[ rs1 ], (double) fregs[ rs2 ] ) ); break;         // fsmuld
-                            case 0x6e: set_qreg( rd, (quadfp_t) get_dreg( rs1 ) * (quadfp_t) get_dreg( rs2 ) ); break;         // fsmulq
+                            case 0x6e: set_qreg( rd, (quadfp_t) get_dreg( rs1 ) * (quadfp_t) get_dreg( rs2 ) ); break;         // fdmulq
                             case 0xc4: set_freg( rd, (float) ( * (int32_t *) &fregs[ rs2 ] ) ); break;                         // fitos
                             case 0xc6: set_freg( rd, (float) get_dreg( rs2 ) ); break;                                         // fdtos
                             case 0xc7: set_freg( rd, (float) get_qreg( rs2 ) ); break;                                         // fqtos
@@ -1268,7 +1309,7 @@ uint64_t Sparc::run()
                             case 0x51: set_fcc( compare_floating( get_freg( rs1 ), get_freg( rs2 ) ) ); break;        // fcmps
                             case 0x52: set_fcc( compare_floating( get_dreg( rs1 ), get_dreg( rs2 ) ) ); break;        // fcmpd
                             case 0x53: set_fcc( compare_floating( get_qreg( rs1 ), get_qreg( rs2 ) ) ); break;        // fcmpq
-                            case 0x55: set_fcc( compare_floating( get_freg( rs1 ), get_freg( rs2 ) ) ); break;        // fcmpes
+                            case 0x55: set_fcc( compare_floating( get_freg( rs1 ), get_freg( rs2 ), true ) ); break;  // fcmpes
                             case 0x56: set_fcc( compare_floating( get_dreg( rs1 ), get_dreg( rs2 ), true ) ); break;  // fcmped
                             case 0x57: set_fcc( compare_floating( get_qreg( rs1 ), get_qreg( rs2 ), true ) ); break;  // fcmpeq
                             default: unhandled();

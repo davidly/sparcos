@@ -7,6 +7,8 @@ else
     optflags="$1"
 fi
 
+script_dir="$(cd -- "$(dirname -- "$0")" && pwd)"
+
 for arg in hidave tprintf tm tmuldiv ttt sieve e tstr targs tbits t tao \
            tcmp ttypes tarray trw trw2 terrno mm_old ttime fileops tpi \
            t_setjmp td tf tap tphi mm ts glob nantst pis tfo sleeptm \
@@ -19,9 +21,9 @@ do
         mkdir bin"$optflag" 2>/dev/null
 
         if [ "$optflag" != "fast" ]; then
-            m.sh $arg $optflag &
+            "$script_dir/m.sh" $arg $optflag &
         else    
-            m.sh $arg $optflag
+            "$script_dir/m.sh" $arg $optflag
         fi
     done
 done
